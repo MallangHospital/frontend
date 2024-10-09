@@ -4,6 +4,22 @@
     display: block; /* 이미지 아래 여백 제거 */
 }
 
+.overlay-text {
+  position: absolute;
+  top: 402px;          /* 상단에서 402px 위치 */
+  left: 50%;           /* 부모 요소의 왼쪽에서 50% 위치 */
+  transform: translateX(-50%);  /* 요소 너비의 50%만큼 왼쪽으로 이동하여 수평 중앙 정렬 */
+  width: 430px;        /* 텍스트 박스 너비 */
+  height: 80px;        /* 텍스트 박스 높이 */
+  font-size: 50px;     /* 글자 크기 */
+  color: white;        /* 글자 색상 */
+  font-weight: bold;   /* 글자 굵기 */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login_container {
     display: flex;
     justify-content: center;
