@@ -1,0 +1,42 @@
+.section img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/**증상 입력창 스타일링**/
+.symptom-input {
+    width: 100%; /* 너비 100% */
+    height: 40px; /* 높이 조정 */
+    padding: 10px; /* 안쪽 여백 */
+    border: 1px solid #ccc; /* 테두리 색상 */
+    border-radius: 4px; /* 둥근 테두리 */
+    box-sizing: border-box; /* 테두리를 포함한 전체 박스 크기 */
+    font-size: 14px; /* 폰트 크기 */
+    background-color: #f9f9f9; /* 배경색 */
+    resize: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
+}
+
+.symptom-input:focus {
+    outline: none; /* 포커스 시 아웃라인 제거 */
+    border-color: #007bff; /* 포커스 시 테두리 색상 변경 */
+}
+
+.symptom-input::placeholder {
+    font-size: 12px; /* placeholder 폰트 크기 */
+    color: #999; /* placeholder 색상 */
+}
+
+.btn_submit {
+    width: 150px; 
+    padding: 10px; 
+    background-color: #A6B1BB; 
+    color: white; 
+    font-size: 15px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; /* 마우스 커서 */
+    margin: 50px auto 0 auto; /* 상단 여백과 중앙 정렬 */
+    display: block; /* 중앙 정렬을 위한 블록 */
+}
