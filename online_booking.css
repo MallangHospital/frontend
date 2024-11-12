@@ -39,12 +39,6 @@
     position: relative; /* 포지션 설정 추가 */
 }
 
-.navbar {
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 2px;
-    position: relative; /* 포지션 설정 */
-}
-
 .navList {
     list-style: none;
     display: flex;
@@ -58,31 +52,26 @@
 
 .navItem {
     position: relative;
-    padding-bottom: 0px;
-    margin-top: -10px; /* 네비게이션 아이템을 위로 이동 */
+    margin-top: 9px; /* 네비게이션 아이템을 위로 이동 */
     cursor: pointer;
+    padding-top: 31px; /* 네비게이션 항목 아래로 이동 */
+    line-height: 2;
+    margin-right: 15px;
 }
 
 
 .navItem.is-active {
     border-bottom: 2px solid #333;
-    font-size: 12px; /* 글씨 크기 조정 */
+    font-size: 16px; /* 글씨 크기 조정 */
     font-weight: 500; /* 글씨 두께 */
 }
 
 .navLink {
     text-decoration: none;
-    color: #333; /* 기본 색상 그대로 유지 */
-    font-size: 12px; /* 글씨 크기 조정 */
+    color: #333 !important;
+    font-size: 12px !important; /* 글씨 크기 조정 */
     font-weight: 500; /* 글씨 두께 */
 }
-
-.navItem:not(.is-active) .navLink {
-    color: #333; /* 선택되지 않은 항목도 동일한 색상 유지 */
-    font-size: 12px; /* 글씨 크기 조정 */
-    font-weight: 500; /* 글씨 두께 */
-}
-
 
 /***** 진료과목 선택 스타일링  *****/
 .medical_department_list {
