@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> 온라인 접수 </title>
+  <title>온라인 접수</title>
 
   <link rel="stylesheet" href="globalstyle.css">
   <link rel="stylesheet" href="navbar.css">   <!--네비게이션 바 css-->
@@ -20,6 +20,26 @@
   <script defer src="theme.js"></script>
   <script defer src="script.js"></script>
   
+  <script>
+     function submitReservation() {
+      // 증상 입력값 확인
+      const symptomInput = document.querySelector('.symptom-input').value.trim();
+      
+      if (!symptomInput) {
+        alert("증상을 입력해 주세요.");
+        return; // 증상이 비었으면 팝업을 표시하지 않음
+      }
+
+      // 팝업창 표시
+      document.getElementById('reservationPopup').style.display = 'flex';
+    }
+
+    function closePopup() {
+      // 팝업창 숨기기
+      document.getElementById('reservationPopup').style.display = 'none';
+    }
+  </script>
+  
  
 </head>
 <body>
@@ -30,14 +50,25 @@
       <img src="section_online_booking.png" alt="section">
     </div>
       <!-- step2-->
-    <div class="step2-block" style="margin: 100px 200px 200px 200px;">
+    <div class="step2-block" style="margin: 100px 200px 100px 200px;">
       <p class="tit" style="font-weight: lighter; font-size: 24px;">step 2</p>
       <br>
       <p class="tit" style="font-weight: bold; font-size: 13px;">• 증상을 간단하게 작성해주세요.</p>
       <textarea class="symptom-input" style="margin: 18px;" placeholder="입력해주세요..."></textarea>
     </div>
 
-      
+     <!-- 예약하기 버튼 -->
+     <div class="btn_submit_wrap">
+      <button type="button" class="btn_submit" onclick="submitReservation()">예약하기</button>
+    </div>
+
+    <div id="reservationPopup" class="popup-overlay">
+      <div class="popup-content">
+        <h2>접수가 완료되었습니다!</h2>
+        <p>병원 정책에 따라 환자 호출 후<br>10분이 지나면 접수가 자동 취소됩니다.</p>
+        <button onclick="closePopup()">확인</button>
+      </div>
+
 
   </div>
   <div id="footer"></div>  <!--푸터-->

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>진료예약</title>
+  <title>온라인 접수</title>
 
   <link rel="stylesheet" href="globalstyle.css">
   <link rel="stylesheet" href="navbar.css">   <!--네비게이션 바 css-->
   <link rel="stylesheet" href="footer.css">   <!--푸터 css-->
-  <link rel="stylesheet" href="medical_booking.css"> 
+  <link rel="stylesheet" href="online_booking.css"> 
 
   <!-- 폰트 연결-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +53,7 @@
     <div class="content-block" style="margin: 100px 200px 50px 200px;">
       <p class="tit" style="font-weight: lighter; font-size: 24px;">step 1</p>
       <br>
-      <p class="tit" style="font-weight: bold; font-size: 13px;">• 진료종류와 진료과목/진료실을 선택해주세요.</p>
+      <p class="tit" style="font-weight: bold; font-size: 13px;">• 진료종류와 진료과목/의료진을 선택해주세요.</p>
       <br>
       <div class="button-group">
         <input type="radio" id="option1" name="option" class="radio-btn" />
@@ -73,7 +73,7 @@
               <a class="navLink" href="#" data-target="진료 과목">진료 과목</a>
             </li>
             <li class="navItem">
-              <a class="navLink" href="#" data-target="진료실 선택">진료실 선택</a>
+              <a class="navLink" href="#" data-target="의료진 선택">의료진 선택</a>
             </li>
           </ul>
         </nav>
@@ -147,10 +147,13 @@
         </ul>
       </div>
 
-      <!-- 진료실 선택 -->
-      <div class="medical_office_list">
+      <div class="medical_staff_list">
         <ul id="staffListView">
-          
+         
+
+
+
+          <!--구현 필요-->
         </ul>
       </div>
 
@@ -159,4 +162,4 @@
 
   </div>
 </body>
-</html
+</html>
