@@ -1,0 +1,96 @@
+.main_title{
+  font-weight: 300;
+  font-size: xx-large;
+  color: #A6B1BB;
+  padding: 100px 200px;
+}
+
+.content{
+  padding: 0px 234px;
+  padding-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  color: #333333;
+}
+
+.sub_title{
+  padding: 0 0 38px 38px;
+  font-size: 20px;
+  color: #444444;
+}
+
+.main_content{
+  font-size: 13px;
+  padding-left: 100px;
+}
+
+.main_doctor {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.main_doctor_name {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+p {
+  margin-bottom: 40px; 
+}
+
+
+
+.doctor_name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.doctor_details {
+  display: flex;
+  align-items: flex-end; 
+}
+
+.career_info {
+  display: flex;
+  align-items: flex-end; 
+}
+
+
+.position {
+  font-size: 16px;
+  color: #555;
+  margin-left: 5px;
+}
+
+.career_info {
+  display: flex;
+  align-items: center;
+}
+
+.career_title {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.profile_section {
+  flex: 0 1 calc(50% - 30px); /* Each profile takes up 50% of the width, minus the gap */
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.doctor_info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 50px 200px;
+}
+
+.profile_section ul{
+  font-size: 12px;
+}
+
