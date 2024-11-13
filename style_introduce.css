@@ -144,7 +144,6 @@
 }
 
 .info_index {
-  
   align-items: center; /* 중앙 정렬 */
   margin-bottom: 20px;
 }
@@ -295,4 +294,143 @@
 
 .map{
   padding: 80px 0;
+}
+
+
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 60px 150px;
+
+}
+
+.custom-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  width: 200px;
+  height: 70px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-button.active {
+  background-color: #e0e4e9;
+  border-color: #aaa;
+}
+
+.custom-button:hover {
+  background-color: #f5f5f5;
+}
+
+.custom-button .text {
+  flex-grow: 1;
+  font-weight: bold;
+  text-align: left;
+}
+
+.custom-button .icon {
+  width: 30px;
+  height: 30px;
+}
+
+.main_department h1 {
+  text-align: center;
+  font-weight: 300;
+  font-size: xx-large;
+  color: #A6B1BB;
+  margin-top: 20px;
+  position: relative; /* 아래 점을 추가하기 위해 위치 속성을 조정 */
+}
+
+.main_department h1::after {
+  content: "";
+  display: block;
+  width: 8px; /* 점의 크기 */
+  height: 8px;
+  background-color: #a0989894; /* 점의 색상 */
+  border-radius: 50%; /* 점을 원형으로 만들기 */
+  margin: 16px auto 0;
+}
+
+.main_department .main_content {
+  font-size: 12px;
+  color: #666;
+  width: 30%;
+  margin: 20px auto; /* 요소를 가운데 정렬 */
+
+}
+
+.department_container {
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.department_container h2{
+  font-size: 1em;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 0;
+}
+
+.department_container hr{
+  border: 0;
+  height: 1px;
+  background-color: #5A4D45;
+  margin-bottom: 30px;
+}
+
+.department {
+  margin: 50px;
+}
+
+.department h3 {
+  font-size: 1em;
+  font-weight: bold;
+  color: #906756;
+  margin-bottom: 10px;
+  display: inline-block; /* 글자 길이에 맞춰 밑줄 적용 */
+  position: relative;
+}
+
+.department h3::after {
+  content: "";
+  display: block;
+  width: 100%; /* 글자 길이에 맞추기 */
+  height: 6px; /* 밑줄 두께 */
+  background-color: #e0d7cf9c; /* 밑줄 색상 */
+  position: absolute;
+  bottom: 0; /* 텍스트 아래에 위치 */
+  left: 0; /* 텍스트 시작 위치에 맞추기 */
+}
+
+.department-content {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.department .icon {
+  width: 40px;
+  margin: 20px;
+}
+
+.department-content p {
+  font-size: 0.9em;
+  color: #555;
+  line-height: 1.6;
+  padding-left: 20px;
 }
