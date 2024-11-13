@@ -342,6 +342,7 @@
   height: 30px;
 }
 
+
 .main_department h1 {
   text-align: center;
   font-weight: 300;
@@ -433,4 +434,8 @@
   color: #555;
   line-height: 1.6;
   padding-left: 20px;
+}
+
+.single{
+  margin-bottom: 70px;
 }
