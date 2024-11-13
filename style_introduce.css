@@ -228,6 +228,7 @@
   color: #4A4A4A;
   font-weight: bold;
 }
+
 .achievement_left p {
   font-size: 16px; /* 글씨 크기 조정 */
   color: #333;
@@ -239,3 +240,59 @@
   width: 133px;
 }
 
+.contact-section {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.contact-section h2 {
+  font-size: 1.2em;
+  color: #a0989894;
+}
+
+.contact-section h1 {
+  font-size: 2em;
+  margin: 10px 0 30px;
+  color: #8b5e34; /* 적절한 색상으로 수정 */
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.info-item {
+  text-align: center;
+  width: 30%;
+}
+
+.info-item .icon {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.info-item h3 {
+  font-size: 1.1em;
+  color: #8b5e34;
+  margin-bottom: 5px;
+}
+
+.phone-number {
+  font-size: 1.5em;
+  color: #8b5e34;
+}
+
+.map-container {
+  margin-top: 20px;
+}
+
+.map-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.map{
+  padding: 80px 0;
+}
