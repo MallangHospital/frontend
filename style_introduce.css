@@ -362,9 +362,9 @@
 }
 
 .main_department .main_content {
-  font-size: 12px;
+  font-size: 0.9em;
   color: #666;
-  width: 30%;
+  width: 36%;
   margin: 20px auto; /* 요소를 가운데 정렬 */
 
 }
