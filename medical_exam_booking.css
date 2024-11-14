@@ -283,4 +283,75 @@ button.main_btn:hover, .btn_submit:hover {
     font-size: 12px;
   }
 
-  
+  /**캘린더 스타일링**/
+  #datepicker {
+    width: 293px;
+    height: 258px;
+    border: 1px solid #d0d7de;
+    padding: 5px;
+    border-radius: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+    display: inline-block;
+    box-sizing: border-box; /* 패딩과 테두리 포함하여 크기 맞춤 */
+  }
+
+  .ui-datepicker-calendar {
+    width: 100%;
+    height: calc(100% - 50px); /* 타이틀 영역 제외한 나머지 높이 */
+    table-layout: fixed; /* 셀 너비 자동 균등 분배 */
+  }
+
+  .ui-datepicker-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .ui-datepicker-prev, .ui-datepicker-next {
+    top: 0.3em;
+  }
+
+  .ui-datepicker th {
+    font-weight: 400;
+    font-size: 12px;
+    color: #666;
+    padding: 0; /* 여백 제거 */
+  }
+
+  .ui-datepicker td {
+    width: 40px;
+    height: 30px;
+  }
+
+  .ui-datepicker td a {
+    color: black;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+    line-height: 30px; /* 셀 높이에 맞춰 텍스트 정렬 */
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ui-datepicker .ui-datepicker-week-end {
+    color: #e74c3c;
+  }
+
+  .ui-datepicker-buttonpane .ui-datepicker-current {
+    display: none;
+  }
+
+  .ui-datepicker td .ui-state-disabled {
+    color: #ccc;
+  }
+
+  .ui-datepicker .ui-state-active {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .ui-datepicker td a:hover {
+    background-color: #d0d7de;
+  }
