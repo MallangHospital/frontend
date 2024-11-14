@@ -7,7 +7,7 @@
 
 /* 박스 레이아웃 */
 .content, .boxed_layout {
-    width: 50%;
+    width: 60%;
     margin: 100px auto;
     padding: 50px;
     background-color: #f9f9f9;
@@ -60,7 +60,7 @@ h2, .title {
   
   .radio_box {
     display: flex;
-    gap: 10px; /* 라디오 버튼 간의 간격 */
+    gap: 7px; /* 라디오 버튼 간의 간격 */
   }
   
 
@@ -219,7 +219,7 @@ button.main_btn:hover, .btn_submit:hover {
 
 .usemenual ul li,
 .privacy-policy ul li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .usemenual h3:last-child,
