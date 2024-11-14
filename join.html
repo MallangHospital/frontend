@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원 가입</title>
-  <link rel="stylesheet" href="globalsytle.css">
+  <link rel="stylesheet" href="globalstyle.css">
   <link rel="stylesheet" href="navbar.css">   <!--네비게이션 바 css-->
   <link rel="stylesheet" href="footer.css">   <!--푸터 css-->
   <link rel="stylesheet" href="join.css">
@@ -33,6 +33,14 @@
         
 
         <div class="form_list">
+        
+           <!-- 이름 입력 -->
+          <div class="form_item">
+            <div class="box_2"></div>
+            <label for="id">이름</label>
+            <input type="text" id="id" name="id" placeholder="이름" maxlength="15" required>
+          </div> 
+
           <!-- 아이디 입력 -->
           <div class="form_item">
             <p class="box_3"></p>
@@ -65,14 +73,14 @@
           <div class="form_item">
             <div class="box_6"></div>
             <label for="ssn">주민등록번호</label>
-            <input type="text" id="ssn" name="ssn" placeholder="주민등록번호" maxlength="13" required>
+            <input type="text" id="ssn" name="ssn" placeholder="123456-1234567 ( '-' 포함 )" maxlength="13" required>
           </div>
 
           <!-- 휴대전화 번호 입력 -->
           <div class="form_item">
             <div class="box_6"></div>
             <label for="phoneNo">휴대전화번호</label>
-            <input type="tel" id="phoneNo" name="phoneNo" placeholder="01012341234 (하이픈을 제거해주세요.)" maxlength="25" required>
+            <input type="tel" id="phoneNo" name="phoneNo" placeholder="010-0000-0000 ( '-' 포함 )" maxlength="25" required>
           </div>
 
           <!-- 이메일 주소 입력 -->
