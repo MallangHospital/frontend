@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>진료예약</title>
+
+  <link rel="stylesheet" href="globalstyle.css">
+  <link rel="stylesheet" href="navbar.css">   <!--네비게이션 바 css-->
+  <link rel="stylesheet" href="footer.css">   <!--푸터 css-->
+  <link rel="stylesheet" href="medical_booking.css"> 
+
+  <!-- 폰트 연결-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> 
+
+  <!--제이쿼리 연결-->
+  <script src="jquery-3.7.1.min.js"></script>
+  <script defer src="theme.js"></script>
+  <script defer src="script.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+  // 진료과목별 의료진 데이터 (사진 경로 추가)
+  const doctorData = {
+    "외과": [
+      { name: "유준상", photo: "path/to/photo1.jpg" },
+      { name: "신성록", photo: "path/to/photo2.jpg" },
+      { name: "민우혁", photo: "path/to/photo3.jpg" }
+    ],
+    "내과": [
+      { name: "김준완", photo: "김준완.jpeg" },
+      { name: "안정원", photo: "안정원.jpeg" },
+      { name: "양석형", photo: "양석형.jpeg" },
+      { name: "이익준", photo: "이익준.jpeg" }
+    ],
+    "소아청소년과": [
+      { name: "정상훈", photo: "path/to/photo7.jpg" },
+      { name: "홍길동", photo: "path/to/photo8.jpg" }
+    ],
+    "산부인과": [
+      { name: "박영희", photo: "path/to/photo9.jpg" },
+      { name: "이민수", photo: "이익준.jpeg" }
+    ]
+  };
+
+  // 진료과목 항목 클릭 시 해당 의료진 리스트 표시
+  $('#listView li').click(function() {
+    const selectedDepartment = $(this).find('.tit').text();
+    const doctorList = doctorData[selectedDepartment] || [];
+    const $staffListView = $('#staffListView');
+
+    // 이전 리스트 초기화 후 새로운 리스트 추가
+    $staffListView.empty();
+    doctorList.forEach(doctor => {
+      $staffListView.append(`
+        <li>
+          <div class="doctor-card">
+            <img src="${doctor.photo}" alt="${doctor.name}" class="doctor-photo">
+            <p class="doctor-name">${doctor.name}</p>
+          </div>
+        </li>
+      `);
+    });
+
+    // 의료진 리스트 화면으로 전환 및 네비게이션 활성화
+    $('.medical_department_list').hide();
+    $('.medical_staff_list').show();
+    $('.navItem').removeClass('is-active');
+    $('.navItem').eq(1).addClass('is-active'); // '의료진 선택' 탭 활성화
+  });
+
+  // 네비게이션 클릭 시 진료과목 및 의료진 표시
+  $('.navLink').click(function(e) {
+    e.preventDefault();
+    $('.navItem').removeClass('is-active');
+    $(this).parent().addClass('is-active');
+    const target = $(this).data('target');
+    
+    // '진료 과목' 클릭 시 진료과목 리스트 표시
+    if (target === '진료 과목') {
+      $('.medical_department_list').show();
+      $('.medical_staff_list').hide();
+    } else if (target === '의료진 선택') {
+      $('.medical_department_list').hide();
+      $('.medical_staff_list').show();
+    }
+  });
+
+  // 초기 설정
+  $('.medical_staff_list').hide();
+});
+
+  </script>
+ 
+</head>
+<body>
+  <div class="wrap">
+
+    <div id="navbar"></div>  <!--네비게이션 바-->
+    <div class="section">
+      <img src="section_medical_booking.png" alt="section">
+    </div>
+
+    <div class="content-block" style="margin: 100px 200px 50px 200px;">
+      <p class="tit" style="font-weight: lighter; font-size: 24px;">step 1</p>
+      <br>
+      <p class="tit" style="font-weight: bold; font-size: 13px;">• 진료종류와 진료과목/의료진을 선택해주세요.</p>
+      <br>
+      <div class="button-group">
+        <input type="radio" id="option1" name="option" class="radio-btn" />
+        <label for="option1" class="btn">초진</label>
+      
+        <input type="radio" id="option2" name="option" class="radio-btn" />
+        <label for="option2" class="btn">재진</label>
+      
+        <input type="radio" id="option3" name="option" class="radio-btn" />
+        <label for="option3" class="btn">상담</label>
+      </div>
+    
+      <div id="navbar" class="navbar">
+        <nav class="nav">
+          <ul class="navList">
+            <li class="navItem is-active">
+              <a class="navLink" href="#" data-target="진료 과목">진료 과목</a>
+            </li>
+            <li class="navItem">
+              <a class="navLink" href="#" data-target="의료진 선택">의료진 선택</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    
+
+      <div class="medical_department_list">
+        <ul id="listView">
+                  <li>
+                    <a href="/?p=50">
+                        <div class="txt">
+                            <div class="top">
+                                <p class="tit">외과</p>
+                                <div class="keyword"><span>간담췌</span><span>위 · 간암</span></div>
+                            </div>
+                            <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 67.547 60.5">
+                                <g id="icon" transform="translate(-465.25 -2561.072)">
+                                    <path id="패스_927" data-name="패스 927" d="M16.458,16.458H56.352A7.729,7.729,0,1,0,56.352,1H10.662A9.662,9.662,0,0,0,1,10.662V22.254a9.661,9.661,0,0,0,9.662,9.662h5.8" transform="translate(466 2561.822)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                    <path id="패스_928" data-name="패스 928" d="M49.589,31.421H8.728a7.729,7.729,0,0,0,0,15.458h2.9v5.8a4.83,4.83,0,1,0,9.661,0v-5.8h34.1a9.663,9.663,0,0,0,9.662-9.662V27.557A11.594,11.594,0,0,0,53.454,15.963" transform="translate(466 2562.316)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                </g>
+                                </svg></div>
+                        </div>
+                  </a>
+                </li> 
+                <li>
+                  <a href="/?p=43">
+                      <div class="txt">
+                          <div class="top">
+                              <p class="tit">내과</p>
+                              <div class="keyword"><span>소화기내과, </span><span>간담췌 내과</span></div>
+                          </div>
+                          <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M115.7 352c-33.4 0-52.1-14.3-64.3-35.8C37.8 292.5 32 258.9 32 224c0-39 12.1-89.3 35.6-129c23.5-39.6 54.7-63 92.1-63c39.7 0 77.1 22.4 85.8 52.9c6 21.1-2.7 49.4-25.5 75.1c-28.7 32.4-24.6 71.3-22 95.6c.2 1.6 .3 3.2 .5 4.7c4.9 49.1-33.6 91.6-82.7 91.6zm0 32c68.1 0 121.3-58.9 114.6-126.8l-.3-2.8c-.6-6.1-1.2-12.2-1.6-18.3l18.8 9.4c5.4 2.7 8.8 8.3 8.8 14.3V496c0 8.8 7.2 16 16 16s16-7.2 16-16V259.8c0-18.2-10.3-34.8-26.5-42.9L231.8 202c2.4-7.2 6.2-14.1 12-20.7c26.6-30 42.6-69.3 32.4-105.1C262.2 26.9 207.7 0 159.7 0C53.7 0 0 135.2 0 224c0 74.9 24.3 160 115.7 160zM394.2 86.1c.1-.4 .3-.8 .4-1.2C403.2 54.4 440.6 32 480.3 32c37.4 0 68.5 23.4 92.1 63C595.9 134.7 608 185 608 224c0 34.9-5.8 68.5-19.4 92.2c-12.2 21.4-31 35.8-64.3 35.8c-49.1 0-87.6-42.5-82.7-91.6c.1-1.5 .3-3 .5-4.7l0 0 0 0c2.6-24.3 6.7-63.2-22-95.6c-23.7-26.7-32.4-54.2-25.9-73.9zm-30.4-10c-11.8 35.8 5.8 75.2 32.4 105.1c5.8 6.6 9.6 13.5 12 20.7l-29.7 14.8C362.3 225 352 241.6 352 259.8V496c0 8.8 7.2 16 16 16s16-7.2 16-16V259.8c0-6.1 3.4-11.6 8.8-14.3l18.8-9.4c-.3 6-.9 12.1-1.6 18.3l-.3 2.8C403 325.1 456.2 384 524.3 384C615.7 384 640 298.9 640 224C640 135.2 586.3 0 480.3 0c-48 0-102.5 26.9-116.5 76.2z"></path></svg></div>
+                      </div>
+                  </a>
+              </li>
+
+              <li>
+                <a href="/?p=55">
+                    <div class="txt">
+                        <div class="top">
+                            <p class="tit">소아청소년과</p>
+                            <div class="keyword"><span>소아관련 질환,</span><span>육아상담</span></div>
+                        </div>
+                        <div class="ico"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M224 128a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM224 0a80 80 0 1 1 0 160A80 80 0 1 1 224 0zM46.1 146.8c20.5-23.1 55.9-25.2 79.1-4.7l24.2 21.5C169.9 181.9 196.5 192 224 192s54.1-10.1 74.6-28.4l24.2-21.5c23.1-20.5 58.5-18.5 79.1 4.7s18.5 58.5-4.7 79.1L373 247.3c-16.1 14.3-33.9 26-53 35.1v32.3l49.9 56.1c16.9 19 18.9 47.1 4.7 68.3l-32 48c-17.2 25.7-51.9 32.7-77.7 15.5s-32.7-51.9-15.5-77.7l8-12L238.9 392H209.1l-18.6 20.9 8 12c17.2 25.7 10.2 60.5-15.5 77.7s-60.5 10.2-77.7-15.5l-32-48c-14.1-21.2-12.2-49.2 4.7-68.3L128 314.7V288.1c0 0 0 0 0-.1s0 0 0-.1v-5.5c-19.1-9-37-20.8-53-35.1L50.8 225.9c-23.1-20.5-25.2-55.9-4.7-79.1zM160 304v16.8c0 .2 0 .4 0 .6l38.9 38.9c1-.2 2-.3 3-.3H246c1 0 2 .1 3 .3L288 321.4c0-.2 0-.4 0-.6V304H160zm128-32c0-6.5 3.9-12.3 9.9-14.7c19.6-8.1 37.8-19.5 53.9-33.8l24.2-21.5c9.9-8.8 10.8-24 2-33.9s-24-10.8-33.9-2l-24.2 21.5C293.5 211 259.3 224 224 224s-69.5-13-95.9-36.5l-24.2-21.5c-9.9-8.8-25.1-7.9-33.9 2s-7.9 25.1 2 33.9l24.2 21.5c16.1 14.3 34.4 25.7 53.9 33.8c6 2.5 9.8 8.3 9.9 14.7H288zm18.7 75.9l-34 34 16.8 19c4.8 5.4 5.4 13.4 1.4 19.5L276 442.7c-7.4 11-4.4 25.9 6.7 33.3s25.9 4.4 33.3-6.7l32-48c6.1-9.1 5.2-21.1-2-29.3l-39.2-44.1zm-131.4 34l-34-34-39.2 44.1c-7.2 8.2-8.1 20.2-2 29.3l32 48c7.4 11 22.3 14 33.3 6.7s14-22.3 6.7-33.3l-14.9-22.3c-4-6.1-3.5-14.1 1.4-19.5l16.8-19z"></path></svg></div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/?p=54">
+                    <div class="txt">
+                        <div class="top">
+                            <p class="tit">산부인과</p>
+                            <div class="keyword"><span>자궁관련 질환,</span><span>난소암</span></div>
+                        </div>
+                        <div class="ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81.691 61.976" height="1em">
+                                <g id="icon" transform="translate(30.771 -2498.25)">
+                                    <path id="패스_953" data-name="패스 953" d="M52.37,59s6.4-18.513,4.114-21.073S52.37,31.163,52.37,28.6c0-1.767,6.8-7.981,11.009-11.658a4.321,4.321,0,0,0,.176-6.338A32.2,32.2,0,0,0,41.22,1H41.4a32.2,32.2,0,0,0-22.337,9.608,4.322,4.322,0,0,0,.177,6.338c4.208,3.677,11.009,9.89,11.009,11.658,0,2.559-1.828,6.764-4.114,9.324S30.251,59,30.251,59" transform="translate(-31.145 2499)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                    <path id="패스_954" data-name="패스 954" d="M46.313,59.67s2.377-9.191,2.651-13.3-3.93-4.57-3.93-4.57V24.429L55.911,11.268a211.4,211.4,0,0,0-27.786,0L39,24.429V41.8s-4.2.457-3.93,4.57,2.651,13.3,2.651,13.3" transform="translate(-31.852 2498.33)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                    <path id="패스_955" data-name="패스 955" d="M66.911,10.924S81.136.585,83.513,8.811c0,0,1.371,4.57-4.57,10.877" transform="translate(-34.5 2498.684)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                    <path id="패스_956" data-name="패스 956" d="M76.208,26.826c-2.289.937-4.744.232-5.485-1.575s.516-4.033,2.8-4.97,4.745-.232,5.485,1.575S78.5,25.889,76.208,26.826Z" transform="translate(-34.746 2497.712)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                    <path id="패스_957" data-name="패스 957" d="M17.738,10.924S3.513.585,1.137,8.811c0,0-1.372,4.57,4.57,10.877" transform="translate(-30 2498.684)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                    <path id="패스_958" data-name="패스 958" d="M9.029,26.826c2.289.937,4.744.232,5.485-1.575s-.516-4.033-2.8-4.97-4.745-.232-5.485,1.575S6.74,25.889,9.029,26.826Z" transform="translate(-30.342 2497.712)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+      </div>
+
+      <div class="medical_staff_list">
+        <ul id="staffListView">
+          <!-- JavaScript로 동적으로 추가되는 의료진 리스트 -->
+          <!-- 예시:
+          <li>
+            <div class="doctor-card">
+              <img src="path/to/photo1.jpg" alt="유준상" class="doctor-photo">
+              <p class="doctor-name">유준상</p>
+            </div>
+          </li>
+          -->
+        </ul>
+      </div>
+
+
+    <div id="footer"></div>  <!--푸터-->
+
+  </div>
+</body>
+</html>
