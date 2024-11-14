@@ -32,8 +32,8 @@
     });
 
  
-  // 예약 완료 팝업
-  function showCompletionPopup() {
+    // 예약 완료 팝업
+    function showCompletionPopup() {
       document.getElementById('completionPopup').style.display = 'flex';
     }
 
@@ -41,12 +41,39 @@
       document.getElementById('completionPopup').style.display = 'none';
     }
 
-    // 폼 제출 이벤트 가로채기
+     // 폼 유효성 검사
+     function validateForm(event) {
+      event.preventDefault();
+
+      var date = document.getElementById('datepicker').value;
+      var name = document.getElementById('name').value.trim();
+      var phoneNo = document.getElementById('phoneNo').value.trim();
+      var checkupCd = document.querySelector('input[name="checkupCd"]:checked');
+
+      if (!date) {
+        alert("예약 날짜를 선택해 주세요.");
+        return;
+      }
+      if (!name) {
+        alert("이름을 입력해 주세요.");
+        return;
+      }
+      if (!phoneNo) {
+        alert("휴대폰번호를 입력해 주세요.");
+        return;
+      }
+      if (!checkupCd) {
+        alert("검진 구분을 선택해 주세요.");
+        return;
+      }
+
+      // 모든 유효성 검사를 통과한 경우 예약 완료 팝업을 표시
+      showCompletionPopup();
+    }
+
     $(document).ready(function() {
-      $('#rFrm').on('submit', function(event) {
-        event.preventDefault(); // 폼 제출 방지
-        showCompletionPopup(); // 예약 완료 팝업 띄우기
-      });
+      // 폼 제출 이벤트에 validateForm 함수 연결
+      $('#rFrm').on('submit', validateForm);
     });
   </script>
 
@@ -239,8 +266,8 @@
     </div>
     <div id="completionPopup">
       <div class="popup-content">
-        <h2>예약이 완료되었습니다</h2>
-        <p>건강검진 예약이 정상적으로 처리되었습니다.<br>예약한 정보를 확인해 주세요.</p>
+        <h2>예약 신청완료</h2>
+        <p>건강검진 예약이 정상적으로 완료되었습니다.<br>예약한 정보를 확인해 주세요.</p>
         <button onclick="closeCompletionPopup()">확인</button>
       </div>
     </div>
