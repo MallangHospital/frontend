@@ -55,6 +55,12 @@
     margin-top: 10px;
   }
 
+  .time-button.active {
+    background-color: #A6B1BB; /* 클릭된 버튼 배경색 */
+    color: white; /* 클릭된 버튼 글씨색 */
+    border-color: #A6B1BB; /* 클릭된 버튼 테두리 색상 */
+}
+
 
 
 

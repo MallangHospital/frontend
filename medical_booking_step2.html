@@ -100,6 +100,18 @@
   </style>
 
   <script>
+    
+      $(document).ready(function() {
+      // time-button 클릭 시 색상 변경
+      $('.time-button').click(function() {
+          // 모든 버튼에서 'active' 클래스를 제거
+          $('.time-button').removeClass('active');
+
+          // 클릭된 버튼에 'active' 클래스 추가
+          $(this).addClass('active');
+      });
+  });
+
     $(function() {
       $("#datepicker").datepicker({
         dateFormat: 'yy-mm-dd',
