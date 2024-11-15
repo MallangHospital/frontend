@@ -19,56 +19,8 @@
   <script src="assets/jquery-3.7.1.min.js"></script>
   <script defer src="assets/script.js"></script>
   
-  <script>
-  $(document).ready(function() {
-  // 진료과목별 의료진 데이터
-  const doctorData = {
-    "외과": ["유준상", "신성록", "민우혁"],
-    "내과": ["고훈정", "이창용", "김건우"],
-    "소아청소년과": ["정상훈", "홍길동"],
-    "산부인과": ["박영희", "이민수"]
-  };
-
-  // 진료과목 항목 클릭 시 해당 의료진 리스트 표시
-  $('#listView li').click(function() {
-    const selectedDepartment = $(this).find('.tit').text();
-    const doctorList = doctorData[selectedDepartment] || [];
-    const $staffListView = $('#staffListView');
-
-    // 이전 리스트 초기화 후 새로운 리스트 추가
-    $staffListView.empty();
-    doctorList.forEach(doctor => {
-      $staffListView.append(`<li>${doctor}</li>`);
-    });
-
-    // 의료진 리스트 화면으로 전환 및 네비게이션 활성화
-    $('.medical_department_list').hide();
-    $('.medical_staff_list').show();
-    $('.navItem').removeClass('is-active');
-    $('.navItem').eq(1).addClass('is-active'); // '의료진 선택' 탭 활성화
-  });
-
-  // 네비게이션 클릭 시 진료과목 및 의료진 표시
-  $('.navLink').click(function(e) {
-    e.preventDefault();
-    $('.navItem').removeClass('is-active');
-    $(this).parent().addClass('is-active');
-    const target = $(this).data('target');
-    
-    // '진료 과목' 클릭 시 진료과목 리스트 표시
-    if (target === '진료 과목') {
-      $('.medical_department_list').show();
-      $('.medical_staff_list').hide();
-    } else if (target === '의료진 선택') {
-      $('.medical_department_list').hide();
-      $('.medical_staff_list').show();
-    }
-  });
-
-  // 초기 설정
-  $('.medical_staff_list').hide();
-});
-  </script>
+  <script src="doctorSelection.js"></script>
+  
  
 </head>
 <body>
@@ -79,7 +31,7 @@
       <img src="assets/section_online_booking.png" alt="section">
     </div>
 
-    <div class="content-block" style="margin: 100px 200px 50px 200px;">
+    <div class="content-block" style="margin: 100px 200px 30px 200px;">
       <p class="tit" style="font-weight: lighter; font-size: 24px;">step 1</p>
       <br>
       <p class="tit" style="font-weight: bold; font-size: 13px;">• 진료종류와 진료과목/의료진을 선택해주세요.</p>
@@ -158,7 +110,7 @@
                             <p class="tit">산부인과</p>
                             <div class="keyword"><span>자궁관련 질환,</span><span>난소암</span></div>
                         </div>
-                        <div class="ico">
+                        <div class="  ico">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81.691 61.976" height="1em">
                                 <g id="icon" transform="translate(30.771 -2498.25)">
                                     <path id="패스_953" data-name="패스 953" d="M52.37,59s6.4-18.513,4.114-21.073S52.37,31.163,52.37,28.6c0-1.767,6.8-7.981,11.009-11.658a4.321,4.321,0,0,0,.176-6.338A32.2,32.2,0,0,0,41.22,1H41.4a32.2,32.2,0,0,0-22.337,9.608,4.322,4.322,0,0,0,.177,6.338c4.208,3.677,11.009,9.89,11.009,11.658,0,2.559-1.828,6.764-4.114,9.324S30.251,59,30.251,59" transform="translate(-31.145 2499)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
@@ -178,11 +130,7 @@
 
       <div class="medical_staff_list">
         <ul id="staffListView">
-         
-
-
-
-          <!--구현 필요-->
+            <!--js로-->
         </ul>
       </div>
 
