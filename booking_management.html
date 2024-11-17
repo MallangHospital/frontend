@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약 정보 확인</title>
+
+  <link rel="stylesheet" href="assets/globalstyle.css">
+  <link rel="stylesheet" href="assets/navbar_admin.css"> <!-- 네비게이션 바 css -->
+  <link rel="stylesheet" href="assets/footer.css"> <!-- 푸터 css -->
+  <link rel="stylesheet" href="booking_management.css">
+
+  <!-- 폰트 연결 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- 제이쿼리 연결 -->
+  <script src="assets/jquery-3.7.1.min.js"></script>
+  <script defer src="assets/script_admin.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+
+    <!-- 예약 정보 확인 섹션 -->
+    <div class="booking-info">
+      <h2>예약 정보 확인</h2>
+      <table>
+        <thead>
+            <tr>
+              <th>환자 이름</th>
+              <th>예약 일시</th>
+              <th>담당 의사</th>
+              <th>상태</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>이환자</td>
+              <td>2024-09-10 14:00</td>
+              <td>전선영</td>
+              <td class="status waiting">예약</td>
+              <td><a href="booking_detail.html">상세보기</a></td>
+            </tr>
+            <tr>
+              <td>김환자</td>
+              <td>2024-09-09 10:00</td>
+              <td>권정균</td>
+              <td class="status waiting">예약</td>
+              <td><a href="booking_detail.html">상세보기</a></td>
+            </tr>
+            <tr>
+              <td>임환자</td>
+              <td>2024-09-09 10:00</td>
+              <td>배정현</td>
+              <td class="status cancelled">취소</td>
+              <td><a href="booking_detail.html">상세보기</a></td>
+            </tr>
+          </tbody>
+          
+      </table>
+    </div>
+    <!-- 예약 정보 확인 섹션 끝 -->
+
+    <div id="footer"></div> <!-- 푸터 -->
+  </div>
+</body>
+</html>

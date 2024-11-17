@@ -1,0 +1,52 @@
+h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+td a {
+  text-decoration: none;
+  color: #808080;
+  font-weight: bold;
+  text-decoration: underline !important;
+}
+
+td a:hover {
+  text-decoration: underline;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.waiting {
+    color: green;
+}
+
+.status.cancelled {
+  color: red;
+}
+
+.booking-info {
+    margin: 100px auto;
+    width: 80%;
+  }

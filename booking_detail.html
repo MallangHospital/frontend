@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약 상세 정보</title>
+
+  <link rel="stylesheet" href="assets/globalstyle.css">
+  <link rel="stylesheet" href="assets/navbar_admin.css">
+  <link rel="stylesheet" href="assets/footer.css">
+  <link rel="stylesheet" href="booking_detail.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <!--제이쿼리 연결-->
+  <script src="assets/jquery-3.7.1.min.js"></script>
+  <script defer src="assets/script_admin.js"></script>
+
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+
+    <section class="booking-detail">
+      <h2>이소희 <span>환자</span></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>정보</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>진료종류</td>
+            <td>초진</td>
+          </tr>
+          <tr>
+            <td>진료과목</td>
+            <td>소아청소년과</td>
+          </tr>
+          <tr>
+            <td>의료진</td>
+            <td>이소희</td>
+          </tr>
+          <tr>
+            <td>전화번호</td>
+            <td>010-0000-0000</td>
+          </tr>
+          <tr>
+            <td>증상</td>
+            <td>
+              아이가 며칠 전부터 열이 나고, 목이 아프다고 합니다.
+              식욕이 떨어지고 잠을 잘 못 자며, 기침과 콧물도 조금씩
+              나고 있어요. 목이 부은 것 같다고 이야기합니다.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="booking_management.html" class="btn-back">이전</a>
+    </section>
+
+    <div id="footer"></div> <!-- 푸터 -->
+  </div>
+</body>
+</html>
