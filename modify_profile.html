@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>개인정보 수정</title>
+  <link rel="stylesheet" href="modify_profile.css">
+  <link rel="stylesheet" href="assets/globalstyle.css">    
+  <link rel="stylesheet" href="assets/navbar.css">   <!--네비게이션 바 css-->
+  <link rel="stylesheet" href="assets/footer.css">   <!--푸터 css-->>   
+  <link rel="stylesheet" href="common.css">  
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> 
+  
+    <script src="assets/jquery-3.7.1.min.js"></script>
+    <script defer src="assets/script.js"></script>
+
+
+    
+</head>
+<body>
+  <div class="wrap">
+
+    <div id="navbar"></div>
+<div class="section">
+        <img src="assets/section_modify.png" alt="secction">
+
+    <div class="header">
+      <span>개인정보수정</span>
+      <button class="close-btn">&times;</button>
+    </div>
+    <form class="form">
+      <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="입력해주세요...">
+      </div>
+      <div class="form-group">
+        <label for="phone">전화번호</label>
+        <input type="text" id="phone" placeholder="010-">
+      </div>
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input type="email" id="email" placeholder="입력해주세요...">
+      </div>
+      <div class="form-group">
+        <label for="id">ID</label>
+        <input type="text" id="id" placeholder="MALRANG">
+      </div>
+      <div class="form-group">
+        <label for="ssn">주민번호</label>
+        <input type="text" id="ssn" placeholder="030101-4******">
+      </div>
+      <div class="buttons">
+        <button type="button" class="cancel-btn">취소</button>
+        <button type="submit" class="save-btn">저장</button>
+      </div>
+    </form>
+
+    <div id="footer"></div>  
+  </div>
+  <script src="modify_profile.js"></script>
+</body>
+</html>

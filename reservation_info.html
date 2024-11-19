@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약 정보 확인</title>
+  <link rel="stylesheet" href="assets/globalstyle.css">    
+  <link rel="stylesheet" href="assets/navbar.css">   <!--네비게이션 바 css-->
+  <link rel="stylesheet" href="assets/footer.css">   <!--푸터 css-->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="common.css">  
+  <link rel="stylesheet" href="reservation_info.css">  
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> 
+
+  <script src="assets/jquery-3.7.1.min.js"></script>
+  <script defer src="assets/script.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div> 
+
+    <div class="section">
+        <img src="assets/section_revervation_info.png" alt="secction">
+    </div>
+
+
+    <div class="header">
+        <h1 class="title-bar">예약 정보 확인</h1>
+    </div>
+  
+    <table class="reservation-table">
+        <thead>
+          <tr>
+            <th>환자 이름</th>
+            <th>예약 일시</th>
+            <th>담당 의사</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>이환자</td>
+            <td>2024-09-10 14:00</td>
+            <td>전선영</td>
+          </tr>
+          <tr>
+            <td>김환자</td>
+            <td>2024-09-09 10:00</td>
+            <td>권정균</td>
+          </tr>
+          <tr>
+            <td>임환자</td>
+            <td>2024-09-09 10:00</td>
+            <td>배정현</td>
+          </tr>
+        </tbody>
+    </table>
+
+
+    <div class="header">
+        <h2 class="title-bar">예약 정보 수정</h2>
+    </div>
+    <div class="footer">
+        <p>예약 정보 수정은 전화 문의 부탁드립니다. :)</p>
+    </div>
+    
+    <div id="footer"></div>
+  </div>
+</body>
+</html>
