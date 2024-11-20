@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>건의사항 상세 페이지</title>
+
+    <link rel="stylesheet" href="assets/globalstyle.css" />
+    <link rel="stylesheet" href="assets/navbar_admin.css" />
+    <link rel="stylesheet" href="style_service_admin.css" />
+    <link rel="stylesheet" href="assets/footer.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="assets/jquery-3.7.1.min.js"></script>
+    <script defer src="assets/script_admin.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <div class="suggestion-detail-container">
+        <h1 class="suggestion-detail-header" id="suggestion-title"></h1>
+        <p class="suggestion-content" id="suggestion-content"></p>
+
+        <div class="suggestion-info">
+          <p><strong>작성자:</strong> <span id="suggestion-name"></span></p>
+          <p><strong>전화번호:</strong> <span id="suggestion-phone"></span></p>
+          <p><strong>이메일:</strong> <span id="suggestion-email"></span></p>
+          <p><strong>작성일:</strong> <span id="suggestion-date"></span></p>
+        </div>
+
+        <button class="detail-action-btn" onclick="goBack()">뒤로가기</button>
+      </div>
+
+      <script>
+        async function fetchSuggestionDetails() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const id = urlParams.get('id');
+
+          const response = await fetch(`/api/suggestions/${id}`);
+          const suggestion = await response.json();
+
+          document.getElementById('suggestion-title').textContent =
+            suggestion.title;
+          document.getElementById('suggestion-content').textContent =
+            suggestion.content;
+          document.getElementById('suggestion-name').textContent =
+            suggestion.name;
+          document.getElementById('suggestion-phone').textContent =
+            suggestion.phone;
+          document.getElementById('suggestion-email').textContent =
+            suggestion.email;
+          document.getElementById('suggestion-date').textContent = new Date(
+            suggestion.created_at
+          ).toLocaleString();
+        }
+
+        function goBack() {
+          window.history.back();
+        }
+
+        fetchSuggestionDetails();
+      </script>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>
