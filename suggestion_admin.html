@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>건의사항 관리자 페이지</title>
+
+    <link rel="stylesheet" href="assets/globalstyle.css" />
+    <link rel="stylesheet" href="assets/navbar_admin.css" />
+    <link rel="stylesheet" href="style_admin_service.css" />
+    <link rel="stylesheet" href="assets/footer.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="assets/jquery-3.7.1.min.js"></script>
+    <script defer src="assets/script_admin.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <div class="admin-panel-container">
+        <h1 class="admin-panel-header">고객의 소리</h1>
+        <table class="admin-table" id="suggestions-table">
+          <thead>
+            <tr>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>전화번호</th>
+              <th>작성일시</th>
+              <th>상세보기</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <script>
+        async function fetchSuggestions() {
+          const response = await fetch('/api/suggestions');
+          const suggestions = await response.json();
+
+          const tableBody = document.querySelector('#suggestions-table tbody');
+          suggestions.forEach((suggestion) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>${suggestion.title}</td>
+                    <td>${suggestion.name}</td>
+                    <td>${suggestion.phone}</td>
+                    <td>${new Date(suggestion.created_at).toLocaleString()}</td>
+                    <td><button class="admin-action-btn" onclick="viewDetails(${
+                      suggestion.id
+                    })">보기</button></td>
+                `;
+            tableBody.appendChild(row);
+          });
+        }
+
+        function viewDetails(id) {
+          window.location.href = `/suggestion-details.html?id=${id}`;
+        }
+
+        fetchSuggestions();
+      </script>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>

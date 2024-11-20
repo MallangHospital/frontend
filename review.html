@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>리뷰 확인 페이지</title>
+
+    <link rel="stylesheet" href="assets/globalstyle.css" />
+    <link rel="stylesheet" href="assets/navbar.css" />
+    <link rel="stylesheet" href="style_service.css" />
+    <link rel="stylesheet" href="assets/footer.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="jquery-3.7.1.min.js"></script>
+    <script defer src="assets/script.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <img src="assets/section_review.png" alt="" width="100%" />
+      <div class="review-container">
+        <div class="review-summary">
+          <h2>리뷰</h2>
+          <p>
+            평균 평점: <span id="average-rating">0</span> (총
+            <span id="total-reviews">0</span>개 리뷰)
+          </p>
+        </div>
+        <div class="review-list" id="review-list">
+          <!-- 리뷰 목록이 여기에 추가됩니다. -->
+        </div>
+        <a href="write_review.html" class="write-review-btn">리뷰 작성하기</a>
+      </div>
+      <script>
+        async function loadReviews() {
+          const response = await fetch('reviews.php');
+          const reviews = await response.json();
+          const reviewList = document.getElementById('review-list');
+          reviewList.innerHTML = reviews
+            .map(
+              (review) => `
+                <div class="review-item">
+                    <div class="review-header">
+                        <h3>${review.reviewer_name}</h3>
+                        <p>평점: ${review.rating}</p>
+                    </div>
+                    <p>${review.review_text}</p>
+                    <div class="review-footer">
+                        <p>진료과: ${review.department}, 의사: ${review.doctor}</p>
+                        <small>${review.created_at}</small>
+                    </div>
+                </div>
+            `
+            )
+            .join('');
+        }
+
+        loadReviews();
+      </script>
+
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>
