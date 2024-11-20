@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 공지사항 작성페이지</title>
+
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar_admin.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
+    <link rel="stylesheet" href="style_service.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script_admin.js"></script>
+    <script defer src="magazine.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+
+      <section class="notice-form">
+        <h2>건강매거진</h2>
+        <form id="noticeForm">
+          <div class="form-group">
+            <label for="title">제목</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="제목을 입력해 주세요."
+            />
+          </div>
+          <div class="form-group">
+            <label for="newsWriter">작성자</label>
+            <input
+              type="text"
+              id="newsWriter"
+              name="newsWriter"
+              placeholder="작성자를 입력해 주세요."
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="비밀번호를 입력해 주세요."
+            />
+          </div>
+          <div class="form-group">
+            <label for="main-file">대표 이미지</label>
+            <input type="file" id="main-file" name="main-file" />
+          </div>
+          <div class="form-group">
+            <label for="attachment">첨부파일</label>
+            <input type="file" id="attachment" name="attachment" />
+          </div>
+          <div class="form-group">
+            <label for="content">본문</label>
+            <textarea
+              id="content"
+              name="content"
+              rows="10"
+              placeholder="본문 내용을 입력해 주세요."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="submit-btn">완료하기</button>
+          </div>
+        </form>
+      </section>
+
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <p id="modal-message"></p>
+          <button id="close-modal" class="close-btn">확인</button>
+        </div>
+      </div>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>

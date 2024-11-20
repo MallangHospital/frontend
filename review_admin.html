@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>리뷰 작성 페이지</title>
+
+    <link rel="stylesheet" href="assets/globalstyle.css" />
+    <link rel="stylesheet" href="assets/navbar.css" />
+    <link rel="stylesheet" href="style_service.css" />
+    <link rel="stylesheet" href="assets/footer.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="jquery-3.7.1.min.js"></script>
+    <script defer src="assets/script.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <div class="review-container">
+        <div class="review-header">
+          <h2>리뷰</h2>
+          <div class="review-summary">
+            <div>
+              <span>고객 평점 평균</span>
+              <div class="review-rating-average">-</div>
+            </div>
+            <div>
+              <span>전체 리뷰 수</span>
+              <div class="review-total-count">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-filter-section">
+          <label for="review-filter">진료과 선택:</label>
+          <select id="review-filter">
+            <option value="">전체 보기</option>
+            <option value="내과">내과</option>
+            <option value="외과">외과</option>
+            <option value="소아과">소아과</option>
+            <option value="산부인과">산부인과</option>
+          </select>
+        </div>
+
+        <div class="review-list" id="review-list">
+          <!-- 리뷰 카드가 동적으로 추가됩니다 -->
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div class="review-pagination" id="pagination">
+          <!-- 동적으로 페이지 버튼 추가 -->
+        </div>
+
+        <button class="review-write-button">리뷰 작성하러 가기</button>
+      </div>
+
+      <script>
+        const apiUrl = 'https://your-api-endpoint/reviews'; // API 엔드포인트
+
+        async function fetchReviews(filter = '', page = 1) {
+          try {
+            const response = await fetch(
+              `${apiUrl}?department=${filter}&page=${page}`
+            );
+            const data = await response.json();
+
+            // 데이터 파싱
+            const { reviews, averageRating, totalReviews, totalPages } = data;
+
+            // 헤더 정보 업데이트
+            document.querySelector(
+              '.review-rating-average'
+            ).textContent = `${averageRating} / 10`;
+            document.querySelector('.review-total-count').textContent =
+              totalReviews;
+
+            // 리뷰 리스트 업데이트
+            renderReviews(reviews);
+
+            // 페이지네이션 업데이트
+            renderPagination(totalPages, page);
+          } catch (error) {
+            console.error(
+              '리뷰 데이터를 가져오는 중 오류가 발생했습니다:',
+              error
+            );
+          }
+        }
+
+        function renderReviews(reviews) {
+          const reviewList = document.getElementById('review-list');
+          reviewList.innerHTML = ''; // 기존 리뷰 초기화
+
+          reviews.forEach((review) => {
+            const reviewCard = document.createElement('div');
+            reviewCard.className = 'review-card';
+
+            reviewCard.innerHTML = `
+                    <div class="review-meta">
+                        <span>작성자: ${review.writer}</span>
+                        <span>진료과: ${review.department}</span>
+                        <span>의사: ${review.doctor}</span>
+                    </div>
+                    <div class="review-content">
+                        <p>${review.content}</p>
+                    </div>
+                    <div class="review-rating">
+                        <span>평점:</span>
+                        <span>${'★'.repeat(review.rating)}${'☆'.repeat(
+              5 - review.rating
+            )}</span>
+                    </div>
+                    <div class="review-actions">
+                        <button class="review-delete-button" data-id="${
+                          review.id
+                        }">삭제</button>
+                    </div>
+                `;
+
+            reviewList.appendChild(reviewCard);
+          });
+
+          // 삭제 버튼 이벤트 리스너 추가
+          document
+            .querySelectorAll('.review-delete-button')
+            .forEach((button) => {
+              button.addEventListener('click', () =>
+                deleteReview(button.dataset.id)
+              );
+            });
+        }
+
+        function renderPagination(totalPages, currentPage) {
+          const pagination = document.getElementById('pagination');
+          pagination.innerHTML = ''; // 기존 페이지 버튼 초기화
+
+          for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.className = 'review-page-button';
+            pageButton.textContent = i;
+            pageButton.disabled = i === currentPage;
+
+            pageButton.addEventListener('click', () =>
+              fetchReviews(document.getElementById('review-filter').value, i)
+            );
+            pagination.appendChild(pageButton);
+          }
+        }
+
+        async function deleteReview(id) {
+          try {
+            const response = await fetch(`${apiUrl}/${id}`, {
+              method: 'DELETE',
+            });
+
+            if (response.ok) {
+              alert('리뷰가 삭제되었습니다.');
+              fetchReviews(); // 새로고침
+            } else {
+              alert('리뷰 삭제 중 오류가 발생했습니다.');
+            }
+          } catch (error) {
+            console.error('리뷰 삭제 중 오류가 발생했습니다:', error);
+          }
+        }
+
+        // 필터 변경 이벤트
+        document
+          .getElementById('review-filter')
+          .addEventListener('change', (event) => {
+            fetchReviews(event.target.value);
+          });
+
+        // 페이지 로드 시 초기 데이터 가져오기
+        fetchReviews();
+      </script>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>
