@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원 가입</title>
   <link rel="stylesheet" href="common_assets/globalstyle.css">
-  <link rel="stylesheet" href="common_assets/navbar.css">   <!--네비게이션 바 css-->
-  <link rel="stylesheet" href="common_assets/footer.css">   <!--푸터 css-->
+  <link rel="stylesheet" href="common_assets/navbar.css"> <!-- 네비게이션 바 CSS -->
+  <link rel="stylesheet" href="common_assets/footer.css"> <!-- 푸터 CSS -->
   <link rel="stylesheet" href="join.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,42 +19,40 @@
 <body>
   <div class="wrap">
 
-    <div id="navbar"></div>  <!--네비게이션 바-->
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
 
     <div class="section">
       <img src="assets/section_join.png" alt="section_img">
     </div>
 
     <div class="content">
-      <form id="join_form" method="post" action="/user2/join/end" class="form">
+      <form id="join_form" class="form">
         <h2>회원정보 입력</h2>
         <br><p class="border"></p><br>
-        
 
         <div class="form_list">
-        
-           <!-- 이름 입력 -->
+          <!-- 이름 입력 -->
           <div class="form_item">
             <div class="box_2"></div>
-            <label for="id">이름</label>
-            <input type="text" id="id" name="id" placeholder="이름" maxlength="15" required>
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" placeholder="이름" maxlength="15" required>
           </div> 
 
           <!-- 아이디 입력 -->
           <div class="form_item">
             <p class="box_3"></p>
-            <label for="id">아이디</label>
-            <input type="text" id="id" name="id" placeholder="아이디 (6-12자 이내, 영문, 숫자 사용 가능)" maxlength="20" required>
+            <label for="userId">아이디</label>
+            <input type="text" id="userId" name="userId" placeholder="아이디 (6-12자 이내, 영문, 숫자 사용 가능)" maxlength="20" required>
             <input class="btn_id" type="button" value="중복 체크" onclick="return idCheck()" />
           </div>
           
           <!-- 비밀번호 입력 -->
           <div class="form_item">
             <div class="box_4"></div>
-            <label for="pswd1">비밀번호</label>
+            <label for="pswd1">비밀번호(8자 이상)</label>
             <input type="password" id="pswd1" name="pswd1" placeholder="비밀번호 (8자 이상, 문자/숫자/기호 사용 가능)" maxlength="20" required>
           </div>
-          <!--비밀번호 재확인--> 
+          <!-- 비밀번호 재확인 -->
           <div class="form_item">
             <div class="box_43"></div>
             <label for="pswd2">비밀번호 재확인</label>
@@ -71,33 +69,114 @@
           <!-- 주민등록번호 입력 -->
           <div class="form_item">
             <div class="box_6"></div>
-            <label for="ssn">주민등록번호</label>
-            <input type="text" id="ssn" name="ssn" placeholder="123456-1234567 ( '-' 포함 )" maxlength="13" required>
+            <label for="rrn">주민등록번호</label>
+            <input type="text" id="rrn" name="rrn" placeholder="123456-1234567 ( '-' 포함 )" maxlength="13" required>
           </div>
 
           <!-- 휴대전화 번호 입력 -->
           <div class="form_item">
             <div class="box_6"></div>
-            <label for="phoneNo">휴대전화번호</label>
-            <input type="tel" id="phoneNo" name="phoneNo" placeholder="010-0000-0000 ( '-' 포함 )" maxlength="25" required>
+            <label for="phoneNum">휴대전화번호</label>
+            <input type="tel" id="phoneNum" name="phoneNum" placeholder="010-0000-0000 ( '-' 포함 )" maxlength="25" required>
           </div>
 
           <!-- 이메일 주소 입력 -->
           <div class="form_item">
             <div class="box_5"></div>
             <label for="email">이메일주소</label>
-            <input type="email" id="email" name="email" placeholder="example@example.com" maxlength="13" required>
+            <input type="email" id="email" name="email" placeholder="example@example.com" maxlength="50" required>
           </div>
         </div>
 
         <!-- 회원 가입 버튼 -->
         <div class="btn_submit_wrap">
-          <button type="submit" class="btn_submit" onclick="location.href='join_complete.html'"> 가입하기</button>
+          <button type="button" class="btn_submit" onclick="submitForm()">가입하기</button>
         </div>
       </form>
     </div>
 
-    <div id="footer"></div>  <!--푸터-->
+    <div id="footer"></div> <!-- 푸터 -->
   </div>
+
+  <script>
+        // 아이디 중복 확인
+      function idCheck() {
+        const userId = document.getElementById('userId').value;
+
+        if (!userId) {
+          alert("아이디를 입력하세요.");
+          return false;
+        }
+
+        $.ajax({
+          url: `/api/member/check-id/${userId}`,
+          method: 'GET',
+          success: function(response) {
+            alert(response); // 서버에서 온 메시지 표시
+          },
+          error: function(xhr) {
+            alert(xhr.responseText); // 에러 메시지 표시
+          }
+        });
+
+        return false;
+      }
+
+      // 비밀번호 검증
+      function validatePasswords() {
+        const password = document.getElementById('pswd1').value;
+        const confirmPassword = document.getElementById('pswd2').value;
+
+       // 비밀번호 규칙 검증 (최소 8자 이상)
+        const passwordRegex = /^.{8,}$/; // 최소 8자 이상만 검증
+        if (!passwordRegex.test(password)) {
+          alert("비밀번호는 최소 8자 이상이어야 합니다.");
+          return false;
+        }
+
+
+        // 비밀번호와 확인 비밀번호가 일치하는지 확인
+        if (password !== confirmPassword) {
+          alert("비밀번호가 일치하지 않습니다.");
+          return false;
+        }
+
+        return true;
+      }
+
+      // 폼 데이터 검증 및 서버 전송
+      function submitForm() {
+        // 비밀번호 검증
+        if (!validatePasswords()) {
+          return; // 검증 실패 시 폼 제출 중단
+        }
+
+        // 폼 데이터 수집
+        const formData = {
+          mid: document.getElementById('userId').value,
+          mpw: document.getElementById('pswd1').value,
+          email: document.getElementById('email').value,
+          name: document.getElementById('name').value,
+          phoneNum: document.getElementById('phoneNum').value,
+          rrn: document.getElementById('rrn').value
+        };
+
+        // Ajax를 통해 서버로 데이터 전송
+        $.ajax({
+          url: '/api/member/join',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
+          success: function(response) {
+            alert(response); // 성공 메시지 표시
+            window.location.href = 'join_complete.html'; // 가입 완료 페이지로 이동
+          },
+          error: function(xhr) {
+            alert(xhr.responseText); // 에러 메시지 표시
+          }
+        });
+      }
+
+  </script>
 </body>
 </html>
