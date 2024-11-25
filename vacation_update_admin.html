@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>휴진 정보 수정</title>
+
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar_admin.css">   <!--네비게이션 바 css-->
+  <link rel="stylesheet" href="common_assets/footer.css">   <!--푸터 css-->
+
+  <!-- 폰트 연결-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> 
+
+  <!--제이쿼리 연결-->
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script_admin.js"></script>
+  <style>
+    /* 팝업 스타일 */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #DFD9D9;
+      padding: 70px 120px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup-content p {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .popup-content button {
+      padding: 10px 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .popup-content button:hover {
+      background: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+
+    <!-- 휴진 정보 수정 -->
+    <section style="margin: 60px auto; max-width: 600px;">
+      <h2 style="font-weight: bold; font-size: 18px; margin-bottom: 30px;">휴진 정보 수정</h2>
+      <form id="vacation-update-form">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="vacation-start" style="font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block;">휴진 시작일:</label>
+          <input type="date" id="vacation-start" name="vacation_start" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="vacation-end" style="font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block;">휴진 종료일:</label>
+          <input type="date" id="vacation-end" name="vacation_end" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+        </div>
+        <button type="submit" class="btn-submit" style="background-color: #A6B1BB; color: white; margin-bottom: 80px; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">수정하기</button>
+      </form>
+    </section>
+
+    <!-- 팝업창 -->
+    <div id="popup-overlay" class="popup-overlay">
+      <div class="popup-content">
+        <p>수정되었습니다.</p>
+        <button id="close-popup">확인</button>
+      </div>
+    </div>
+
+    <div id="footer"></div> <!-- 푸터 -->
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("vacation-update-form");
+      const popupOverlay = document.getElementById("popup-overlay");
+      const closePopupButton = document.getElementById("close-popup");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault(); // 기본 제출 방지
+
+        const vacationStart = document.getElementById("vacation-start").value;
+        const vacationEnd = document.getElementById("vacation-end").value;
+
+        if (!vacationStart) {
+          alert("휴진 시작일을 입력해주세요.");
+          return;
+        }
+
+        if (!vacationEnd) {
+          alert("휴진 종료일을 입력해주세요.");
+          return;
+        }
+
+        if (new Date(vacationStart) > new Date(vacationEnd)) {
+          alert("휴진 시작일은 종료일보다 이전이어야 합니다.");
+          return;
+        }
+
+        popupOverlay.style.display = "flex"; // 팝업 열기
+      });
+
+      closePopupButton.addEventListener("click", () => {
+        popupOverlay.style.display = "none"; // 팝업 닫기
+      });
+    });
+  </script>
+</body>
+</html>
