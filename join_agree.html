@@ -109,14 +109,18 @@
 
     // "다음" 버튼 클릭 시 모든 체크박스 확인
     function validateAgreement() {
-      const allChecked = Array.from(document.querySelectorAll('.terms_checkbox')).every(cb => cb.checked);
-      if (!allChecked) {
-        alert("모든 필수 항목에 동의하셔야 합니다.");
-        return;
-      }
-      // 모든 체크박스가 동의된 경우 다음 페이지로 이동
-      location.href = 'join.html';
-    }
+  const allChecked = Array.from(document.querySelectorAll('.terms_checkbox')).every(cb => cb.checked);
+  if (!allChecked) {
+    alert("모든 필수 항목에 동의하셔야 합니다.");
+    return;
+  }
+
+  // 약관 동의 상태를 localStorage에 저장
+  localStorage.setItem('agreeToTerms', true);
+
+  // 다음 페이지로 이동
+  location.href = 'join.html';
+}
   </script>
 </body>
 </html>

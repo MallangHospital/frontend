@@ -14,7 +14,52 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
   <script src="common_assets/jquery-3.7.1.min.js"></script>
-  <script defer src="common_assets/script.js"></script>
+  <script src="common_assets/script"></script>
+  <script arc="join.js"></script>
+
+  <style>
+    /* 팝업창 스타일 */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup-content p {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .popup-content button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .popup-content button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -59,18 +104,11 @@
             <input type="password" id="pswd2" name="pswd2" placeholder="비밀번호를 다시 한 번 입력해주세요." maxlength="20" required>
           </div>
 
-          <!-- 생년월일 입력 -->
-          <div class="form_item">
-            <div class="box_4"></div>
-            <label for="birthday">생년월일</label>
-            <input type="text" id="birthday" name="birthday" placeholder="YYYYMMDD" maxlength="8" required>
-          </div> 
-
           <!-- 주민등록번호 입력 -->
           <div class="form_item">
             <div class="box_6"></div>
             <label for="rrn">주민등록번호</label>
-            <input type="text" id="rrn" name="rrn" placeholder="123456-1234567 ( '-' 포함 )" maxlength="13" required>
+            <input type="text" id="rrn" name="rrn" placeholder="123456-1234567 ( '-' 포함 )" maxlength="14" required>
           </div>
 
           <!-- 휴대전화 번호 입력 -->
@@ -93,90 +131,32 @@
           <button type="button" class="btn_submit" onclick="submitForm()">가입하기</button>
         </div>
       </form>
+      <button onclick="showPopup()">팝업 테스트</button>
     </div>
 
     <div id="footer"></div> <!-- 푸터 -->
+
+    <!-- 팝업창 -->
+    <div id="popup-overlay" class="popup-overlay">
+      <div class="popup-content">
+        <p>회원가입이 완료되었습니다!</p>
+        <button onclick="redirectToHome()">홈으로</button>
+      </div>
+    </div>
   </div>
 
   <script>
-        // 아이디 중복 확인
-      function idCheck() {
-        const userId = document.getElementById('userId').value;
-
-        if (!userId) {
-          alert("아이디를 입력하세요.");
-          return false;
-        }
-
-        $.ajax({
-          url: `/api/member/check-id/${userId}`,
-          method: 'GET',
-          success: function(response) {
-            alert(response); // 서버에서 온 메시지 표시
-          },
-          error: function(xhr) {
-            alert(xhr.responseText); // 에러 메시지 표시
-          }
-        });
-
-        return false;
-      }
-
-      // 비밀번호 검증
-      function validatePasswords() {
-        const password = document.getElementById('pswd1').value;
-        const confirmPassword = document.getElementById('pswd2').value;
-
-       // 비밀번호 규칙 검증 (최소 8자 이상)
-        const passwordRegex = /^.{8,}$/; // 최소 8자 이상만 검증
-        if (!passwordRegex.test(password)) {
-          alert("비밀번호는 최소 8자 이상이어야 합니다.");
-          return false;
-        }
-
-
-        // 비밀번호와 확인 비밀번호가 일치하는지 확인
-        if (password !== confirmPassword) {
-          alert("비밀번호가 일치하지 않습니다.");
-          return false;
-        }
-
-        return true;
-      }
-
-      // 폼 데이터 검증 및 서버 전송
-      function submitForm() {
-        // 비밀번호 검증
-        if (!validatePasswords()) {
-          return; // 검증 실패 시 폼 제출 중단
-        }
-
-        // 폼 데이터 수집
-        const formData = {
-          mid: document.getElementById('userId').value,
-          mpw: document.getElementById('pswd1').value,
-          email: document.getElementById('email').value,
-          name: document.getElementById('name').value,
-          phoneNum: document.getElementById('phoneNum').value,
-          rrn: document.getElementById('rrn').value
-        };
-
-        // Ajax를 통해 서버로 데이터 전송
-        $.ajax({
-          url: '/api/member/join',
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify(formData),
-          success: function(response) {
-            alert(response); // 성공 메시지 표시
-            window.location.href = 'join_complete.html'; // 가입 완료 페이지로 이동
-          },
-          error: function(xhr) {
-            alert(xhr.responseText); // 에러 메시지 표시
-          }
-        });
-      }
-
+    // 팝업 표시 함수
+    function showPopup() {
+      const popupOverlay = document.getElementById('popup-overlay');
+      popupOverlay.style.display = 'flex';
+    }
+ 
+    // 홈으로 리다이렉션 함수
+    function redirectToHome() {
+      window.location.href = 'home.html';
+    }
   </script>
+  
 </body>
 </html>
