@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 페이지</title>
+
+  
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar.css">   <!--네비게이션 바 css-->
+  <link rel="stylesheet" href="common_assets/footer.css">   <!--푸터 css-->
+  <link rel="stylesheet" href="login.css">
+
+  <!-- 폰트 연결-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> 
+
+  
+ 
+  <!--제이쿼리 연결-->
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script.js"></script>
+  
+ 
+</head>
+<body>
+  <div class="wrap">
+
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+    
+    <div class="section">
+        <img src="assets/section_login.png" alt="secction">
+    </div>
+
+    <div class="in2">
+      <div class="login_container">
+          <div class="login_wrap">
+              <p class="title">로그인</p>
+              <form id="loginFrm" name="loginFrm" method="POST" action="/login">
+                  <div class="form_wrap">
+                      <div class="login_inp">
+                          <div class="ico">
+                              <!-- 사용자 아이콘 -->
+                              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"></path></svg>
+                          </div>
+                          <input type="text" id="username" name="username" placeholder="아이디를 입력해주세요." required>
+                      </div>
+
+                      <div class="login_inp">
+                          <div class="ico">
+                              <!-- 비밀번호 아이콘 -->
+                              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M224 48c44.2 0 80 35.8 80 80v64H144V128c0-44.2 35.8-80 80-80zM96 128v64H64c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64H352V128C352 57.3 294.7 0 224 0S96 57.3 96 128zM64 240H384c8.8 0 16 7.2 16 16V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V256c0-8.8 7.2-16 16-16zm184 80c0-13.3-10.7-24-24-24s-24 10.7-24 24v64c0 13.3 10.7 24 24 24s24-10.7 24-24V320z"></path></svg>
+                          </div>
+                          <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." required>
+                      </div>
+                  </div>
+
+                  <div class="btn_wrap">
+                      <button type="submit" class="login_btn">로그인</button>
+                  </div>
+
+                  <a href="join_agree.html" class="signup-link">회원가입</a>
+              </form>
+          </div>
+      </div>
+    </div>
+
+    <div id="footer"></div> <!-- 푸터 -->
+
+  </div>
+</body>
+</html>
