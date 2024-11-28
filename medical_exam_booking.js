@@ -86,8 +86,6 @@ $(function () {
     // JWT 토큰 가져오기
     const jwtToken = localStorage.getItem("jwtToken");
 
-    console.log("전송 데이터:", requestData); // 디버깅용
-    console.log("JWT 토큰:", jwtToken);
 
     // 서버로 요청 보내기
     fetch("https://mallang-a85bb2ff492b.herokuapp.com/healthcareReserve", {
@@ -99,7 +97,6 @@ $(function () {
       body: JSON.stringify(requestData),
     })
       .then((response) => {
-        console.log("응답 상태 코드:", response.status); // 디버깅용
         if (!response.ok) {
           return response.text().then((text) => {
             throw new Error(text || "예약 처리 중 문제가 발생했습니다.");
@@ -108,11 +105,9 @@ $(function () {
         return response.json(); // JSON 응답을 파싱
       })
       .then((data) => {
-        console.log("예약 성공:", data); // 디버깅용
         showCompletionPopup(); // 예약 성공 후 팝업 표시
       })
       .catch((error) => {
-        console.error("에러 발생:", error);
         alert(`에러: ${error.message}`); // 에러 메시지 표시
       });
   }
