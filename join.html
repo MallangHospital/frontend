@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 가입</title>
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar.css"> <!-- 네비게이션 바 CSS -->
+  <link rel="stylesheet" href="common_assets/footer.css"> <!-- 푸터 CSS -->
+  <link rel="stylesheet" href="join.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script src="common_assets/script.js"></script>
+  <script src="join.js"></script>
+
+</head>
+<body>
+  <div class="wrap">
+
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+
+    <div class="section">
+      <img src="assets/section_join.png" alt="section_img">
+    </div>
+
+    <div class="content">
+      <form id="join_form" class="form">
+        <h2>회원정보 입력</h2>
+        <br><p class="border"></p><br>
+
+        <div class="form_list">
+          <!-- 이름 입력 -->
+          <div class="form_item">
+            <div class="box_2"></div>
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" placeholder="이름" maxlength="15" required>
+          </div> 
+
+          <!-- 아이디 입력 -->
+          <div class="form_item">
+            <p class="box_3"></p>
+            <label for="userId">아이디</label>
+            <input type="text" id="userId" name="userId" placeholder="아이디 (6-12자 이내, 영문, 숫자 사용 가능)" maxlength="20" required>
+            <input class="btn_id" type="button" value="중복 체크" onclick="return idCheck()" />
+          </div>
+          
+          <!-- 비밀번호 입력 -->
+          <div class="form_item">
+            <div class="box_4"></div>
+            <label for="pswd1">비밀번호(8자 이상)</label>
+            <input type="password" id="pswd1" name="pswd1" placeholder="비밀번호 (8자 이상, 문자/숫자/기호 사용 가능)" maxlength="20" required>
+          </div>
+          <!-- 비밀번호 재확인 -->
+          <div class="form_item">
+            <div class="box_43"></div>
+            <label for="pswd2">비밀번호 재확인</label>
+            <input type="password" id="pswd2" name="pswd2" placeholder="비밀번호를 다시 한 번 입력해주세요." maxlength="20" required>
+          </div>
+
+          <!-- 주민등록번호 입력 -->
+          <div class="form_item">
+            <div class="box_6"></div>
+            <label for="rrn">주민등록번호</label>
+            <input type="text" id="rrn" name="rrn" placeholder="123456-1234567 ( '-' 포함 )" maxlength="14" required>
+          </div>
+
+          <!-- 휴대전화 번호 입력 -->
+          <div class="form_item">
+            <div class="box_6"></div>
+            <label for="phoneNum">휴대전화번호</label>
+            <input type="tel" id="phoneNum" name="phoneNum" placeholder="010-0000-0000 ( '-' 포함 )" maxlength="25" required>
+          </div>
+
+          <!-- 이메일 주소 입력 -->
+          <div class="form_item">
+            <div class="box_5"></div>
+            <label for="email">이메일주소</label>
+            <input type="email" id="email" name="email" placeholder="example@example.com" maxlength="50" required>
+          </div>
+        </div>
+
+        <!-- 회원 가입 버튼 -->
+        <div class="btn_submit_wrap">
+          <button type="button" class="btn_submit" onclick="submitForm()">가입하기</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="footer"></div> <!-- 푸터 -->
+
+    <!-- 팝업창 -->
+    <div id="popup-overlay" class="popup-overlay">
+      <div class="popup-content">
+        <p>회원가입이 완료되었습니다!</p>
+        <button onclick="redirectToHome()">홈으로</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 팝업 표시 함수
+    function showPopup() {
+      const popupOverlay = document.getElementById('popup-overlay');
+      popupOverlay.style.display = 'flex';
+    }
+ 
+    // 홈으로 리다이렉션 함수
+    function redirectToHome() {
+      window.location.href = 'login.html';
+    }
+  </script>
+  
+</body>
+</html>

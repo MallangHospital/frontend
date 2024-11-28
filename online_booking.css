@@ -1,0 +1,224 @@
+/* General Styling */
+.section img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.radio-btn {
+    display: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 5px;
+    text-align: center;
+    color: #999;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    width: 100px; /* 버튼 너비 */
+    font-size: 12px;
+}
+
+.radio-btn:checked + .btn {
+    border-color: #333;
+    color: #333;
+    background-color: #fff;
+}
+
+/***** 네비바 스타일링 *****/
+.navbar {
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 2px;
+    padding-top: 10px;
+    margin-top: 70px;
+    position: relative; 
+}
+
+.navList {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    position: absolute; 
+    top: -62px; 
+    left: 0; 
+    z-index: 2;
+}
+
+.navItem {
+    position: relative;
+    margin-top: 9px; 
+    cursor: pointer;
+    padding-top: 31px; 
+    line-height: 2;
+    margin-right: 15px;
+}
+
+
+.navItem.is-active {
+    border-bottom: 2px solid #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.navLink {
+    text-decoration: none;
+    color: #333 !important;
+    font-size: 12px !important; 
+    font-weight: 500;
+}
+
+/***** 진료과목 선택 스타일링  *****/
+.medical_department_list {
+    margin-top: 30px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center; /* 내부 콘텐츠를 수평으로 가운데 정렬 */
+    flex-wrap: wrap; /* 아이템이 넘칠 경우 다음 줄로 이동 */
+}
+
+#listView {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 150px)); /* 가로 길이 설정 */
+    gap: 50px;
+}
+
+#listView li {
+    width: 100%; 
+    max-width: 150px;
+    background-color: #f5f7f9;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+#listView li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#listView .tit {
+    font-size: 1.0rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: #000;
+    text-align: left;
+}
+
+#listView .keyword {
+    font-size: 0.6rem;
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+#listView .keyword span {
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+#listView .txt {
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+#listView .ico {
+    font-size: 1.8rem;
+    color: #888;
+    margin-top: 80px; 
+    margin-left: auto;
+}
+
+/* 의료진 카드 스타일링 */
+
+#staffListView {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); /* 2개의 열로 정렬 */
+    gap: 50px; /* 간격 */
+    justify-content: center; 
+    align-items: center;
+    text-align: center;
+    column-gap: 10px; /* 열 간 간격 설정 */
+}
+
+/* 의료진 카드 스타일링 */
+#staffListView li {
+    display: flex; 
+    align-items: center; 
+    width: 100%; 
+    max-width: 300px; 
+    padding: 20px;
+    background-color: #f5f7f9;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    transition: box-shadow 0.3s;
+    height: 130px; 
+}
+
+/* 프로필 이미지 스타일링 */
+.doctor-img {
+    width: 80px; /* 이미지 크기 */
+    height: 80px;
+    border-radius: 50%; /* 원형 이미지 */
+    object-fit: cover; 
+    margin-right: 15px; 
+}
+
+/* 텍스트 정보 정렬 */
+.doctor-info {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    height: 100%; 
+}
+
+/* 의사 이름 스타일 */
+.doctor-name {
+    font-size: 14px;
+    font-weight: lighter;
+    color: #333;
+    margin-top: 3px; /* 이미지와 간격 */
+}
+
+/* 상태 정보 스타일 */
+.doctor-status p {
+    font-size: 15px;
+    color: #666;
+    margin: 0;
+}
+
+.doctor-status {
+    margin-left: 50px; 
+}
+
+
+#staffListView li p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin: 0; 
+}
+
+
+#staffListView li:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#staffListView li .favorite-btn {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.medical_staff_list{
+    margin: 30px 300px 100px 300px;
+}

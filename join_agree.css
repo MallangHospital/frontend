@@ -1,0 +1,173 @@
+.section img {
+  width: 100%;    /* 화면 전체 너비에 맞게 설정 */
+  height: auto;   /* 비율에 맞게 높이를 자동 조정 */
+  display: block; /* 이미지 아래 여백 제거 */
+}
+
+.terms_section {
+  width: 50%; /* 원하는 크기로 설정 */
+  margin: 100px auto 100px auto; /* 상단 100px, 좌우 자동으로 가운데 정렬, 하단 0px */
+  padding: 50px;
+  background-color: #f9f9f9; /* 배경 색상 */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+}
+
+.next_btn {
+  width: 150px;
+  padding: 10px;
+  background-color: #A6B1BB;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  margin: 50px auto 0 auto; /* 상단 50px 여백, 좌우 중앙 정렬 */
+  display: block; /* 블록 요소로 변환하여 중앙 정렬 가능 */
+  
+}
+
+.next_btn:hover {
+  background-color: rgb(83, 81, 81);
+}
+
+.check_terms{
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.title{
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.terms_item .terms_title{
+  font-size: 13px;
+  margin-left: 5px;
+  margin-bottom: 15px;
+  border-left: 4px solid rgba(83, 81, 81, 0.500); 
+  padding: 4px; 
+  border-bottom: 2px solid rgb(83, 81, 81,0.500);
+  padding-left: 5px;
+  width: 200px;
+}
+/* 약관 전체 스타일 */
+.usemenual {
+font-family: Arial, sans-serif;
+line-height: 1.6;
+margin: 10px;
+padding: 20px;
+background-color: #f9f9f9;
+border: 1px solid #ddd;
+border-radius: 8px;
+height: auto;
+width: 95%;
+margin-left: auto;
+margin-right: auto;
+}
+
+/* 제목 스타일 */
+.usemenual h2 {
+text-align: center;
+font-size: 18px;
+font-weight: bold;
+color: #333;
+margin-bottom: 20px;
+}
+
+.usemenual h3 {
+font-size: 16px;
+color: #555;
+margin-top: 20px;
+margin-bottom: 10px;
+}
+
+/* 본문 스타일 */
+.usemenual p {
+font-size: 12px;
+color: #333;
+margin-bottom: 15px;
+}
+
+/* 목록 스타일 */
+.usemenual ul {
+margin-left: 20px;
+margin-bottom: 20px;
+}
+
+.usemenual ul li {
+margin-bottom: 10px;
+}
+
+/* 링크나 강조해야 할 요소를 위한 스타일 */
+.usemenual a {
+color: #007bff;
+text-decoration: none;
+}
+
+.usemenual a:hover {
+text-decoration: underline;
+}
+
+/* 약관의 부칙 */
+.usemenual h3:last-child, 
+.usemenual p:last-child {
+margin-bottom: 0;
+text-align: center;
+}
+
+/* 개인정보 처리방침 전체 스타일 */
+.privacy-policy {
+font-family: Arial, sans-serif;
+line-height: 1.6;
+margin: 10px;
+padding: 20px;
+background-color: #f9f9f9;
+border: 1px solid #ddd;
+border-radius: 8px;
+max-width: 800px;
+margin-left: auto;
+margin-right: auto;
+}
+
+/* 제목 스타일 */
+.privacy-policy h2 {
+text-align: center;
+font-size: 18px;
+font-weight: bold;
+color: #333;
+margin-bottom: 20px;
+}
+
+.privacy-policy h3 {
+font-size: 16px;
+color: #555;
+margin-top: 20px;
+margin-bottom: 10px;
+}
+
+/* 본문 스타일 */
+.privacy-policy p {
+font-size: 12px;
+color: #333;
+margin-bottom: 15px;
+}
+
+/* 목록 스타일 */
+.privacy-policy ul {
+margin-left: 20px;
+margin-bottom: 20px;
+}
+
+.privacy-policy ul li {
+margin-bottom: 10px;
+}
+.border{
+width: 100%;
+background-color: rgb(83, 81, 81);
+height: 3px;
+margin-bottom: 20px;
+}

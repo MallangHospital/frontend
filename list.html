@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>title(||쓰지 않은 경우)</th>
+        <th>writer</th>
+        <th>date</th>
+        <th>hits</th>
+    </tr>
+    <tr th:each="post: ${postList}">
+        <td th:text="${post.id}"></td>
+        <td><a th:href="@{|/post/${post.id}|}" th:text="${post.postTitle}"></a></td>
+        <td><a th:href="@{/post/${post.id}}" th:text="${post.postTitle}"></a></td>
+        <td th:text="${post.postWriter}"></td>
+        <td th:text="*{#temporals.format(post.postCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${post.postHits}"></td>
+    </tr>
+</table>
+</body>
+</html>

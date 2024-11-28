@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약 및 접수 확인</title>
+
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar_admin.css">
+  <link rel="stylesheet" href="common_assets/footer.css">
+  <link rel="stylesheet" href="booking_management_admin.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- 제이쿼리 연결 -->
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script_admin.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+
+    <!-- 예약 정보 확인 섹션 -->
+    <section class="section-info">
+      <h2>예약 정보 확인</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>환자 이름</th>
+            <th>예약 일시</th>
+            <th>담당 의사</th>
+            <th>상태</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="appointment-list">
+          <!-- JavaScript에서 동적으로 추가 -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 접수 확인 섹션 -->
+    <section class="section-info">
+      <h2>접수 확인</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>환자 이름</th>
+            <th>접수 일시</th>
+            <th>담당 의사</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+           <!-- JavaScript에서 동적으로 추가 -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 건강검진 예약 확인 섹션 -->
+    <section class="section-info">
+      <h2>건강검진 예약 확인</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>이름</th>
+            <th>예약 날짜</th>
+            <th>휴대폰 번호</th>
+            <th>검진 구분</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JavaScript에서 동적으로 추가 -->
+        </tbody>
+      </table>
+    </section>
+
+    <div id="footer"></div> <!-- 푸터 -->
+  </div>
+  <script src="BookingManagement.js"></script>
+</body>
+</html>
