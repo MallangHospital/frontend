@@ -130,6 +130,7 @@ async function submitForm() {
       body: JSON.stringify(formData),
     });
 
+    
     if (response.ok) {
       const message = await response.text();
       showPopup(); // 성공 팝업 표시
