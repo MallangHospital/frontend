@@ -49,7 +49,9 @@
 
           try {
             // API 호출
-            const response = await fetch(`/api/feedbacks/${id}`);
+            const response = await fetch(
+              `https://mallang-a85bb2ff492b.herokuapp.com/api/feedback/${id}`
+            );
             if (!response.ok) {
               throw new Error('건의사항 정보를 불러오는 데 실패했습니다.');
             }
@@ -59,19 +61,18 @@
 
             // 데이터를 HTML에 표시
             document.getElementById('suggestion-title').textContent =
-              suggestion.title || '제목 없음';
+              suggestion.title;
             document.getElementById('suggestion-content').textContent =
-              suggestion.content || '내용 없음';
+              suggestion.content;
             document.getElementById('suggestion-name').textContent =
-              suggestion.name || '작성자 없음';
+              suggestion.name;
             document.getElementById('suggestion-phone').textContent =
-              suggestion.phoneNumber || '전화번호 없음';
+              suggestion.phoneNumber;
             document.getElementById('suggestion-email').textContent =
               suggestion.email || '이메일 없음';
-            document.getElementById('suggestion-date').textContent =
-              suggestion.createdAt
-                ? new Date(suggestion.createdAt).toLocaleString()
-                : '날짜 없음';
+            document.getElementById('suggestion-date').textContent = new Date(
+              suggestion.regDate
+            ).toLocaleString();
           } catch (error) {
             console.error(error.message);
             alert('건의사항 상세 정보를 불러오는 중 오류가 발생했습니다.');
