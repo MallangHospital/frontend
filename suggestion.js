@@ -62,9 +62,6 @@ async function validateAndSubmit() {
 
     // 응답 처리
     if (response.ok) {
-      const result = await response.text();
-      showModal(result); // 성공 메시지 표시
-      console.log(feedback);
       window.location.href = 'submission_complete.html';
     } else {
       const error = await response.text();
