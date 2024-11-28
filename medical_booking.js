@@ -1,4 +1,13 @@
 $(document).ready(function () {
+
+  // JWT 토큰 가져오기
+  const jwtToken = localStorage.getItem("jwtToken");
+  if (!jwtToken) {
+    alert("로그인이 필요합니다.");
+    window.location.href = "/login.html"; // 로그인 페이지로 리다이렉트
+    return;
+  }
+  
     // 특정 부서의 의사 데이터를 가져오는 함수
     async function fetchDoctorsByDepartment(departmentId) {
       try {
