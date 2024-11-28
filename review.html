@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>리뷰 페이지</title>
+
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
+    <link rel="stylesheet" href="style_review.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+
+      <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <h1>리뷰</h1>
+        </div>
+
+        <!-- Review Summary -->
+        <div class="review-summary">
+          <div class="summary-item">
+            <h2>고객 평점 평균</h2>
+            <p id="average-stars" class="average-stars"></p>
+            <p id="average-score"></p>
+          </div>
+          <div class="summary-item">
+            <h2>전체 리뷰 수</h2>
+            <p id="total-reviews"></p>
+          </div>
+          <div class="summary-item">
+            <h2>세부 항목</h2>
+            <p id="detail-description"></p>
+            <p id="treatment-result"></p>
+            <p id="staff-kindness"></p>
+            <p id="cleanliness"></p>
+          </div>
+        </div>
+
+        <!-- Review List -->
+        <div id="review-list" class="review-list"></div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+
+        <!-- Write Review Button -->
+        <div class="write-review-button">
+          <button id="open-review-modal">리뷰 작성하러 가기</button>
+        </div>
+      </div>
+
+      <!-- 리뷰 삭제 팝업 -->
+      <div id="delete-popup" class="popup">
+        <div class="popup-content">
+          <p id="popup-message">리뷰를 삭제하려면 비밀번호를 입력하세요</p>
+          <input
+            type="password"
+            id="popup-password"
+            placeholder="비밀번호 입력"
+          />
+          <div class="popup-buttons">
+            <button id="popup-confirm">확인</button>
+            <button id="popup-cancel">취소</button>
+          </div>
+        </div>
+      </div>
+      <div id="overlay"></div>
+
+      <!-- Review Form Modal -->
+      <form class="review-form-container" id="review-form">
+        <div class="review-form-header">
+          <h2>리뷰 작성</h2>
+          <button type="button" class="close-button" onclick="closeForm()">
+            X
+          </button>
+        </div>
+        <!-- 진료과 -->
+        <div class="form-section_option">
+          <label for="department">진료과</label>
+          <select id="department" name="department">
+            <option value="" disabled selected>진료 선택</option>
+            <option value="내과">내과</option>
+            <option value="외과">외과</option>
+            <option value="소아과">소아과</option>
+            <option value="산부인과">산부인과</option>
+          </select>
+        </div>
+
+        <!-- 의사 -->
+        <div class="form-section_option">
+          <label for="doctor">의사</label>
+          <select id="doctor" name="doctor">
+            <option value="" disabled selected>의사 선택</option>
+            <option value="김철수">김철수</option>
+            <option value="박영희">박영희</option>
+          </select>
+        </div>
+        <hr />
+        <!-- 별점 -->
+        <div class="star-section_option">
+          <label>자세한 설명</label>
+          <div class="stars" data-name="detailed-explanation"></div>
+        </div>
+        <div class="star-section_option">
+          <label>치료 후 결과</label>
+          <div class="stars" data-name="treatment-results"></div>
+        </div>
+        <div class="star-section_option">
+          <label>직원의 친절</label>
+          <div class="stars" data-name="staff-kindness"></div>
+        </div>
+        <div class="star-section_option">
+          <label>청결함</label>
+          <div class="stars" data-name="cleanliness"></div>
+        </div>
+        <hr />
+        <!-- 진료 후기 -->
+        <div class="form-section">
+          <label for="review-text">진료는 어떠셨나요?</label>
+          <textarea
+            id="review-text"
+            name="review_text"
+            placeholder="리뷰 내용을 입력하세요"
+            class="review-textarea"
+          ></textarea>
+        </div>
+        <hr />
+        <!-- 파일 업로드 -->
+        <div class="form-section">
+          <label>병원 방문을 인증할 수 있는 자료를 올려주세요</label>
+          <input type="file" id="upload-file" name="file" />
+        </div>
+        <hr />
+        <!-- 제출 버튼 -->
+        <div class="review-form-footer">
+          <button type="submit" class="review-submit-button">등록하기</button>
+        </div>
+      </form>
+
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <p id="modal-message"></p>
+          <button id="close-modal" class="close-btn">확인</button>
+        </div>
+      </div>
+
+      <script>
+        let currentReviewId = null;
+
+        async function fetchReviews(page = 1) {
+          try {
+            const response = await fetch(`/reviews?page=${page}`);
+            if (!response.ok)
+              throw new Error('리뷰 데이터를 불러오는 데 실패했습니다.');
+
+            const data = await response.json();
+            const reviews = data.reviews;
+            const totalPages = data.totalPages;
+
+            // 평균 데이터 업데이트
+            const averageScore = calculateAverage(
+              reviews.map((review) => review.rating)
+            );
+            const detailRatings = calculateDetailAverages(reviews);
+
+            document.getElementById('average-stars').textContent =
+              '★'.repeat(Math.round(averageScore)) +
+              '☆'.repeat(5 - Math.round(averageScore));
+            document.getElementById(
+              'average-score'
+            ).textContent = `${averageScore.toFixed(1)} / 10`;
+            document.getElementById('total-reviews').textContent =
+              data.totalReviews;
+            document.getElementById(
+              'detail-description'
+            ).textContent = `자세한 설명: ★${detailRatings.description.toFixed(
+              1
+            )}`;
+            document.getElementById(
+              'treatment-result'
+            ).textContent = `치료 후 결과: ★${detailRatings.treatment.toFixed(
+              1
+            )}`;
+            document.getElementById(
+              'staff-kindness'
+            ).textContent = `직원의 친절: ★${detailRatings.staff.toFixed(1)}`;
+            document.getElementById(
+              'cleanliness'
+            ).textContent = `청결함: ★${detailRatings.cleanliness.toFixed(1)}`;
+
+            renderReviews(reviews);
+            renderPagination(totalPages, page);
+          } catch (error) {
+            console.error(error.message);
+            alert('리뷰 데이터를 불러오는 중 오류가 발생했습니다.');
+          }
+        }
+
+        function calculateAverage(scores) {
+          if (scores.length === 0) return 0;
+          return scores.reduce((sum, score) => sum + score, 0) / scores.length;
+        }
+
+        function calculateDetailAverages(reviews) {
+          const totals = {
+            description: 0,
+            treatment: 0,
+            staff: 0,
+            cleanliness: 0,
+          };
+          let count = 0;
+
+          reviews.forEach((review) => {
+            if (review.detailRatings) {
+              totals.description += review.detailRatings.description || 0;
+              totals.treatment += review.detailRatings.treatment || 0;
+              totals.staff += review.detailRatings.staff || 0;
+              totals.cleanliness += review.detailRatings.cleanliness || 0;
+              count++;
+            }
+          });
+
+          return {
+            description: count ? totals.description / count : 0,
+            treatment: count ? totals.treatment / count : 0,
+            staff: count ? totals.staff / count : 0,
+            cleanliness: count ? totals.cleanliness / count : 0,
+          };
+        }
+
+        function renderReviews(reviews) {
+          const reviewList = document.getElementById('review-list');
+          reviewList.innerHTML = '';
+
+          reviews.forEach((review) => {
+            const reviewItem = document.createElement('div');
+            reviewItem.className = 'review-item';
+            reviewItem.innerHTML = `
+              <h3>${review.username}</h3>
+              <p>진료과: ${review.department}, 의사: ${review.doctor}</p>
+              <p class="average-stars">${'★'.repeat(review.rating)}${'☆'.repeat(
+              5 - review.rating
+            )}</p>
+              <p>${review.content}</p>
+              <p>${new Date(review.createdAt).toLocaleDateString()}</p>
+              <button onclick="openDeletePopup(${review.id})">삭제</button>
+            `;
+            reviewList.appendChild(reviewItem);
+          });
+        }
+
+        function openDeletePopup(reviewId) {
+          currentReviewId = reviewId;
+
+          const popupMessage = document.getElementById('popup-message');
+          const passwordInput = document.getElementById('popup-password');
+          const confirmButton = document.getElementById('popup-confirm');
+          const cancelButton = document.getElementById('popup-cancel');
+
+          document.getElementById('popup-message').textContent =
+            '리뷰를 삭제하려면 비밀번호를 입력하세요';
+          document.getElementById('popup-password').value = '';
+          document.getElementById('delete-popup').style.display = 'flex';
+        }
+
+        function closeDeletePopup() {
+          document.getElementById('delete-popup').style.display = 'none';
+        }
+
+        async function deleteReview() {
+          const password = document.getElementById('popup-password').value;
+
+          if (!password) {
+            alert('비밀번호를 입력해주세요.');
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `/reviews/${currentReviewId}?password=${password}`,
+              { method: 'DELETE' }
+            );
+            const message = await response.text();
+
+            if (response.ok) {
+              document.getElementById('popup-password').style.display = 'none';
+              document.getElementById('popup-cancel').style.display = 'none';
+              document.getElementById('popup-message').textContent = message;
+              setTimeout(() => {
+                closeDeletePopup();
+                fetchReviews();
+              }, 1500);
+            } else {
+              document.getElementById('popup-message').textContent = message;
+            }
+          } catch (error) {
+            console.error(error);
+            document.getElementById('popup-message').textContent =
+              '삭제 요청 중 오류가 발생했습니다.';
+          }
+        }
+
+        function renderPagination(totalPages, currentPage) {
+          const pagination = document.getElementById('pagination');
+          pagination.innerHTML = '';
+
+          for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.className = i === currentPage ? 'active' : '';
+            button.addEventListener('click', () => fetchReviews(i));
+            pagination.appendChild(button);
+          }
+        }
+
+        fetchReviews();
+
+        document
+          .getElementById('popup-confirm')
+          .addEventListener('click', deleteReview);
+        document
+          .getElementById('popup-cancel')
+          .addEventListener('click', closeDeletePopup);
+
+        document
+          .getElementById('open-review-modal')
+          .addEventListener('click', () => {
+            initializeStarRatings();
+            document.getElementById('review-form').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+          });
+
+        document.getElementById('overlay').addEventListener('click', closeForm);
+        document
+          .querySelector('.close-button')
+          .addEventListener('click', closeForm);
+
+        function closeForm() {
+          document.getElementById('review-form').style.display = 'none';
+          document.getElementById('overlay').style.display = 'none';
+          document.body.style.overflow = '';
+        }
+
+        // Initialize Star Ratings
+        function initializeStarRatings() {
+          document.querySelectorAll('.stars').forEach((container) => {
+            container.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+              const star = document.createElement('span');
+              star.textContent = '★';
+              star.dataset.value = i;
+              star.addEventListener('click', () => selectStar(container, i));
+              container.appendChild(star);
+            }
+          });
+        }
+
+        // Handle Star Selection
+        function selectStar(container, value) {
+          Array.from(container.children).forEach((star, index) => {
+            star.classList.toggle('selected', index < value);
+          });
+          container.dataset.selectedValue = value;
+        }
+
+        // Show Modal
+        function showModal(message) {
+          const modal = document.getElementById('modal');
+          const modalMessage = document.getElementById('modal-message');
+          modalMessage.textContent = message;
+          modal.style.display = 'flex';
+        }
+
+        // Close Modal
+        document.getElementById('close-modal').addEventListener('click', () => {
+          document.getElementById('modal').style.display = 'none';
+        });
+
+        // Submit Review
+        document
+          .getElementById('review-form')
+          .addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const department = document.getElementById('department').value;
+            const doctor = document.getElementById('doctor').value;
+            const reviewText = document.getElementById('review-text').value;
+            const fileInput = document.getElementById('upload-file').files[0];
+            const stars = document.querySelectorAll('.stars');
+
+            if (!department) {
+              showModal('진료과를 선택해주세요.');
+              return;
+            }
+
+            if (!doctor) {
+              showModal('의사를 선택해주세요.');
+              return;
+            }
+
+            const starRatings = {};
+            for (const starContainer of stars) {
+              const selectedStars = parseInt(
+                starContainer.dataset.selectedValue || 0
+              );
+              if (!selectedStars) {
+                const label = starContainer.previousElementSibling.textContent;
+                showModal(`${label} 항목에 별점을 선택해주세요.`);
+                return;
+              }
+              const key = starContainer.getAttribute('data-name');
+              starRatings[key] = selectedStars;
+            }
+
+            if (!reviewText.trim()) {
+              showModal('리뷰 내용을 입력해주세요.');
+              return;
+            }
+
+            if (!fileInput) {
+              showModal('병원 방문을 인증할 자료를 업로드해주세요.');
+              return;
+            }
+
+            const formData = new FormData();
+            formData.append(
+              'review',
+              new Blob(
+                [
+                  JSON.stringify({
+                    department,
+                    doctor,
+                    starRatings,
+                    reviewText,
+                  }),
+                ],
+                { type: 'application/json' }
+              )
+            );
+            formData.append('file', fileInput);
+
+            try {
+              const response = await fetch('/reviews', {
+                method: 'POST',
+                body: formData,
+              });
+              if (response.ok) {
+                showModal('리뷰가 성공적으로 등록되었습니다!');
+                closeForm();
+              } else {
+                const errorMessage = await response.text();
+                showModal(errorMessage);
+              }
+            } catch (error) {
+              console.error(error.message);
+              showModal('리뷰 등록 중 오류가 발생했습니다.');
+            }
+          });
+      </script>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>

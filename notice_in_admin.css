@@ -1,0 +1,83 @@
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0 40px; 
+}
+
+.footer-space {
+  margin-bottom: 40px; 
+}
+
+.button:hover {
+  background-color: #4a5359; 
+}
+
+.title h1 {
+  font-size: 2rem;
+  text-align: left;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.announcement {
+  margin-top: 30px;
+}
+
+.announcement h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.info {
+  font-size: 1.2rem;
+  color: #707070;
+  margin-bottom: 30px;
+}
+
+.details {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 300px; 
+}
+
+.write-button {
+  background-color: #545C62;  
+  color: white; 
+  font-size: 0.9rem;  
+  padding: 15px 15px;  
+  border: none;  
+  border-radius: 5px;  
+  cursor: pointer;  
+  width: 200px;  
+  margin: 0 auto; 
+  display: block;  
+  text-align: center;  
+  line-height: 1.5; 
+  margin-bottom: 30px;  
+}
+
+.section img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.prev-next {
+  display: flex;
+  flex-direction: column; 
+  font-size: 1.1rem;
+  margin-top: 20px;
+}
+
+.prev-next .label {
+  font-weight: bold;
+  color: #333;
+}
+
+.prev-next .prev,
+.prev-next .next {
+  margin-bottom: 3px; 
+}
