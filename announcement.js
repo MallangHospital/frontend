@@ -7,10 +7,10 @@ document
   });
 
 async function validateAndSubmit() {
-  const title = document.getElementById('title').value.trim();
+  const title = document.getElementById('title').value;
   const noticeWriter = document.getElementById('noticeWriter').value.trim();
   const password = document.getElementById('password').value.trim();
-  const content = document.getElementById('content').value.trim();
+  const content = document.getElementById('content').value;
 
   const noticeData = {
     title,
