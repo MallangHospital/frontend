@@ -15,12 +15,19 @@ async function validateAndSubmit() {
   const mainFile = document.getElementById('main-file').files[0];
   const attachment = document.getElementById('attachment').files[0];
 
-  const newsData = {
+  // 1. JSON 데이터 준비
+  const newsDTO = {
     title,
     newsWriter,
     password,
     content,
   };
+
+  // 2. FormData 객체 생성
+  const formData = new FormData();
+  formData.append('newsDTO', newsDTO);
+  if (mainFile) formData.append('mainFile', mainFile); // 대표 이미지 파일 추가
+  if (attachment) formData.append('attachment', attachment); // 첨부파일 추가
 
   try {
     // 서버에 POST 요청
@@ -29,15 +36,16 @@ async function validateAndSubmit() {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
-        body: JSON.stringify(newsData),
+        body: formData,
       }
     );
 
     // 응답 처리
     if (response.ok) {
       showModal('건강 매거진이 성공적으로 등록되었습니다!'); // 성공 메시지 표시
+      window.location.href = 'health_magazine_admin.html';
     } else {
       const error = await response.text();
       showModal(`등록 실패: ${error}`); // 서버 오류 메시지 표시

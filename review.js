@@ -186,6 +186,42 @@ function closeForm() {
   document.body.style.overflow = '';
 }
 
+document
+  .getElementById('department')
+  .addEventListener('change', async function () {
+    const departmentId = this.value; // 선택된 진료과 ID
+
+    if (!departmentId) {
+      alert('진료과를 선택해주세요.');
+      return;
+    }
+
+    try {
+      // 의료진 목록을 가져오는 API 호출
+      const response = await fetch(
+        `https://mallang-a85bb2ff492b.herokuapp.com/api/doctor?departmentId=${departmentId}`
+      );
+      if (!response.ok) {
+        throw new Error('의료진 정보를 불러오는 데 실패했습니다.');
+      }
+
+      const doctors = await response.json();
+
+      // 의사 선택 드롭다운 업데이트
+      const doctorSelect = document.getElementById('doctor');
+      doctorSelect.innerHTML = `<option value="" disabled selected>의사 선택</option>`; // 초기화
+      doctors.forEach((doctor) => {
+        const option = document.createElement('option');
+        option.value = doctor.id; // 의사 ID 사용
+        option.textContent = doctor.name; // 의사 이름 사용
+        doctorSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error(error.message);
+      alert('의료진 데이터를 불러오는 중 오류가 발생했습니다.');
+    }
+  });
+
 // Initialize Star Ratings
 function initializeStarRatings() {
   document.querySelectorAll('.stars').forEach((container) => {
@@ -230,61 +266,31 @@ document
   });
 
 async function validateAndSubmit() {
-  const department = document.getElementById('department').value;
-  const doctor = document.getElementById('doctor').value;
+  const departmentId = document.getElementById('department').value;
+  const doctorId = document.getElementById('doctor').value;
   const content = document.getElementById('review-text').value;
   const fileInput = document.getElementById('upload-file').files[0];
   const memberPassword = document.getElementById('review-password').value;
   const stars = document.querySelectorAll('.stars');
 
-  if (!department) {
-    showModal('진료과를 선택해주세요.');
-    return;
-  }
-
-  if (!doctor) {
-    showModal('의사를 선택해주세요.');
-    return;
-  }
-
   // 별점 데이터 수집
   const detailStars = [];
   for (const starContainer of stars) {
     const selectedStars = parseInt(starContainer.dataset.selectedValue || 0);
-    if (!selectedStars) {
-      const label = starContainer.previousElementSibling.textContent;
-      showModal(`${label} 항목에 별점을 선택해주세요.`);
-      return;
-    }
     detailStars.push(selectedStars); // 선택된 별점 값을 배열에 추가
   }
 
-  if (!content.trim()) {
-    showModal('리뷰 내용을 입력해주세요.');
-    return;
-  }
-
-  if (!fileInput) {
-    showModal('병원 방문을 인증할 자료를 업로드해주세요.');
-    return;
-  }
-
-  if (!memberPassword.trim()) {
-    showModal('비밀 번호를 입력해주세요.');
-    return;
-  }
-
   // 데이터 구성
-  const reviewData = {
-    department,
-    doctor,
+  const reviewDTO = {
+    departmentId,
+    doctorId,
     detailStars,
     content,
     memberPassword,
   };
 
   const formData = new FormData();
-  formData.append('reviewDTO', JSON.stringify(reviewData));
+  formData.append('reviewDTO', reviewDTO);
 
   // 파일을 FormData에 추가
   formData.append('receiptFile', fileInput);
@@ -294,6 +300,9 @@ async function validateAndSubmit() {
       'https://mallang-a85bb2ff492b.herokuapp.com/api/review',
       {
         method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
         body: formData,
       }
     );
