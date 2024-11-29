@@ -36,6 +36,7 @@ async function validateAndSubmit() {
     if (response.ok) {
       const result = await response.text();
       showModal(result); // 성공 메시지 표시
+      window.location.href = 'notice_admin.html';
     } else {
       const error = await response.text();
       showModal(`${error}`); // 서버에서 반환된 오류 메시지 표시
