@@ -2,7 +2,6 @@ const jwtToken = localStorage.getItem('jwtToken');
 if (!jwtToken) {
   alert('로그인이 필요합니다.');
   window.location.href = '/login.html'; // 로그인 페이지로 리다이렉트
-  return; // 이후 코드 실행을 막습니다.
 }
 
 // 이메일 선택 시 도메인 입력 필드 자동 설정
