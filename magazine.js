@@ -23,9 +23,8 @@ async function validateAndSubmit() {
     content,
   };
 
-  // 2. FormData 객체 생성
   const formData = new FormData();
-  formData.append('newsDTO', newsDTO);
+  formData.append('newsDTO', JSON.stringify(newsDTO)); // JSON 문자열로 변환
   if (mainFile) formData.append('mainFile', mainFile); // 대표 이미지 파일 추가
   if (attachment) formData.append('attachment', attachment); // 첨부파일 추가
 
@@ -35,10 +34,7 @@ async function validateAndSubmit() {
       'https://mallang-a85bb2ff492b.herokuapp.com/api/news',
       {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        body: formData,
+        body: formData, // FormData는 Content-Type 자동 설정
       }
     );
 
