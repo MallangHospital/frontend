@@ -48,15 +48,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     appointments.forEach((appointment) => {
       const row = document.createElement("tr");
 
-      row.innerHTML = `
-        <td>${appointment.patientName}</td>
-        <td>${appointment.appointmentDate} ${appointment.appointmentTime}</td>
-        <td>${appointment.doctorName}</td>
-        <td>${appointment.appointmentType}</td>
-        <td>
-          <button class="view-details" data-id="${appointment.id}">상세 보기</button>
-        </td>
-      `;
+      const statusClass = appointment.status === "취소" ? "canceled" : "reserved";
+
+    row.innerHTML = `
+      <td>${appointment.patientName}</td>
+      <td>${appointment.appointmentDate} ${appointment.appointmentTime}</td>
+      <td>${appointment.doctorName}</td>
+      <td class="${statusClass}">${appointment.status}</td>
+      <td>
+        <button class="view-details" data-id="${appointment.id}">상세 보기</button>
+      </td> `;
 
       appointmentTableBody.appendChild(row);
     });
@@ -113,7 +114,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         <td>${reservation.name}</td>
         <td>${reservation.reserveDate}</td>
         <td>${reservation.phoneNumber}</td>
-        <td>${reservation.hType}</td>
+        <td>${reservation.htype}</td>
       `;
 
       healthcareTableBody.appendChild(row);
