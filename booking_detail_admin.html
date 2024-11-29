@@ -14,17 +14,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
-  <!--제이쿼리 연결-->
+  <!-- 제이쿼리 연결 -->
   <script src="common_assets/jquery-3.7.1.min.js"></script>
   <script defer src="common_assets/script_admin.js"></script>
-
 </head>
 <body>
   <div class="wrap">
     <div id="navbar"></div> <!-- 네비게이션 바 -->
 
     <section class="booking-detail">
-      <h2>이소희 <span>환자</span></h2>
+      <h2><span>환자</span></h2> <!-- 환자 이름 동적 설정 -->
       <table>
         <thead>
           <tr>
@@ -33,30 +32,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>진료종류</td>
-            <td>초진</td>
-          </tr>
-          <tr>
-            <td>진료과목</td>
-            <td>소아청소년과</td>
-          </tr>
-          <tr>
-            <td>담당 의료진</td>
-            <td>차정숙</td>
-          </tr>
-          <tr>
-            <td>전화번호</td>
-            <td>010-0000-0000</td>
-          </tr>
-          <tr>
-            <td>증상</td>
-            <td>
-              아이가 며칠 전부터 열이 나고, 목이 아프다고 합니다.
-              식욕이 떨어지고 잠을 잘 못 자며, 기침과 콧물도 조금씩
-              나고 있어요. 목이 부은 것 같다고 이야기합니다.
-            </td>
-          </tr>
+          <!-- 예약 정보가 동적으로 추가됩니다 -->
         </tbody>
       </table>
       <a href="booking_management_admin.html" class="btn-back">이전</a>
@@ -66,3 +42,90 @@
   </div>
 </body>
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    const jwtToken = localStorage.getItem("jwtToken"); // JWT 토큰 가져오기
+
+    // JWT 토큰 없으면 로그인 페이지로 리다이렉트
+    if (!jwtToken) {
+      alert("관리자 로그인이 필요합니다.");
+      window.location.href = "/login.html";
+      return;
+    }
+
+    // URL에서 예약 ID 추출
+    const params = new URLSearchParams(window.location.search);
+    const appointmentId = params.get("id"); // URL에서 'id' 값을 가져옴
+
+    if (!appointmentId) {
+      alert("예약 ID가 누락되었습니다.");
+      window.location.href = "booking_management_admin.html"; // 목록 페이지로 리다이렉트
+      return;
+    }
+
+    const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/appointments/${appointmentId}`;
+    const bookingDetailSection = document.querySelector(".booking-detail tbody");
+    const heading = document.querySelector(".booking-detail h2");
+
+    // 예약 상세 정보 로드 함수
+    async function loadAppointmentDetails() {
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`, // JWT 토큰 추가
+          },
+        });
+
+        console.log("예약 상세 정보 응답 상태 코드:", response.status);
+
+        if (response.ok) {
+          const details = await response.json();
+          console.log("예약 상세 정보:", details);
+          renderAppointmentDetails(details);
+        } else {
+          alert("예약 상세 정보를 불러오는 데 실패했습니다.");
+          console.error("Error:", response.status, response.statusText);
+        }
+      } catch (error) {
+        alert("서버 요청 중 문제가 발생했습니다.");
+        console.error("Error:", error);
+      }
+    }
+
+    // 예약 상세 정보를 테이블과 제목에 렌더링
+    function renderAppointmentDetails(details) {
+      // 환자 이름 설정
+      heading.innerHTML = `${details.patientName} <span>환자</span>`; // 환자 이름 동적 설정
+
+      // 예약 상세 정보 테이블에 추가
+      bookingDetailSection.innerHTML = `
+        <tr>
+          <td>진료종류</td>
+          <td>${details.appointmentType}</td>
+        </tr>
+        <tr>
+          <td>진료과목</td>
+          <td>${details.departmentName}</td>
+        </tr>
+        <tr>
+          <td>담당 의료진</td>
+          <td>${details.doctorName}</td>
+        </tr>
+        <tr>
+          <td>전화번호</td>
+          <td>${details.phoneNumber}</td>
+        </tr>
+        <tr>
+          <td>증상</td>
+          <td>${details.symptomDescription}</td>
+        </tr>
+      `;
+    }
+
+    // 초기 데이터 로드
+    loadAppointmentDetails();
+  });
+</script>

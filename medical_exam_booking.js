@@ -6,7 +6,6 @@ function checkLogin() {
     window.location.href = "/login.html"; // 로그인 페이지로 리다이렉트
     return false;
   }
-
   return true;
 }
 
@@ -14,6 +13,7 @@ $(function () {
   // 페이지 로드 시 로그인 확인
   if (!checkLogin()) return; // 로그인 실패 시 이후 코드 실행 중단
 
+  // Datepicker 초기화
   $("#datepicker").datepicker({
     dateFormat: "yy-mm-dd",
     showOtherMonths: true,
@@ -28,11 +28,8 @@ $(function () {
   function validateDate(selectedDate) {
     const selectedDateObj = new Date(selectedDate);
     const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // 현재 날짜의 시간 초기화
 
-    // 현재 날짜의 시간, 분, 초를 0으로 설정 (시간 비교를 정확하게 하기 위해)
-    currentDate.setHours(0, 0, 0, 0);
-
-    // 선택한 날짜가 현재 날짜보다 이전이면 경고 메시지
     if (selectedDateObj < currentDate) {
       alert("예약 날짜는 현재 날짜 이후로 선택해 주세요.");
       $("#datepicker").val(""); // 날짜 입력 초기화
@@ -83,14 +80,15 @@ $(function () {
       name: name,
       phoneNumber: phoneNo,
       reserveDate: date,
-      hType: checkupCd.value,
+      hType: checkupCd.value, // 서버 Enum 값에 일치해야 함
     };
 
     // JWT 토큰 가져오기
     const jwtToken = localStorage.getItem("jwtToken");
 
+
     // 서버로 요청 보내기
-    fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/member/healthcareReserve", {
+    fetch("https://mallang-a85bb2ff492b.herokuapp.com/healthcareReserve", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,17 +98,17 @@ $(function () {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("예약 처리 중 문제가 발생했습니다.");
+          return response.text().then((text) => {
+            throw new Error(text || "예약 처리 중 문제가 발생했습니다.");
+          });
         }
         return response.json(); // JSON 응답을 파싱
       })
       .then((data) => {
-        console.log("예약 성공:", data);
         showCompletionPopup(); // 예약 성공 후 팝업 표시
       })
       .catch((error) => {
-        console.error("에러 발생:", error);
-        alert(error.message); // 에러 메시지 표시
+        alert(`에러: ${error.message}`); // 에러 메시지 표시
       });
   }
 
@@ -121,7 +119,7 @@ $(function () {
 
   function closeCompletionPopup() {
     document.getElementById("completionPopup").style.display = "none";
-    window.location.href = "home.html"; // 홈 페이지로 이동
+    window.location.href = "index.html"; // 홈 페이지로 이동
   }
 
   // 폼 제출 이벤트 바인딩
