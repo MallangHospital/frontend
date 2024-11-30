@@ -117,10 +117,15 @@ $(function () {
     document.getElementById("completionPopup").style.display = "flex";
   }
 
-  function closeCompletionPopup() {
-    document.getElementById("completionPopup").style.display = "none";
-    window.location.href = "index.html"; // 홈 페이지로 이동
-  }
+  // 팝업 닫기 함수
+function closeCompletionPopup() {
+  document.getElementById("completionPopup").style.display = "none";
+  window.location.href = "index.html"; // 홈 페이지로 이동
+}
+
+// 전역에 함수 등록
+window.closeCompletionPopup = closeCompletionPopup;
+
 
   // 폼 제출 이벤트 바인딩
   $("#rFrm").on("submit", validateAndSubmitForm); // 폼 제출 시 유효성 검사
