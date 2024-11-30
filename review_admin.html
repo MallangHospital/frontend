@@ -62,24 +62,20 @@
       <!-- 리뷰 삭제 팝업 -->
       <div id="delete-popup" class="popup">
         <div class="popup-content">
-          <p id="popup-message">리뷰를 삭제하려면 비밀번호를 입력하세요</p>
-          <input
-            type="password"
-            id="popup-password"
-            placeholder="비밀번호 입력"
-          />
+          <p id="popup-message"></p>
           <div class="popup-buttons">
             <button id="popup-confirm">확인</button>
             <button id="popup-cancel">취소</button>
           </div>
         </div>
       </div>
-      <div id="overlay"></div>
 
-      <div id="modal" class="modal">
-        <div class="modal-content">
-          <p id="modal-message"></p>
-          <button id="close-modal" class="close-btn">확인</button>
+      <div id="result-popup" class="popup">
+        <div class="popup-content">
+          <p id="result-popup-message"></p>
+          <div class="popup-buttons">
+            <button id="result-popup-close">확인</button>
+          </div>
         </div>
       </div>
       <div id="footer"></div>
