@@ -41,6 +41,22 @@ $(document).ready(function () {
     }
   }
 
+  // 부서 번호를 부서 이름으로 변환하는 함수
+  function getDepartmentName(departmentId) {
+    switch (departmentId) {
+      case 1:
+        return "내과";
+      case 2:
+        return "산부인과";
+      case 3:
+        return "소아청소년과";
+      case 4:
+        return "외과";
+      default:
+        return "기타";
+    }
+  }
+
   // 진료과목 리스트를 보이는 함수
   function showMedicalDepartments(event) {
     event.preventDefault(); // 기본 링크 동작 방지
@@ -65,7 +81,7 @@ $(document).ready(function () {
     doctorList.forEach((doctor) => {
       console.log("의사 정보:", doctor); // 각 의사 정보 로그
       $staffListView.append(`
-        <li data-doctor-id="${doctor.id}">
+        <li data-doctor-id="${doctor.id}" class="doctor-item">
           <img src="${doctor.photoUrl}" alt="${doctor.name}" class="doctor-img">
           <p>${doctor.name}</p>
           <button class="favorite-btn">
@@ -87,13 +103,59 @@ $(document).ready(function () {
 
   // 진료과목 클릭 시 의료진 리스트 표시
   $("#listView li").click(function () {
-    const departmentId = $(this).data("id"); // 진료과 ID 가져오기
-    console.log("클릭된 진료과목 ID:", departmentId); // 로그 추가
-    if (!departmentId) {
+    // 기존 선택된 항목 해제
+    $("#listView li").removeClass("is-active");
+
+    // 현재 선택된 항목 강조
+    $(this).addClass("is-active");
+
+    // 진료과 ID 가져오기
+    const departmentId = $(this).data("id"); // 진료과목 ID
+    const departmentName = getDepartmentName(departmentId); // 진료과목 이름 변환
+    console.log(`선택된 진료과 ID: ${departmentId}, 이름: ${departmentName}`); // 로그 추가
+
+    // 선택한 departmentId 저장 (다음 단계에서 사용 가능)
+    localStorage.setItem("selectedDepartmentId", departmentId);
+
+    // 해당 부서의 의료진 리스트를 표시
+    if (departmentId) {
+      showDoctorsByDepartment(departmentId);
+    } else {
       alert("유효한 진료과목이 아닙니다.");
-      return;
     }
-    showDoctorsByDepartment(departmentId); // 해당 부서의 의사 목록 표시
+  });
+
+  // 의사 선택 로직 추가
+  $("#staffListView").on("click", ".doctor-item", function () {
+    // 기존 선택된 항목 해제
+    $(".doctor-item").removeClass("selected");
+
+    // 현재 선택된 항목 강조
+    $(this).addClass("selected");
+
+    // 선택된 의사의 ID 로그 출력
+    const selectedDoctorId = $(this).data("doctor-id");
+    console.log("선택된 의사 ID:", selectedDoctorId);
+  });
+
+  // 즐겨찾기 기능 추가
+  $("#staffListView").on("click", ".favorite-btn", function (event) {
+    event.stopPropagation(); // 부모 요소 클릭 이벤트 방지
+
+    const doctorElement = $(this).closest("li");
+    const doctorName = doctorElement.find("p").text(); // 의사 이름 가져오기
+    const $favoriteIcon = $(this).find(".favorite-icon"); // 버튼 내의 이미지
+    const isFavorited = $favoriteIcon.attr("src") === "assets/취소.png"; // 현재 이미지가 '취소'인지 확인
+
+    if (isFavorited) {
+      $favoriteIcon.attr("src", "assets/즐겨찾기.png"); // '즐겨찾기'로 변경
+      alert(`${doctorName} 의사를 즐겨찾기했습니다.`);
+    } else {
+      $favoriteIcon.attr("src", "assets/취소.png"); // '취소'로 변경
+      alert(`${doctorName} 의사의 즐겨찾기가 취소되었습니다.`);
+    }
+
+    console.log("즐겨찾기 상태 변경:", doctorName, isFavorited);
   });
 
   // "진료 과목" 네비게이션 클릭 이벤트
@@ -102,7 +164,7 @@ $(document).ready(function () {
   // 데이터 저장 및 다음 단계로 이동
   function saveSelectionAndProceed() {
     // 진료과 ID 가져오기
-    const departmentId = $("#listView li.is-active").data("id");
+    const departmentId = parseInt(localStorage.getItem("selectedDepartmentId"));
     console.log("저장된 departmentId:", departmentId); // 로그 추가
 
     // 의료진 ID 가져오기
@@ -131,12 +193,11 @@ $(document).ready(function () {
 
     // 로컬 스토리지에 저장
     localStorage.setItem("departmentId", departmentId); // 진료과 ID 저장
-    localStorage.setItem("doctorId", doctorId); // 의료진 ID 저장
+    localStorage.setItem("doctorId", doctorId);         // 의료진 ID 저장
     localStorage.setItem("appointmentType", appointmentType); // 진료 유형 저장
 
-    console.log("데이터 저장 완료. 다음 단계로 이동."); // 로그 추가
-    // 다음 페이지로 이동
-    window.location.href = "medical_booking_step2.html";
+    console.log("데이터 저장 완료. 다음 단계로 이동.");
+    window.location.href = "medical_booking_step2.html"; // 다음 단계로 이동
   }
 
   // "다음" 버튼 클릭 이벤트
@@ -144,22 +205,6 @@ $(document).ready(function () {
 
   // 초기 상태 설정
   $(".medical_staff_list").hide();
-
-  // 즐겨찾기 기능 추가
-  $("#staffListView").on("click", ".favorite-btn", function () {
-    const doctorName = $(this).closest("li").find("p").text(); // 의사 이름 가져오기
-    const $favoriteIcon = $(this).find(".favorite-icon"); // 버튼 내의 이미지
-    const isFavorited = $favoriteIcon.attr("src") === "assets/취소.png"; // 현재 이미지가 '취소'인지 확인
-
-    if (isFavorited) {
-      $favoriteIcon.attr("src", "assets/즐겨찾기.png"); // '즐겨찾기'로 변경
-      alert(`${doctorName} 의사를 즐겨찾기했습니다.`);
-    } else {
-      $favoriteIcon.attr("src", "assets/취소.png"); // '취소'로 변경
-      alert(`${doctorName} 의사의 즐겨찾기가 취소되었습니다.`);
-    }
-    console.log("즐겨찾기 상태 변경:", doctorName, isFavorited); // 로그 추가
-  });
 
   console.log("스크립트 초기화 완료"); // 초기화 완료 로그
 });

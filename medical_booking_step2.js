@@ -23,7 +23,6 @@ function initializeDatepicker(doctorId, baseUrl) {
             const today = new Date(); // 현재 날짜
             today.setHours(0, 0, 0, 0); // 현재 날짜의 시간 초기화
 
-            // 이전 날짜 선택 시 경고 메시지 표시 및 초기화
             if (selectedDateObj < today) {
                 alert("현재 날짜 이후의 날짜를 선택해주세요.");
                 $("#datepicker").val(""); // 선택된 날짜 초기화
@@ -39,10 +38,15 @@ function initializeDatepicker(doctorId, baseUrl) {
 // 특정 날짜의 예약 가능한 시간 가져오기
 async function fetchAvailableTimes(doctorId, date, baseUrl) {
     try {
-        const response = await fetch(`https://mallang-a85bb2ff492b.herokuapp.com/api/schedules?doctorId=${doctorId}&date=${date}`);
+        const apiUrl = `"https://mallang-a85bb2ff492b.herokuapp.com"/api/schedules?doctorId=${doctorId}&date=${date}`;
+        console.log("예약 가능한 시간 API 요청 URL:", apiUrl); // 디버깅용 로그
+
+        const response = await fetch(apiUrl);
         if (response.ok) {
             const data = await response.json();
-            updateTimeButtons(data[0]?.availableTimes || []); // 첫 번째 스케줄의 예약 가능한 시간
+            console.log("예약 가능한 시간 데이터:", data); // API 응답 데이터 로그
+            const availableTimes = data.length > 0 ? data[0].availableTimes : []; // 첫 번째 스케줄의 예약 가능한 시간 목록
+            updateTimeButtons(availableTimes); // 시간 버튼 업데이트
         } else {
             console.error("예약 가능한 시간 가져오기 실패:", response.status);
             alert("예약 가능한 시간을 불러오는 데 실패했습니다.");
@@ -90,18 +94,20 @@ function submitReservation() {
         return;
     }
 
-    // 예약 데이터 구성
+    // 예약 데이터 구성 (DTO에 맞게 수정)
     const requestData = {
-        doctorId: parseInt(doctorId, 10), // 의사 ID
-        departmentId: parseInt(departmentId, 10), // 진료과 ID
-        appointmentType: appointmentType, // 진료 유형
+        doctorId: parseInt(doctorId, 10),
+        departmentId: parseInt(departmentId, 10),
+        appointmentType: appointmentType, // 초진/재진/상담
         appointmentDate: date, // 예약 날짜
         appointmentTime: selectedTime, // 예약 시간
         symptomDescription: symptoms, // 증상 설명
     };
 
+    console.log("백엔드로 전송할 예약 데이터:", requestData);
+
     // 백엔드로 데이터 전송
-    fetch(`https://mallang-a85bb2ff492b.herokuapp.com/api/appointments`, {
+    fetch(`"https://mallang-a85bb2ff492b.herokuapp.com"/api/appointments`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
