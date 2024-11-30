@@ -46,7 +46,7 @@ document.getElementById('loginFrm').addEventListener('submit', async function (e
         } else {
             const errorMessage = await response.text();
             console.error("서버 응답 실패:", errorMessage);
-            alert(`로그인 실패: ${errorMessage}`);
+            alert(`로그인 정보가 올바르지 않습니다.!`);
         }
     } catch (error) {
         console.error("로그인 오류:", error);
