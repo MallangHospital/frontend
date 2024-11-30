@@ -71,6 +71,7 @@
     // 예약 상세 정보 로드 함수
     async function loadAppointmentDetails() {
       try {
+        console.log("예약 상세 정보 요청 시작...");  // 로그 추가
         const response = await fetch(apiUrl, {
           method: "GET",
           headers: {
@@ -79,11 +80,11 @@
           },
         });
 
-        console.log("예약 상세 정보 응답 상태 코드:", response.status);
+        console.log("예약 상세 정보 응답 상태 코드:", response.status);  // 응답 상태 코드 로그 추가
 
         if (response.ok) {
           const details = await response.json();
-          console.log("예약 상세 정보:", details);
+          console.log("예약 상세 정보:", details);  // 응답 데이터 로그 추가
           renderAppointmentDetails(details);
         } else {
           alert("예약 상세 정보를 불러오는 데 실패했습니다.");
@@ -97,6 +98,8 @@
 
     // 예약 상세 정보를 테이블과 제목에 렌더링
     function renderAppointmentDetails(details) {
+      console.log("예약 상세 정보 렌더링 시작...");  // 렌더링 시작 로그 추가
+
       // 환자 이름 설정
       heading.innerHTML = `${details.patientName} <span>환자</span>`; // 환자 이름 동적 설정
 
@@ -116,13 +119,14 @@
         </tr>
         <tr>
           <td>전화번호</td>
-          <td>${details.phoneNumber}</td>
+          <td>${details.phoneNum}</td>
         </tr>
         <tr>
           <td>증상</td>
           <td>${details.symptomDescription}</td>
         </tr>
       `;
+      console.log("예약 상세 정보 렌더링 완료.");  // 렌더링 완료 로그 추가
     }
 
     // 초기 데이터 로드

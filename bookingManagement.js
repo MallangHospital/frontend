@@ -109,12 +109,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     healthcareTableBody.innerHTML = ""; // 기존 내용 초기화
     reservations.forEach((reservation) => {
       const row = document.createElement("tr");
+      const statusClass = reservation.status === "취소" ? "canceled" : "reserved";
 
       row.innerHTML = `
         <td>${reservation.name}</td>
         <td>${reservation.reserveDate}</td>
         <td>${reservation.phoneNumber}</td>
         <td>${reservation.htype}</td>
+        <td class="${statusClass}">${reservation.status}</td>
       `;
 
       healthcareTableBody.appendChild(row);
