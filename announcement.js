@@ -34,8 +34,7 @@ async function validateAndSubmit() {
 
     // 응답 처리
     if (response.ok) {
-      const result = await response.text();
-      showModal(result); // 성공 메시지 표시
+      showModal('공지사항이 성공적으로 등록되었습니다!');
       window.location.href = 'notice_admin.html';
     } else {
       const error = await response.text();
