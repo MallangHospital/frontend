@@ -81,7 +81,7 @@ function closeDeletePopup() {
 async function deleteReview() {
   try {
     const response = await fetch(
-      `https://mallang-a85bb2ff492b.herokuapp.com/api/reviews/${currentReviewId}`,
+      `https://mallang-a85bb2ff492b.herokuapp.com/api/reviews/${currentReviewId}?isAdmin=true`,
       { method: 'DELETE' }
     );
     const message = await response.text();
