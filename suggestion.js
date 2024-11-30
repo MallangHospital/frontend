@@ -1,3 +1,9 @@
+const jwtToken = localStorage.getItem('jwtToken');
+if (!jwtToken) {
+  alert('로그인이 필요합니다.');
+  window.location.href = '/login.html'; // 로그인 페이지로 리다이렉트
+}
+
 // 이메일 선택 시 도메인 입력 필드 자동 설정
 document.getElementById('email-select').addEventListener('change', function () {
   const emailDomain = document.getElementById('email-domain');
@@ -62,9 +68,6 @@ async function validateAndSubmit() {
 
     // 응답 처리
     if (response.ok) {
-      const result = await response.text();
-      showModal(result); // 성공 메시지 표시
-      console.log(feedback);
       window.location.href = 'submission_complete.html';
     } else {
       const error = await response.text();
