@@ -8,77 +8,40 @@ document
   });
 
 async function validateAndSubmit() {
-  const title = document.getElementById('title').value.trim();
-  const noticeWriter = document.getElementById('newsWriter').value.trim();
+  const title = document.getElementById('title').value;
+  const newsWriter = document.getElementById('newsWriter').value.trim();
   const password = document.getElementById('password').value.trim();
-  const representativeImage = document.getElementById('main-file').files[0];
+  const content = document.getElementById('content').value;
+  const mainFile = document.getElementById('main-file').files[0];
   const attachment = document.getElementById('attachment').files[0];
-  const content = document.getElementById('content').value.trim();
 
-  // 제목 확인
-  if (!title) {
-    showModal('제목이 입력되지 않았습니다. 다시 확인해 주세요.');
-    return;
-  }
-
-  // 작성자 확인
-  if (!noticeWriter) {
-    showModal('작성자가 입력되지 않았습니다. 다시 확인해 주세요.');
-    return;
-  }
-
-  if (!password) {
-    showModal('비밀번호가 입력되지 않았습니다. 다시 확인해 주세요.');
-    return;
-  }
-
-  // 본문 확인
-  if (!content) {
-    showModal('본문이 입력되지 않았습니다. 내용을 입력해 주세요.');
-    return;
-  }
+  // 1. JSON 데이터 준비
+  const newsDTO = {
+    title,
+    newsWriter,
+    password,
+    content,
+  };
 
   const formData = new FormData();
-  formData.append('title', title);
-  formData.append('writer', noticeWriter);
-  formData.append('password', password);
-
-  // 파일이 존재하는 경우만 추가
-  if (representativeImage) {
-    formData.append('representativeImage', representativeImage);
-  } else {
-    console.warn(
-      '대표 이미지가 제공되지 않았습니다. 가상 데이터를 추가합니다.'
-    );
-    const fakeImage = new Blob(['Fake image content'], { type: 'image/png' });
-    formData.append('representativeImage', fakeImage, 'fake-image.png');
-  }
-
-  if (attachment) {
-    formData.append('attachment', attachment);
-  } else {
-    console.warn('첨부파일이 제공되지 않았습니다. 가상 데이터를 추가합니다.');
-    const fakeFile = new Blob(['Fake file content'], { type: 'text/plain' });
-    formData.append('attachment', fakeFile, 'fake-file.txt');
-  }
-
-  formData.append('content', content);
+  formData.append('newsDTO', JSON.stringify(newsDTO)); // JSON 문자열로 변환
+  if (mainFile) formData.append('mainFile', mainFile); // 대표 이미지 파일 추가
+  if (attachment) formData.append('attachment', attachment); // 첨부파일 추가
 
   try {
     // 서버에 POST 요청
     const response = await fetch(
-      'https://mallang-a85bb2ff492b.herokuapp.com/admin/magazines',
+      'https://mallang-a85bb2ff492b.herokuapp.com/api/news',
       {
         method: 'POST',
-        body: formData,
+        body: formData, // FormData는 Content-Type 자동 설정
       }
     );
 
     // 응답 처리
     if (response.ok) {
-      const result = await response.text();
-      console.log(formData);
-      showModal(result); // 성공 메시지 표시
+      showModal('건강 매거진이 성공적으로 등록되었습니다!'); // 성공 메시지 표시
+      window.location.href = 'health_magazine_admin.html';
     } else {
       const error = await response.text();
       showModal(`등록 실패: ${error}`); // 서버 오류 메시지 표시
