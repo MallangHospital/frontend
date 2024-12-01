@@ -5,14 +5,17 @@ html{
     width: 100%;   
     height: 100%; 
     box-sizing: border-box;  
+
 }
 
 
 .announcement-table {
-    width: 100%;               
-    margin: 0;                  
+    width: 50%;                          
     border-collapse: collapse;
     text-align: center;
+    margin-right: 800px;
+    margin-left: 550px;
+
 }
 
 
@@ -39,6 +42,7 @@ html{
     width: 100%;  
     height: auto;
     display: block;
+    margin-bottom: 50px;
 }
 
 .centered-text {
@@ -81,7 +85,8 @@ html{
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .pagination-numbers a {

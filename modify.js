@@ -1,191 +1,122 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//     // 로그인 확인
-//     const jwtToken = localStorage.getItem("jwtToken");
-//     if (!jwtToken) {
-//       alert("로그인이 필요합니다.");
-//       window.location.href = "/login.html"; // 로그인 페이지로 리다이렉트
-//       return;
-//     }
-  
-//     // 비밀번호 유효성 검사 함수
-//     const isValidPassword = (password) => {
-//       const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{1,20}$/;
-//       return passwordRegex.test(password);
-//     };
-  
-//     // 경고 모달 표시
-//     const showModal = (message, imageUrl = "alert_image.png") => {
-//       document.body.innerHTML += `
-//         <div id="alert-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0, 0, 0, 0.5); display:flex; align-items:center; justify-content:center; z-index:1000;">
-//           <div style="background-color:white; padding:20px; border-radius:10px; text-align:center;">
-//             <img src="${imageUrl}" alt="경고 이미지" style="width:300px; height:300px; margin-bottom:10px;">
-//             <p>${message}</p>
-//             <button id="close-alert" style="margin-top:10px; padding:5px 10px; cursor:pointer;">닫기</button>
-//           </div>
-//         </div>
-//       `;
-  
-//       document.querySelector("#close-alert").addEventListener("click", function () {
-//         document.querySelector("#alert-overlay").remove();
-//       });
-//     };
-  
-//     // 개인정보 수정 초기화 (GET 요청)
-//     const initializePersonalInfo = () => {
-//       fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/member/info", {
-//         method: "GET",
-//         headers: {
-//           Authorization: `Bearer ${jwtToken}`,
-//         },
-//       })
-//         .then((response) => response.json())
-//         .then((data) => {
-//           document.getElementById("name").value = data.name || "";
-//           document.getElementById("phone").value = data.phoneNum || "";
-//           document.getElementById("email").value = data.email || "";
-//           document.getElementById("id").value = data.id || "";
-//           document.getElementById("ssn").value = data.ssn || "";
-  
-//           // 읽기 전용 필드 설정
-//           document.getElementById("name").setAttribute("readonly", true);
-//           document.getElementById("id").setAttribute("readonly", true);
-//           document.getElementById("ssn").setAttribute("readonly", true);
-//         })
-//         .catch((error) => {
-//           console.error("Error fetching personal info:", error);
-//           alert("개인정보를 불러오지 못했습니다. 다시 시도해주세요.");
-//         });
-//     };
-  
-//     initializePersonalInfo();
-  
-//     // 비밀번호 변경 저장 버튼 처리
-//     document.querySelector(".save-btn").addEventListener("click", (event) => {
-//       event.preventDefault();
-  
-//       const currentPassword = document.getElementById("current-password")?.value.trim();
-//       const newPassword = document.getElementById("new-password")?.value.trim();
-//       const confirmPassword = document.getElementById("confirm-password")?.value.trim();
-  
-//       if (currentPassword || newPassword || confirmPassword) {
-//         // 비밀번호 변경 처리
-//         if (!currentPassword || !newPassword || !confirmPassword) {
-//           showModal("필수 정보를 모두 입력 바람");
-//           return;
-//         }
-  
-//         if (!isValidPassword(newPassword)) {
-//           showModal("영어, 숫자 또는 특수문자 포함 20자로 입력 바람");
-//           return;
-//         }
-  
-//         if (newPassword !== confirmPassword) {
-//           showModal("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-//           return;
-//         }
-  
-//         // PUT 요청 (비밀번호 변경)
-//         fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/member/update", {
-//           method: "PUT",
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${jwtToken}`,
-//           },
-//           body: JSON.stringify({
-//             currentPassword: currentPassword,
-//             newPassword: newPassword,
-//           }),
-//         })
-//           .then((response) => {
-//             if (response.ok) {
-//               alert("저장되었습니다.");
-//               document.querySelector("form").reset(); // 입력 필드 초기화
-//             } else {
-//               alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
-//             }
-//           })
-//           .catch((error) => {
-//             console.error("Error:", error);
-//             alert("오류가 발생했습니다. 다시 시도해주세요.");
-//           });
-//       } else {
-//         // 개인정보 수정 처리
-//         const phone = document.getElementById("phone").value.trim();
-//         const email = document.getElementById("email").value.trim();
-  
-//         if (!phone || !email) {
-//           showModal("필수 정보를 모두 입력 바람");
-//           return;
-//         }
-  
-//         // PUT 요청 (개인정보 수정)
-//         fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/member/update", {
-//           method: "PUT",
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${jwtToken}`,
-//           },
-//           body: JSON.stringify({
-//             phoneNum: phone,
-//             email: email,
-//           }),
-//         })
-//           .then((response) => {
-//             if (response.ok) {
-//               alert("저장되었습니다.");
-//               initializePersonalInfo(); // 정보 다시 불러오기
-//             } else {
-//               alert("개인정보 수정에 실패했습니다. 다시 시도해주세요.");
-//             }
-//           })
-//           .catch((error) => {
-//             console.error("Error:", error);
-//             alert("오류가 발생했습니다. 다시 시도해주세요.");
-//           });
-//       }
-//     });
-  
-//     // 취소 버튼 처리
-//     document.querySelectorAll(".cancel-btn").forEach((cancelButton) => {
-//       cancelButton.addEventListener("click", (e) => {
-//         e.preventDefault();
-//         alert("취소되었습니다.");
-//         const form = e.target.closest("form");
-//         form.reset(); // 입력 필드 초기화
-//         initializePersonalInfo(); // 개인정보 초기화
-//       });
-//     });
-//   });
-  
-$(document).ready(function () {
-    const fetchMemberInfo = async () => {
-      try {
-        const response = await fetch('https://mallang-a85bb2ff492b.herokuapp.com/info', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to fetch member info');
-        }
-  
-        const memberData = await response.json();
-  
-        // 폼에 데이터 채우기
-        $('#name').val(memberData.name || '');
-        $('#phone').val(memberData.phone || '');
-        $('#email').val(memberData.email || '');
-        $('#id').val(memberData.id || '');
-        $('#ssn').val(memberData.ssn || '');
-      } catch (error) {
-        console.error('Error fetching member info:', error);
-        alert('회원 정보를 불러오는 데 실패했습니다.');
-      }
-    };
-  
-    // 페이지 로드 시 회원 정보 가져오기
-    fetchMemberInfo();
+const API_BASE_URL = "https://mallang-a85bb2ff492b.herokuapp.com/api/member";
+
+// 로그인한 사용자만 접근 가능
+const jwtToken = localStorage.getItem("jwtToken");
+if (!jwtToken) {
+  alert("로그인이 필요합니다.");
+  window.location.href = "/login.html"; // 로그인 페이지로 리다이렉트
+}
+
+// DOMContentLoaded 이벤트 리스너 추가
+document.addEventListener("DOMContentLoaded", () => {
+  // 사용자 정보 조회
+  loadMemberInfo();
+
+  // 폼 제출 이벤트
+  document.getElementById("modify-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    updateMemberInfo();
   });
-  
+
+  // 취소 버튼 클릭 이벤트
+  document.querySelector(".cancel-btn").addEventListener("click", () => {
+    clearForm();
+    alert("취소되었습니다.");
+  });
+});
+
+// 사용자 정보 조회
+// 사용자 정보 조회
+function loadMemberInfo() {
+  fetch(`${API_BASE_URL}/info`, {  // API_BASE_URL을 템플릿 리터럴로 감쌈
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,  // Authorization에 Bearer를 템플릿 리터럴로 추가
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("회원 정보를 불러오는 데 실패했습니다.");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      populateForm(data);
+    })
+    .catch((error) => {
+      console.error("오류 발생:", error);
+      alert("회원 정보를 불러오는 중 오류가 발생했습니다.");
+    });
+}
+
+// 폼에 데이터 채우기
+function populateForm(member) {
+  document.getElementById("name").value = member.name;
+  document.getElementById("id").value = member.mid;
+  document.getElementById("ssn").value = member.rrn;
+  document.getElementById("phone").value = member.phoneNum;
+  document.getElementById("email").value = member.email;
+}
+
+
+function updateMemberInfo() {
+  const currentPassword = document.getElementById("current-password").value;
+  const newPassword = document.getElementById("new-password").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
+
+// 비밀번호 조건 검사 정규식: 영어, 숫자, 특수문자를 모두 포함하며 20자 이내
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?~\-=/]).{1,20}$/;
+
+// 조건 1: 현재 비밀번호와 새 비밀번호가 조건을 만족하는지 확인
+if (!passwordRegex.test(currentPassword) || (newPassword && !passwordRegex.test(newPassword))) {
+  alert("영어, 숫자, 특수문자를 모두 포함하며 20자 이내로 작성 바랍니다.");
+  return;
+}
+
+  // 조건 3: 새 비밀번호와 비밀번호 확인 칸의 값이 일치하지 않는 경우
+  if (newPassword !== confirmPassword) {
+    alert("새 비밀번호가 일치하지 않습니다.");
+    return;
+  }
+  // // 조건 2: 현재 비밀번호와 입력된 값이 일치하지 않는 경우
+  // if (currentPassword !== "serverStoredCurrentPassword") { // 실제로 서버에서 비밀번호 확인하는 API가 필요
+  //   alert("현재 비밀번호와 일치하지 않습니다.");
+  //   return;
+  // }
+
+
+
+  // 수정 가능한 데이터만 전송
+  const memberUpdateData = {
+    currentPassword: currentPassword,   // 현재 비밀번호
+    newPassword: newPassword,           // 새 비밀번호
+    phoneNum: document.getElementById("phone").value,   // 전화번호
+    email: document.getElementById("email").value,      // 이메일
+  };
+
+  // 전송할 데이터 로그
+  console.log("Sending data:", JSON.stringify(memberUpdateData));
+
+  fetch(`${API_BASE_URL}/update`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`, // JWT 토큰 필요 시 추가
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(memberUpdateData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("회원 정보 수정에 실패했습니다.");
+      }
+      return response.text();
+    })
+    .then((message) => {
+      alert("저장되었습니다.");
+      window.location.reload(); // 페이지 새로고침
+    })
+    .catch((error) => {
+      console.error("오류 발생:", error);
+      alert("현재 비밀번호와 일치하지 않습니다.");
+    });
+}

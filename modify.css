@@ -1,123 +1,124 @@
 .section img {
-    width: 100%;               
-    height: auto;
-    display: block;
-    margin-bottom: 50px;
-  }
-/* Header 스타일 */
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background-color: #A6B1BB;
-    color: #FFFFFF;
-    font-size: 1.125rem;
-    font-weight: bold;
-    width: 100%; /* 전체 너비로 확장 */
-    box-sizing: border-box;
-    margin: 0;
-  }
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  
+  width: 100%;               
+  height: auto;
+  display: block;
+  margin-bottom: 50px;
+}
 
-   .form {
-    width: 100%; /* Header와 동일한 너비 */
-    max-width: 1280px; /* 최대 너비를 설정 */
-    margin: 0 auto; /* 화면 가운데 정렬 */
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Form 그룹 스타일 */
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    font-size: 1rem;
-    color: #505050;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #CCCCCC;
-    border-radius: 4px;
-    width: 100%; /* Header와 맞춘 너비 */
-    max-width: 1280px;
-    box-sizing: border-box;
-  }
-  
-  .buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
-  .cancel-btn, .save-btn {
-    padding: 10px 20px;
-    font-size: 0.875rem;
-    color: #A6B1BB;
-    border: 1px solid #A6B1BB;
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 50px;
-  }
-  
-  .save-btn {
-    background-color: #A6B1BB;
-    color: #FFFFFF;
-  }
-  
-  .cancel-btn:hover {
-    background-color: #F9F9F9;
-  }
-  
-  .save-btn:hover {
-    background-color: #707070;
-  }
-  
-  
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: #ECE9E9;
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;
-    width: 300px;
-  }
-  
-  .modal-content p {
-    font-size: 1rem;
-    color: #000;
-    margin-bottom: 20px;
-  }
-  
-  .modal-confirm-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #707070;
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
-    border-radius: 20px;
-    cursor: pointer;
-  }
+
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.title-bar {
+  text-align: left;
+  background-color: #A6B1BB;
+  color: #FFFFFF;
+  padding: 15px 20px;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+ .form {
+  width: 100%; /* Header와 동일한 너비 */
+  max-width: 1280px; /* 최대 너비를 설정 */
+  margin: 0 auto; /* 화면 가운데 정렬 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Form 그룹 스타일 */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.form-group label {
+  font-size: 1rem;
+  color: #505050;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  width: 100%; /* Header와 맞춘 너비 */
+  max-width: 1280px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-btn, .save-btn {
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  color: #A6B1BB;
+  border: 1px solid #A6B1BB;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 50px;
+  margin-left: 1150px;
+}
+
+.save-btn {
+  background-color: #A6B1BB;
+  color: #FFFFFF;
+}
+
+.cancel-btn:hover {
+  background-color: #F9F9F9;
+}
+
+.save-btn:hover {
+  background-color: #707070;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #ECE9E9;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.modal-content p {
+  font-size: 1rem;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.modal-confirm-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #707070;
+  background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 20px;
+  cursor: pointer;
+}

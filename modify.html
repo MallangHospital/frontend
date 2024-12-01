@@ -18,79 +18,58 @@
 
   <script src="common_assets/jquery-3.7.1.min.js"></script>
   <script defer src="common_assets/script.js"></script>
-
+  <script defer src="modify.js"></script> <!-- 연결된 JS -->
 </head>
 <body>
   <div class="wrap">
-
     <div id="navbar"></div>
     <div class="section">
-        <img src="assets/section_modify.png" alt="secction">
-        </div>
-        <div class="header">
-          <span>비밀번호 변경</span>
-        </div>
-        <form class="form">
-          <div class="form-group">
-            <label for="current-password">현재 비밀번호</label>
-            <input type="password" id="current-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
-          </div>
-          <div class="form-group">
-            <label for="new-password">새 비밀번호</label>
-            <input type="password" id="new-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
-          </div>
-          <div class="form-group">
-            <label for="confirm-password">새 비밀번호 확인</label>
-            <input type="password" id="confirm-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
-          </div>
-          <div class="buttons">
-            <button type="button" class="cancel-btn">취소</button>
-            <button type="submit" class="save-btn">저장</button>
-          </div>
-        </form>
-    
-        <!-- Modal -->
-        <div class="modal" id="warning-modal">
-          <div class="modal-content">
-            <p>영어, 숫자 또는 특수 문자 조합 20자 이내로<br>작성바랍니다</p>
-            <button class="modal-confirm-btn" id="modal-confirm-btn">확인</button>
-          </div>
-        </div>
-    
-        <!-- Section: 개인정보 수정 -->
-        
-        <div class="header">
-          <span>개인정보수정</span>
-        </div>
-        <form class="form">
-          <div class="form-group">
-            <label for="name">이름</label>
-            <input type="text" id="name" placeholder="입력해주세요...">
-          </div>
-          <div class="form-group">
-            <label for="phone">전화번호</label>
-            <input type="text" id="phone" placeholder="010-">
-          </div>
-          <div class="form-group">
-            <label for="email">이메일</label>
-            <input type="email" id="email" placeholder="입력해주세요...">
-          </div>
-          <div class="form-group">
-            <label for="id">ID</label>
-            <input type="text" id="id" placeholder="MALRANG">
-          </div>
-          <div class="form-group">
-            <label for="ssn">주민번호</label>
-            <input type="text" id="ssn" placeholder="030101-4******">
-          </div>
-          <div class="buttons">
-            <button type="button" class="cancel-btn">취소</button>
-            <button type="submit" class="save-btn">저장</button>
-          </div>
-        </form>
-    
-        <!-- Footer -->
-        <div id="footer"></div>
+        <img src="assets/section_modify.png" alt="section">
+    </div>
+
+    <div class="header">
+      <h1 class="title-bar">개인 정보 수정</h1>
+  </div>
+    <form class="form" id="modify-form">
+      <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="입력해주세요..." readonly>
       </div>
-    </body>
-    </html>
+      <div class="form-group">
+        <label for="id">ID</label>
+        <input type="text" id="id" placeholder="MALRANG" readonly>
+      </div>
+      <div class="form-group">
+        <label for="ssn">주민번호</label>
+        <input type="text" id="ssn" placeholder="030101-4******" readonly>
+      </div>
+      <div class="form-group">
+        <label for="phone">전화번호</label>
+        <input type="text" id="phone" placeholder="010-">
+      </div>
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input type="email" id="email" placeholder="입력해주세요...">
+      </div>
+      <div class="form-group">
+        <label for="current-password">현재 비밀번호</label>
+        <input type="password" id="current-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
+      </div>
+      <div class="form-group">
+        <label for="new-password">새 비밀번호</label>
+        <input type="password" id="new-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">새 비밀번호 확인</label>
+        <input type="password" id="confirm-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
+      </div>        
+      <div class="buttons">
+    
+        <button type="submit" class="save-btn">저장</button>
+      </div>
+    </form>
+
+    <div id="footer"></div>
+  </div>
+</body>
+</html>
