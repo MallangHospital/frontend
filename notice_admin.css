@@ -10,6 +10,9 @@
 .pagination{
     margin-bottom: 30px;
 }
+.search-box{
+    margin-top: 20px;
+}
 
 .write-button {
     background-color: #545C62;  
@@ -26,7 +29,23 @@
     line-height: 1.5; 
     margin-bottom: 30px;  
 }
+.announcement-table{
+    margin-left: 600px;
+}
 
+.delete-all-button {
+    background-color:  #545C62;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .delete-all-button:hover {
+    background-color:#434c54;
+  }
+  
 
 .write-button:hover {
     background-color: #434c54; 

@@ -11,6 +11,7 @@ body {
     width: 100%;    
     height: auto;  
     display: block; 
+    margin-bottom: 50px;
   }
   
  
@@ -19,6 +20,7 @@ body {
     grid-template-columns: repeat(3, 1fr);  
     gap: 16px;
     padding: 20px;
+    margin-bottom: 50px;
   }
   
  
@@ -67,6 +69,7 @@ body {
   .card-info {
     font-size: 0.8em;
     color: #999;
+    
   }
   
 
