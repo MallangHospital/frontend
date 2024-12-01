@@ -92,39 +92,171 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("vacation-update-form");
-      const popupOverlay = document.getElementById("popup-overlay");
-      const closePopupButton = document.getElementById("close-popup");
+   document.addEventListener("DOMContentLoaded", () => {
+    const baseUrl = "https://mallang-a85bb2ff492b.herokuapp.com"; // Heroku API Base URL
+    const ITEMS_PER_PAGE = 4; // 페이지당 항목 수
+    let currentPage = 1;
+    let doctors = []; // 의료진 정보 저장
+    let vacations = []; // 휴진 정보 저장
 
-      form.addEventListener("submit", (e) => {
+    // 의료진 정보 로드
+    async function loadDoctors() {
+        try {
+            const response = await fetch(`${baseUrl}/api/doctors`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                doctors = await response.json();
+                console.log("의료진 정보 로드 성공:", doctors);
+                populateDoctorDropdown(); // 의료진 등록 섹션 드롭다운 업데이트
+                renderDoctorList();
+            } else {
+                console.error("의료진 정보 로드 실패:", response.status);
+                alert("의료진 정보를 불러오는 데 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("네트워크 오류:", error);
+            alert("의료진 정보를 불러오는 중 오류가 발생했습니다.");
+        }
+    }
+
+    // 휴진 정보 로드
+    async function loadVacations() {
+        try {
+            const response = await fetch(`${baseUrl}/api/vacations`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                vacations = await response.json();
+                console.log("휴진 정보 로드 성공:", vacations);
+                renderVacationList();
+            } else {
+                console.error("휴진 정보 로드 실패:", response.status);
+                alert("휴진 정보를 불러오는 데 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("네트워크 오류:", error);
+            alert("휴진 정보를 불러오는 중 오류가 발생했습니다.");
+        }
+    }
+
+    // 의료진 정보 렌더링
+    function renderDoctorList() {
+        const doctorList = document.getElementById("doctor-list");
+        doctorList.innerHTML = doctors
+            .map(
+                (doctor) => `
+                <tr>
+                    <td><img src="${doctor.photoUrl || 'default.jpg'}" alt="${doctor.name}" width="50" height="50"></td>
+                    <td>${doctor.name}</td>
+                    <td>${doctor.departmentName || "정보 없음"}</td>
+                    <td>${doctor.phoneNumber || "정보 없음"}</td>
+                    <td><a href="doctor_update_admin.html?doctorId=${doctor.id}" class="btn-update">수정</a></td>
+                </tr>
+            `
+            )
+            .join("");
+    }
+
+    // 휴진 정보 렌더링
+    function renderVacationList() {
+        const vacationList = document.querySelector(".vacation-table tbody");
+        vacationList.innerHTML = vacations
+            .map(
+                (vacation) => `
+                <tr>
+                    <td>${vacation.doctorName || "정보 없음"}</td>
+                    <td>${vacation.startDate || "정보 없음"}</td>
+                    <td>${vacation.endDate || "정보 없음"}</td>
+                    <td><a href="vacation_update_admin.html?vacationId=${vacation.id}" class="btn-update">수정</a></td>
+                </tr>
+            `
+            )
+            .join("");
+    }
+
+    // 의료진 드롭다운 채우기
+    function populateDoctorDropdown() {
+        const doctorDropdown = document.getElementById("vacation-doctor");
+        doctorDropdown.innerHTML = doctors
+            .map(
+                (doctor) => `
+                <option value="${doctor.id}">${doctor.name} (${doctor.departmentName})</option>
+            `
+            )
+            .join("");
+    }
+
+    // 휴진 정보 등록
+    const vacationForm = document.querySelector("section form");
+    vacationForm.addEventListener("submit", async (e) => {
         e.preventDefault(); // 기본 제출 방지
 
+        const doctorId = document.getElementById("vacation-doctor").value;
         const vacationStart = document.getElementById("vacation-start").value;
         const vacationEnd = document.getElementById("vacation-end").value;
 
+        if (!doctorId) {
+            alert("의료진을 선택해주세요.");
+            return;
+        }
         if (!vacationStart) {
-          alert("휴진 시작일을 입력해주세요.");
-          return;
+            alert("휴진 시작일을 입력해주세요.");
+            return;
         }
-
         if (!vacationEnd) {
-          alert("휴진 종료일을 입력해주세요.");
-          return;
+            alert("휴진 종료일을 입력해주세요.");
+            return;
         }
-
         if (new Date(vacationStart) > new Date(vacationEnd)) {
-          alert("휴진 시작일은 종료일보다 이전이어야 합니다.");
-          return;
+            alert("휴진 시작일은 종료일보다 이전이어야 합니다.");
+            return;
         }
 
-        popupOverlay.style.display = "flex"; // 팝업 열기
-      });
+        try {
+            const response = await fetch(`${baseUrl}/api/vacations/${doctorId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    startDate: vacationStart,
+                    endDate: vacationEnd,
+                    doctorId: parseInt(doctorId, 10),
+                }),
+            });
 
-      closePopupButton.addEventListener("click", () => {
-        popupOverlay.style.display = "none"; // 팝업 닫기
-      });
+            if (response.ok) {
+                alert("휴진 정보가 성공적으로 등록되었습니다.");
+                await loadVacations(); // 휴진 정보 다시 로드
+            } else {
+                console.error("휴진 정보 등록 실패:", response.status);
+                alert("휴진 정보 등록에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("휴진 정보 등록 중 오류 발생:", error);
+            alert("휴진 정보 등록 중 오류가 발생했습니다.");
+        }
     });
+
+    // 초기 데이터 로드
+    async function initializePage() {
+        await loadDoctors(); // 의료진 정보 로드
+        await loadVacations(); // 휴진 정보 로드
+    }
+
+    initializePage();
+});
+
+
   </script>
 </body>
 </html>
