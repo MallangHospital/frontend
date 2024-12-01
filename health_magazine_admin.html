@@ -1,134 +1,41 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>건강매거진</title>
-  
 
-  <link rel="stylesheet" href="health_magazine_admin.css">  
+  <link rel="stylesheet" href="health_magazine_admin.css">
   <link rel="stylesheet" href="common_assets/globalstyle.css">
-  <link rel="stylesheet" href="common_assets/navbar_admin.css">   <!--네비게이션 바 css-->
-  <link rel="stylesheet" href="common_assets/footer.css">   <!--푸터 css-->
+  <link rel="stylesheet" href="common_assets/navbar_admin.css"> <!-- 네비게이션 바 css -->
+  <link rel="stylesheet" href="common_assets/footer.css"> <!-- 푸터 css -->
 
-  <!-- 폰트 연결-->
+  <!-- 폰트 연결 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
-  <!--제이쿼리 연결-->
+  <!-- 제이쿼리 연결 -->
   <script src="common_assets/jquery-3.7.1.min.js"></script>
   <script defer src="common_assets/script_admin.js"></script>
-
+  <script defer src="health_magazine_admin.js"></script> <!-- 건강매거진 데이터 로드 JS -->
 </head>
 <body>
   <div class="wrap">
-    <div id="navbar"></div>  
-
+    <div id="navbar"></div>
 
     <div class="notice-container">
-      <!-- 카드 1 -->
-      <div class="card">
-        <div class="card-img-container">
-        <img src="example1.jpg" alt="지역응급의료센터 이미지">
-        <button class="close-btn">X</button>
-      </div>
-        <div class="card-content">
-          <h3 class="card-subtitle">추석 연휴 문여는 병원</h3>
-          <h2 class="card-title">지역응급의료센터</h2>
-          <p class="card-description">추석연휴 문여는 병원 | 응급의학과 의료진 11명, 참조은병원 지역응급...</p>
-          <div class="card-info">
-            <span>2024. 09. 05</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 카드 2 -->
-      <div class="card">
-        <div class="card-img-container">
-        <img src="example2.jpg" alt="혈압, 혈당, 콜레스테롤 관리 이미지">
-        <button class="close-btn">X</button>
-      </div>
-        <div class="card-content">
-          <h3 class="card-subtitle">체중 관리만큼 중요한!</h3>
-          <h2 class="card-title">혈압·혈당·콜레스테롤</h2>
-          <p class="card-description">체중만큼 중요한 혈압·혈당·콜레스테롤 수치</p>
-          <div class="card-info">
-            <span>2024. 09. 05</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 카드 3 -->
-      <a href="mhealth_magazine_in.html">
-      <div class="card">
-        <div class="card-img-container">
-        <img src="example3.jpg" alt="하지정맥류 이미지">
-        <button class="close-btn">X</button>
-      </div>
-        <div class="card-content">
-          <h3 class="card-subtitle">악화되기 전 초기에 치료하세요!</h3>
-          <h2 class="card-title">하지정맥류</h2>
-          <p class="card-description">하지정맥류 악화되기 전 초기에 치료하세요</p>
-          <div class="card-info">
-            <span>2024. 08. 28</span>
-          </div>
-        </div>
-      </div>
-    </a>
-      <!-- 카드 4 -->
-      <div class="card">
-        <div class="card-img-container">
-        <img src="example4.jpg" alt="봉합과 흉터관리 이미지">
-        <button class="close-btn">X</button>
-      </div>
-        <div class="card-content">
-          <h3 class="card-subtitle">피부 염상, 성형외과 전문의에게!</h3>
-          <h2 class="card-title">봉합과 흉터관리</h2>
-          <p class="card-description">피부 염상 봉합 및 흉터관리! 성형외과 전문의에게 치료받으세요~</p>
-          <div class="card-info">
-            <span>2024. 08. 19</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 카드 5 -->
-      <div class="card">
-        <div class="card-img-container">
-        <img src="example5.png" alt="안저검사 AI판독 이미지">
-        <button class="close-btn">X</button>
-      </div>
-        <div class="card-content">
-          <h3 class="card-subtitle">건강검진시 당뇨망막병증 진단</h3>
-          <h2 class="card-title">안저검사 AI판독</h2>
-          <p class="card-description">건강검진 시 당뇨망막병증, AI기반 판독으로 신속하고 정확한 안저검...</p>
-          <div class="card-info">
-            <span>2024. 08. 16</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 카드 6 -->
-      <div class="card">
-        <div class="card-img-container">
-        <img src="example6.png" alt="담낭염 이미지">
-        <button class="close-btn">X</button>
-      </div>
-        <div class="card-content">
-          <h3 class="card-subtitle">증상부터 수술 후 관리까지!</h3>
-          <h2 class="card-title">담낭염</h2>
-          <p class="card-description">담낭염의 증상 및 담낭제거수술 후 관리</p>
-          <div class="card-info">
-            <span>2024. 08. 14</span>
-          </div>
-        </div>
+      <!-- 카드 컨테이너 -->
+      <div id="magazine-cards-container" class="cards-grid">
+        로딩 중...
       </div>
     </div>
-    <a href="magazine_write_admin.html">
-      <button class="write-button">글 작성하러 가기</button>
-    </a>
-    
-    <div id="footer"></div>  
+
+    <!-- 글 작성 버튼 -->
+    <button class="write-button" id="writeButton">글 작성하러 가기</button>
+
+    <div id="footer"></div>
   </div>
 </body>
 </html>

@@ -5,6 +5,11 @@
   color: #333;
   margin-bottom: 20px;
 }
+.notice-container {
+  padding: 0 20px; /* Adds padding to the left and right */
+  margin: 0 auto;  /* Centers the container horizontally */
+  max-width: 1200px; /* Optional: Limits the max width of the content */
+}
 
 
 .announcement {
@@ -47,6 +52,7 @@
 .button-container {
   text-align: center;
   margin-top: 40px;
+  margin-bottom: 50px;
 }
 
 .button {
@@ -69,6 +75,7 @@
   width: 100%;
   height: auto;
   display: block;
+  margin-bottom: 80px;
 }
 
 
