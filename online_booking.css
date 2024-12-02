@@ -155,23 +155,23 @@
     display: flex; 
     align-items: center; 
     width: 100%; 
-    max-width: 300px; 
-    padding: 20px;
+    max-width: 250px; /* 이전 300px에서 줄임 */
+    padding: 15px; /* 이전 20px에서 줄임 */
     background-color: #f5f7f9;
-    border-radius: 15px;
+    border-radius: 10px; /* 이전 15px에서 줄임 */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: left; /* 텍스트 왼쪽 정렬 */
     transition: box-shadow 0.3s;
-    height: 130px; 
+    height: 110px; /* 이전 130px에서 줄임 */
 }
 
 /* 프로필 이미지 스타일링 */
 .doctor-img {
-    width: 80px; /* 이미지 크기 */
-    height: 80px;
-    border-radius: 50%; /* 원형 이미지 */
+    width: 60px; /* 이전 80px에서 줄임 */
+    height: 60px;
+    border-radius: 50%; /* 원형 유지 */
     object-fit: cover; 
-    margin-right: 15px; 
+    margin-right: 10px; /* 이전 15px에서 줄임 */
 }
 
 /* 텍스트 정보 정렬 */
@@ -184,7 +184,7 @@
 
 /* 의사 이름 스타일 */
 .doctor-name {
-    font-size: 14px;
+    font-size: 12px; /* 이전 14px에서 줄임 */
     font-weight: lighter;
     color: #333;
     margin-top: 3px; /* 이미지와 간격 */
@@ -192,9 +192,14 @@
 
 /* 상태 정보 스타일 */
 .doctor-status p {
-    font-size: 15px;
+    font-size: 13px; /* 이전 15px에서 줄임 */
     color: #666;
     margin: 0;
+}
+
+/* 의사 카드 hover 효과 */
+#staffListView li:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .doctor-status {
@@ -209,10 +214,6 @@
     margin: 0; 
 }
 
-
-#staffListView li:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
 
 #staffListView li .favorite-btn {
     margin-top: 10px;

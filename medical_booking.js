@@ -208,3 +208,4 @@ $(document).ready(function () {
 
   console.log("스크립트 초기화 완료"); // 초기화 완료 로그
 });
+

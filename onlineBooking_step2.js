@@ -14,12 +14,13 @@ function submitReservation() {
 
   // 예약 데이터 구성
   const registrationData = {
-      visitType: localStorage.getItem("appointmentType"),
-      department: localStorage.getItem("department"),
-      doctorName: localStorage.getItem("doctorName"),
-      registrationDate: registrationDate, // 접수 날짜 (오늘 날짜)
-      registrationTime: registrationTime, // 접수 시간 (현재 시간)
-  };
+    visitType: localStorage.getItem("visitType"),
+    departmentId: localStorage.getItem("departmentId"),
+    doctorName: localStorage.getItem("doctorName"),
+    registrationDate: registrationDate, // 접수 날짜 (오늘 날짜)
+    registrationTime: registrationTime, // 접수 시간 (현재 시간)
+    symptom: symptomInput, // 증상 추가
+};
 
   console.log("전송할 예약 데이터:", registrationData);
 
