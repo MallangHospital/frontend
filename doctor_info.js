@@ -92,62 +92,64 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("드롭다운 갱신 완료");
     }
 
-        // 의료진 등록
-       async function addDoctor() {
-    const name = document.getElementById("doctor-name").value;
-    const department = document.getElementById("doctor-department").value;
-    const contact = document.getElementById("doctor-contact").value;
-    const photoFile = document.getElementById("doctor-image").files[0];
-
-    const departmentMapping = {
-        "내과": 1,
-        "산부인과": 2,
-        "소아청소년과": 3,
-        "외과": 4,
-    };
-    const departmentId = departmentMapping[department];
-
-    if (!name || !departmentId || !contact) {
-        alert("모든 필드를 입력해주세요.");
-        return;
-    }
-
-    const doctorData = {
-        name,
-        departmentId,
-        phoneNumber: contact,
-        specialty: "General Medicine", // 기본값 제공
-        position: "Doctor", // 기본값 제공
-        adminId: "admin123", // 기본값 제공 (실제 관리자의 ID로 대체 필요)
-        photoPath: "default/photo/path", // 기본값 제공
-    };
-
-    const formData = new FormData();
-    formData.append("doctor", JSON.stringify(doctorData));
-    if (photoFile) {
-        formData.append("photo", photoFile);
-    }
-
-    try {
-        console.log("의료진 등록 요청 데이터:", doctorData, photoFile);
-        const response = await fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/doctors", {
-            method: "POST",
-            body: formData,
-        });
-
-        if (response.ok) {
-            alert("의료진 정보가 등록되었습니다.");
-            await loadDoctors(); // 데이터 새로 로드
-        } else {
-            const errorText = await response.text();
-            console.error("의료진 등록 실패:", response.status, errorText);
-            alert(`의료진 등록에 실패했습니다. 상태 코드: ${response.status}\n응답 내용: ${errorText}`);
+    async function addDoctor() {
+        const name = document.getElementById("doctor-name").value.trim();
+        const department = document.getElementById("doctor-department").value.trim();
+        const contact = document.getElementById("doctor-contact").value.trim();
+        const photoFile = document.getElementById("doctor-image").files[0];
+    
+        // 부서 맵핑
+        const departmentMapping = {
+            "내과": 1,
+            "산부인과": 2,
+            "소아청소년과": 3,
+            "외과": 4,
+        };
+        const departmentId = departmentMapping[department];
+    
+        // 유효성 검사
+        if (!name || !departmentId || !contact) {
+            alert("모든 필드를 입력해주세요.");
+            return;
         }
-    } catch (error) {
-        console.error("의료진 등록 중 오류 발생:", error);
-        alert("의료진 등록 중 문제가 발생했습니다.");
+    
+        // JSON 데이터 준비
+        const doctorData = {
+            name,
+            departmentId,
+            phoneNumber: contact,
+            photoPath: "default/photo/path", // 기본값
+        };
+    
+        // FormData에 JSON 데이터와 이미지 파일 추가
+        const formData = new FormData();
+        formData.append("doctor", JSON.stringify(doctorData));
+        if (photoFile) {
+            formData.append("photo", photoFile);
+        }
+    
+        try {
+            console.log("전송할 데이터:", doctorData, photoFile);
+            const response = await fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/doctors", {
+                method: "POST",
+                body: formData,
+            });
+    
+            if (response.ok) {
+                alert("의료진이 성공적으로 등록되었습니다.");
+                document.getElementById("add-doctor-form").reset(); // 폼 초기화
+                await loadDoctors(); // 새로고침
+            } else {
+                const errorMessage = await response.text();
+                console.error("의료진 등록 실패:", errorMessage);
+                alert(`등록 실패: ${errorMessage}`);
+            }
+        } catch (error) {
+            console.error("의료진 등록 중 오류 발생:", error);
+            alert("의료진 등록 중 문제가 발생했습니다. 네트워크를 확인하세요.");
+        }
     }
-}
+    
 
     // 삭제 버튼 이벤트 연결
     function attachDeleteEvents() {

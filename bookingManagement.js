@@ -42,37 +42,73 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  function renderAppointments(appointments) {
-    appointmentTableBody.innerHTML = ""; // 기존 내용 초기화
-    appointments.forEach((appointment) => {
-      const row = document.createElement("tr");
-      const statusClass = appointment.status === "취소" ? "canceled" : "reserved";
+// 예약 정보를 로드하는 함수 (상세보기 버튼 수정)
+function renderAppointments(appointments) {
+  appointmentTableBody.innerHTML = ""; // 기존 내용 초기화
+  appointments.forEach((appointment) => {
+    const row = document.createElement("tr");
+    const statusClass = appointment.status === "취소" ? "canceled" : "reserved";
 
-      row.innerHTML = `
-        <td>${appointment.patientName}</td>
-        <td>${appointment.appointmentDate} ${appointment.appointmentTime}</td>
-        <td>${appointment.doctorName}</td>
-        <td class="${statusClass}">${appointment.status}</td>
-        <td>
-          <button class="view-details" data-id="${appointment.id}">상세 보기</button>
-        </td>`;
+    row.innerHTML = `
+      <td>${appointment.patientName}</td>
+      <td>${appointment.appointmentDate} ${appointment.appointmentTime}</td>
+      <td>${appointment.doctorName}</td>
+      <td class="${statusClass}">${appointment.status}</td>
+      <td>
+        <button class="view-details" data-id="${appointment.id}" data-type="appointment">상세 보기</button>
+      </td>`;
 
-      appointmentTableBody.appendChild(row);
+    appointmentTableBody.appendChild(row);
+  });
+
+  document.querySelectorAll(".view-details").forEach((button) => {
+    button.addEventListener("click", function () {
+      const appointmentId = this.dataset.id; // id를 가져옴
+      const type = this.dataset.type; // 예약인지 접수인지 확인
+      console.log(`"상세 보기" 버튼 클릭: ID = ${appointmentId}, 타입 = ${type}`);
+      viewDetails(appointmentId, type);
     });
+  });
+}
 
-    document.querySelectorAll(".view-details").forEach((button) => {
-      button.addEventListener("click", function () {
-        const appointmentId = this.dataset.id; // id를 가져옴
-        console.log(`"상세 보기" 버튼 클릭: 예약 ID = ${appointmentId}`);
-        viewAppointmentDetails(appointmentId);
-      });
+function renderOnlineRegistrations(registrations) {
+  registrationTableBody.innerHTML = ""; // 기존 내용 초기화
+  registrations.forEach((registration) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${registration.patientName}</td>
+      <td>${registration.registrationDate} ${registration.registrationTime}</td>
+      <td>${registration.doctorName}</td>
+      <td>
+        <button class="view-details" data-id="${registration.id}" data-type="registration">상세 보기</button>
+      </td>
+    `;
+
+    registrationTableBody.appendChild(row);
+  });
+
+  document.querySelectorAll(".view-details").forEach((button) => {
+    button.addEventListener("click", function () {
+      const registrationId = this.dataset.id; // id를 가져옴
+      const type = this.dataset.type; // 예약인지 접수인지 확인
+      console.log(`"상세 보기" 버튼 클릭: ID = ${registrationId}, 타입 = ${type}`);
+      viewDetails(registrationId, type); // 공통 상세보기 함수 호출
     });
-  }
+  });
+}
 
-  function viewAppointmentDetails(appointmentId) {
-    console.log(`상세보기 페이지로 이동: 예약 ID = ${appointmentId}`);
-    window.location.href = `/booking_detail_admin.html?id=${appointmentId}`;
+
+// 상세보기 페이지로 이동하는 함수 (예약과 접수를 구분)
+function viewDetails(id, type) {
+  if (type === "appointment") {
+    console.log(`예약 상세보기 페이지로 이동: 예약 ID = ${id}`);
+    window.location.href = `/booking_detail_admin.html?id=${id}`;
+  } else if (type === "registration") {
+    console.log(`접수 상세보기 페이지로 이동: 접수 ID = ${id}`);
+    window.location.href = `/onlineBooking_detail_admin.html?id=${id}`;
   }
+}
 
 
   //온라인 접수

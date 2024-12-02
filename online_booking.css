@@ -20,7 +20,7 @@
     color: #999;
     background-color: #f9f9f9;
     transition: all 0.3s ease;
-    width: 100px; /* 버튼 너비 */
+    width: 100px;
     font-size: 12px;
 }
 
@@ -36,7 +36,7 @@
     margin-bottom: 2px;
     padding-top: 10px;
     margin-top: 70px;
-    position: relative; 
+    position: relative;
 }
 
 .navList {
@@ -44,21 +44,20 @@
     display: flex;
     padding: 0;
     margin: 0;
-    position: absolute; 
-    top: -62px; 
-    left: 0; 
+    position: absolute;
+    top: -62px;
+    left: 0;
     z-index: 2;
 }
 
 .navItem {
     position: relative;
-    margin-top: 9px; 
+    margin-top: 9px;
     cursor: pointer;
-    padding-top: 31px; 
+    padding-top: 31px;
     line-height: 2;
     margin-right: 15px;
 }
-
 
 .navItem.is-active {
     border-bottom: 2px solid #333;
@@ -69,17 +68,17 @@
 .navLink {
     text-decoration: none;
     color: #333 !important;
-    font-size: 12px !important; 
+    font-size: 12px !important;
     font-weight: 500;
 }
 
-/***** 진료과목 선택 스타일링  *****/
+/***** 진료과목 선택 스타일링 *****/
 .medical_department_list {
     margin-top: 30px;
     margin-bottom: 100px;
     display: flex;
-    justify-content: center; /* 내부 콘텐츠를 수평으로 가운데 정렬 */
-    flex-wrap: wrap; /* 아이템이 넘칠 경우 다음 줄로 이동 */
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 #listView {
@@ -89,7 +88,7 @@
 }
 
 #listView li {
-    width: 100%; 
+    width: 100%;
     max-width: 150px;
     background-color: #f5f7f9;
     border-radius: 15px;
@@ -126,113 +125,159 @@
 
 #listView .txt {
     display: flex;
-    flex-direction: row; 
-    justify-content: space-between; 
-    align-items: center; 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #listView .ico {
     font-size: 1.8rem;
     color: #888;
-    margin-top: 80px; 
+    margin-top: 80px;
     margin-left: auto;
 }
 
-/* 의료진 카드 스타일링 */
-
+/***** 의료진 카드 스타일링 *****/
 #staffListView {
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); /* 2개의 열로 정렬 */
-    gap: 50px; /* 간격 */
-    justify-content: center; 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2개씩 배치 */
+    gap: 20px; /* 항목 간의 간격을 20px로 설정 */
+    justify-content: center; /* 중앙 정렬 */
     align-items: center;
     text-align: center;
-    column-gap: 10px; /* 열 간 간격 설정 */
+    margin-top: 30px; /* 위쪽 여백 추가 */
 }
 
-/* 의료진 카드 스타일링 */
 #staffListView li {
-    display: flex; 
-    align-items: center; 
-    width: 100%; 
-    max-width: 250px; /* 이전 300px에서 줄임 */
-    padding: 15px; /* 이전 20px에서 줄임 */
-    background-color: #f5f7f9;
-    border-radius: 10px; /* 이전 15px에서 줄임 */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: left; /* 텍스트 왼쪽 정렬 */
-    transition: box-shadow 0.3s;
-    height: 110px; /* 이전 130px에서 줄임 */
-}
-
-/* 프로필 이미지 스타일링 */
-.doctor-img {
-    width: 60px; /* 이전 80px에서 줄임 */
-    height: 60px;
-    border-radius: 50%; /* 원형 유지 */
-    object-fit: cover; 
-    margin-right: 10px; /* 이전 15px에서 줄임 */
-}
-
-/* 텍스트 정보 정렬 */
-.doctor-info {
     display: flex;
-    flex-direction: column; 
-    justify-content: space-between; 
-    height: 100%; 
+    align-items: center; /* 수평 정렬 */
+    width: 100%;
+    max-width: 260px; /* 카드 너비 고정 */
+    padding: 15px;
+    background-color: #f5f7f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: box-shadow 0.3s;
+    height: 120px;
+    position: relative;
 }
 
-/* 의사 이름 스타일 */
-.doctor-name {
-    font-size: 12px; /* 이전 14px에서 줄임 */
-    font-weight: lighter;
-    color: #333;
-    margin-top: 3px; /* 이미지와 간격 */
+.medical_staff_list {
+    margin: 0 400px; /* 좌우 마진 150px */
+    /* 나머지 스타일은 그대로 */
 }
 
-/* 상태 정보 스타일 */
-.doctor-status p {
-    font-size: 13px; /* 이전 15px에서 줄임 */
-    color: #666;
-    margin: 0;
-}
-
-/* 의사 카드 hover 효과 */
 #staffListView li:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.doctor-status {
-    margin-left: 50px; 
+/* 의사 사진 스타일 (왼쪽에 위치) */
+.doctor-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px; /* 사진과 텍스트 간의 간격 */
 }
 
+/* 의료진 정보 스타일 (오른쪽에 위치) */
+.doctor-info {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 100%;
+}
 
-#staffListView li p {
-    font-size: 14px;
+/* 의사 이름 스타일 */
+.doctor-name {
+    font-size: 16px;
     font-weight: bold;
     color: #333;
-    margin: 0; 
+    margin: 0;
 }
 
-
-#staffListView li .favorite-btn {
-    margin-top: 10px;
-    margin-bottom: 20px;
+/* 대기 인원 스타일 */
+.doctor-status {
+    font-size: 14px;
+    color: #666;
 }
 
-.medical_staff_list{
-    margin: 30px 300px 100px 300px;
+/* 예상 대기 시간 스타일 */
+.doctor-wait-time {
+    font-size: 18px;
+    color: rgb(199, 83, 83); /* 붉은 색 */
+    font-weight: bold;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
 }
 
+.wait-time {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* 리스트 아이템 간 여백 설정 */
+.doctor-item {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* 사진과 텍스트 간 간격 설정 */
+    margin-bottom: 20px; /* 리스트 항목 간의 고정된 간격 설정 */
+}
+
+/* 버튼 스타일 */
 .btn_next {
-    width: 200px; 
-    padding: 10px; 
-    background-color: #A6B1BB; 
-    color: white; 
-    font-size: 15px; 
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer; /* 마우스 커서 */
-    margin: 30px auto 0 auto; /* 상단 여백과 중앙 정렬 */
-    display: block; /* 중앙 정렬을 위한 블록 */
+    width: 200px;
+    padding: 10px;
+    background-color: #A6B1BB;
+    color: white;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 30px auto 100px auto; /* 버튼 아래 100px 여백 추가 */
+    display: block;
+}
+
+/* 의료진 정보 스타일 (중복 제거된 부분) */
+.doctor-info {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.doctor-name {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+}
+
+.doctor-status, .doctor-wait-time {
+    font-size: 14px;
+    margin: 0;
+}
+
+/* 대기 시간 텍스트 색상 지정 */
+.doctor-wait-time, .wait-time {
+    color: rgb(199, 83, 83); /* 붉은 색으로 지정 */
+    font-weight: bold;
+}
+
+/* 리스트 아이템 간 여백 설정 */
+.doctor-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px; /* 리스트 항목 간의 고정 간격 설정 */
+}
+
+/* 의사 사진 크기 및 스타일 */
+.doctor-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
 }
