@@ -45,7 +45,7 @@ function loadMemberInfo() {
     })
     .catch((error) => {
       console.error("오류 발생:", error);
-      alert("회원 정보를 불러오는 중 오류가 발생했습니다.");
+      alert("로그인 후 이용가능한 서비스입니다.");
     });
 }
 
