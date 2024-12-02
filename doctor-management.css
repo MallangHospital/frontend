@@ -84,11 +84,13 @@ section {
     cursor: pointer;
   }
   
-  .btn-add {
-    background-color: #007bff;
-    color: white;
-    margin-bottom: 40px;
+  .add-doctor-btn,
+  .add-vacation-btn {
+      background-color: #007bff;
+      color: white;
+      margin-bottom: 40px;
   }
+  
   
   a.btn-update {
     background-color: #A6B1BB;
