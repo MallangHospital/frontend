@@ -124,19 +124,24 @@ $(document).ready(function () {
       alert("유효한 진료과목이 아닙니다.");
     }
   });
+// 의사 선택 로직 추가
+$("#staffListView").on("click", ".doctor-item", function () {
+  // 기존 선택된 항목 해제
+  $(".doctor-item").removeClass("selected");
 
-  // 의사 선택 로직 추가
-  $("#staffListView").on("click", ".doctor-item", function () {
-    // 기존 선택된 항목 해제
-    $(".doctor-item").removeClass("selected");
+  // 현재 선택된 항목 강조
+  $(this).addClass("selected");
 
-    // 현재 선택된 항목 강조
-    $(this).addClass("selected");
+  // 선택된 의사의 ID 로그 출력
+  const selectedDoctorId = $(this).data("doctor-id");
+  const selectedDoctorName = $(this).find("p").text(); // 의사 이름 가져오기
+  console.log("선택된 의사 ID:", selectedDoctorId);
+  console.log("선택된 의사 이름:", selectedDoctorName); // 이름 확인 로그
 
-    // 선택된 의사의 ID 로그 출력
-    const selectedDoctorId = $(this).data("doctor-id");
-    console.log("선택된 의사 ID:", selectedDoctorId);
-  });
+  // 의사를 선택했을 때 alert 출력
+  alert(`${selectedDoctorName} 의사를 선택했습니다.`); // 이름 표시
+});
+
 
   // 즐겨찾기 기능 추가
   $("#staffListView").on("click", ".favorite-btn", function (event) {
