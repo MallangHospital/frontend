@@ -9,9 +9,9 @@ $(document).ready(function () {
 
   console.log("JWT 토큰:", jwtToken); // JWT 토큰 로그
 
-  // 특정 부서의 의사 데이터를 가져오는 함수
+  // 특정 부서의 의료진 데이터를 가져오는 함수
   async function fetchDoctorsByDepartment(departmentId) {
-    const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/doctors/department/${departmentId}`;
+    const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/department/${departmentId}`;
     console.log("API 요청 URL:", apiUrl); // API URL 로그
 
     try {
@@ -30,13 +30,13 @@ $(document).ready(function () {
         console.log("API 응답 데이터:", data); // 응답 데이터 로그
         return data;
       } else {
-        console.error("의사 데이터 로드 실패:", response.status);
-        alert("의사 데이터를 불러오는 데 실패했습니다.");
+        console.error("의료진 데이터 로드 실패:", response.status);
+        alert("의료진 데이터를 불러오는 데 실패했습니다.");
         return [];
       }
     } catch (error) {
       console.error("네트워크 오류:", error);
-      alert("의사 데이터를 불러오는 중 오류가 발생했습니다.");
+      alert("의료진 데이터를 불러오는 중 오류가 발생했습니다.");
       return [];
     }
   }
@@ -69,10 +69,10 @@ $(document).ready(function () {
     console.log("진료 과목 리스트 표시"); // 로그 추가
   }
 
-  // 의료진 리스트를 보이는 함수
   async function showDoctorsByDepartment(departmentId) {
     console.log("선택한 departmentId:", departmentId); // 선택한 departmentId 로그
 
+    const departmentName = getDepartmentName(departmentId); // 진료과목 이름 가져오기
     const $staffListView = $("#staffListView");
     const doctorList = await fetchDoctorsByDepartment(departmentId);
 
@@ -84,9 +84,6 @@ $(document).ready(function () {
         <li data-doctor-id="${doctor.id}" class="doctor-item">
           <img src="${doctor.photoUrl}" alt="${doctor.name}" class="doctor-img">
           <p>${doctor.name}</p>
-          <button class="favorite-btn">
-            <img src="assets/취소.png" alt="즐겨찾기" class="favorite-icon">
-          </button>
         </li>
       `);
     });
@@ -138,46 +135,17 @@ $(document).ready(function () {
     console.log("선택된 의사 ID:", selectedDoctorId);
   });
 
-  // 즐겨찾기 기능 추가
-  $("#staffListView").on("click", ".favorite-btn", function (event) {
-    event.stopPropagation(); // 부모 요소 클릭 이벤트 방지
-
-    const doctorElement = $(this).closest("li");
-    const doctorName = doctorElement.find("p").text(); // 의사 이름 가져오기
-    const $favoriteIcon = $(this).find(".favorite-icon"); // 버튼 내의 이미지
-    const isFavorited = $favoriteIcon.attr("src") === "assets/취소.png"; // 현재 이미지가 '취소'인지 확인
-
-    if (isFavorited) {
-      $favoriteIcon.attr("src", "assets/즐겨찾기.png"); // '즐겨찾기'로 변경
-      alert(`${doctorName} 의사를 즐겨찾기했습니다.`);
-    } else {
-      $favoriteIcon.attr("src", "assets/취소.png"); // '취소'로 변경
-      alert(`${doctorName} 의사의 즐겨찾기가 취소되었습니다.`);
-    }
-
-    console.log("즐겨찾기 상태 변경:", doctorName, isFavorited);
-  });
-
   // "진료 과목" 네비게이션 클릭 이벤트
   $(".navLink[data-target='진료 과목']").click(showMedicalDepartments);
 
   // 데이터 저장 및 다음 단계로 이동
   function saveSelectionAndProceed() {
-    // 진료과 ID 가져오기
     const departmentId = parseInt(localStorage.getItem("selectedDepartmentId"));
-    console.log("저장된 departmentId:", departmentId); // 로그 추가
-
-    // 의료진 ID 가져오기
     const doctorElement = $("#staffListView li.selected");
     const doctorId = doctorElement.data("doctor-id");
-    console.log("저장된 doctorId:", doctorId); // 로그 추가
-
-    // 진료 유형 가져오기
     const appointmentTypeElement = $("input[name='option']:checked");
-    const appointmentType = appointmentTypeElement.attr("id"); // 초진, 재진, 상담
-    console.log("저장된 appointmentType:", appointmentType); // 로그 추가
+    const appointmentType = appointmentTypeElement?.attr("id"); // 초진, 재진, 상담
 
-    // 유효성 검사
     if (!appointmentType) {
       alert("진료 유형을 선택해주세요.");
       return;
@@ -187,24 +155,20 @@ $(document).ready(function () {
       return;
     }
     if (!doctorId) {
-      alert("의료진을 선택해주세요.");
+      alert("진료실을 선택해주세요.");
       return;
     }
 
-    // 로컬 스토리지에 저장
-    localStorage.setItem("departmentId", departmentId); // 진료과 ID 저장
-    localStorage.setItem("doctorId", doctorId);         // 의료진 ID 저장
-    localStorage.setItem("appointmentType", appointmentType); // 진료 유형 저장
+    localStorage.setItem("departmentId", departmentId);
+    localStorage.setItem("doctorId", doctorId);
+    localStorage.setItem("appointmentType", appointmentType);
 
     console.log("데이터 저장 완료. 다음 단계로 이동.");
-    window.location.href = "medical_booking_step2.html"; // 다음 단계로 이동
+    window.location.href = "online_booking_step2.html";
   }
 
-  // "다음" 버튼 클릭 이벤트
   $(".btn_next").click(saveSelectionAndProceed);
 
-  // 초기 상태 설정
   $(".medical_staff_list").hide();
-
-  console.log("스크립트 초기화 완료"); // 초기화 완료 로그
+  console.log("스크립트 초기화 완료");
 });

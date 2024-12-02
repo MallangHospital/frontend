@@ -155,7 +155,7 @@ $(document).ready(function () {
           return;
       }
       if (!doctorId) {
-          alert("의료진을 선택해주세요.");
+          alert("진료실을 선택해주세요.");
           return;
       }
 
