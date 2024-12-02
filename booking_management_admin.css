@@ -54,3 +54,12 @@
 .status.cancelled {
   color: red;
 }
+
+  /* 예약 상태에 따라 색상 지정 */
+  .canceled {
+    color: red; /* 취소 상태는 빨간색 */
+  }
+  
+  .reserved {
+    color: green; /* 예약 상태는 초록색 */
+  }

@@ -61,7 +61,11 @@
     border-color: #A6B1BB; /* 클릭된 버튼 테두리 색상 */
 }
 
-
+.time-button.disabled {
+  background-color: #e0e0e0;
+  color: #5d5d5d;
+  cursor: not-allowed;
+}
 
 
   /* 버튼 스타일 */

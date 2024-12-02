@@ -1,10 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메인 페이지</title>
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar.css">   <!--네비게이션 바 css-->
+  <link rel="stylesheet" href="common_assets/footer.css">   <!--푸터 css-->
+  <link rel="stylesheet" href="index.css"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"rel="stylesheet"/>
+  
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script.js"></script>
+
 </head>
 <body>
+  <div class="wrap">
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+  </div>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/main_logo.png" alt="메인로고">
+      </div>
+      <div class="wrap_box">
+        <div class="box">
+          <a href="medical_booking.html">
+            <div class="icon">
+              <img src="assets/icon_reserv.png" alt="진료예약">
+            </div>
+            <p>진료예약</p>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+        <div class="box">
+          <a href="online_booking.html">
+            <div class="icon">
+              <img src="assets/icon_online.png" alt="온라인 접수">
+            </div>
+            <p>온라인 접수</p>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+        <div class="box">
+          <a href="hospital_information.html">
+            <div class="icon">
+              <img src="assets/icon_hosinfo.png" alt="병원 안내">
+            </div>
+            <p>병원 안내</p>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+        <div class="box">
+          <a href="surgery.html">
+            <div class="icon">
+              <img src="assets/icon_dept.png" alt="진료과목 소개">
+            </div>
+            <p>진료과목</p>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+        <div class="box">
+          <a href="health_magazine.html">
+            <div class="icon">
+              <img src="assets/icon_mag.png" alt="건강매거진">
+            </div>
+            <p>건강매거진</p>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+        <div class="box">
+          <a href="login.html">
+            <div class="icon">
+              <img src="assets/icon_login.png" alt="로그인">
+            </div>
+            <p>로그인</p>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+      </div>
+       
+  </div>
+  <div id="footer"></div> 
 
 </body>
 </html>

@@ -1,86 +1,76 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항 페이지</title>
-
+  <title>공지사항 상세 페이지</title>
 
   <link rel="stylesheet" href="notice_in_admin.css">
   <link rel="stylesheet" href="common_assets/globalstyle.css">
-  <link rel="stylesheet" href="common_assets/navbar_admin.css">   <!--네비게이션 바 css-->
-  <link rel="stylesheet" href="common_assets/footer.css">   <!--푸터 css-->
+  <link rel="stylesheet" href="common_assets/navbar_admin.css"> <!-- 네비게이션 바 css -->
+  <link rel="stylesheet" href="common_assets/footer.css"> <!-- 푸터 css -->
 
-  <!-- 폰트 연결-->
+  <!-- 폰트 연결 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
-  <!--제이쿼리 연결-->
+  <!-- 제이쿼리 연결 -->
   <script src="common_assets/jquery-3.7.1.min.js"></script>
   <script defer src="common_assets/script_admin.js"></script>
-
+  <script defer src="notice_in_admin.js"></script> <!-- 동적으로 공지사항 데이터를 로드할 JS -->
 </head>
 <body>
   <div class="wrap">
-
-
     <div id="navbar"></div>
 
     <div class="notice-container">
       <div class="title">
-        <h1>공지사항</h1> 
+        <h1>공지사항</h1>
       </div>
-      
+
       <div class="divider"></div> 
+
       <div class="announcement">
-        <h2>9월 15일~9월 18일 추석연휴 외래 휴진 안내</h2>
+        <h2 id="notice-title">제목 로딩 중...</h2>
         <div class="info">
-          <span>조회수: 119</span> | 
-          <span>등록일: 2024-09-05</span>
+          <span id="notice-writer">작성자: 로딩 중...</span> |
+          <span id="notice-date">등록일: 로딩 중...</span>
         </div>
 
         <div class="divider"></div>
 
-        <div class="details">
-          <p>2024년 9월 15일 ~ 9월 18일 추석연휴 기간은 <span class="highlight">일반 외래진료가 없습니다.</span></p>
-          <p>병원 이용에 참고하여 주시기 바랍니다.</p>
-          <p>말랑병원은 앞으로 더 나은 서비스를 제공해 드리기 위해 최선을 다하겠습니다.</p>
-          <p>감사합니다.</p>
+        <div class="details" id="notice-content">
+          <p>내용 로딩 중...</p>
         </div>
 
-        <div class="divider"></div> 
+        <div class="divider"></div>
       </div>
 
       <div class="button-container">
-        <a href="mnotice.html" class="button">목록</a>
+        <button class="button" id="goBackButton">목록</button>
       </div>
-     
 
       <div class="divider"></div> 
 
       <div class="prev-next">
-        <div class="prev">
-          <span class="label">이전글</span> 8월 28일 (수) 의료진과 환우를 위한 힐링콘서트
+        <div class="prev" id="prev-notice">
+          <span class="label">이전글</span> 이전글 로딩 중...
         </div>
         <div class="divider"></div>
-        <div class="next">
-          <span class="label">다음글</span> 10월 1일(화) 임시공휴일 정상 진료 안내
+        <div class="next" id="next-notice">
+          <span class="label">다음글</span> 다음글 로딩 중...
         </div>
       </div>
-      
+
       <div class="divider"></div> 
 
-      <a href="announce_write_admin.html">
-        <button class="write-button">글 작성하러 가기</button>
-      </a>
-      
+      <button id="writeButton2" class="write-button" style="margin-top: 20px;">글 수정하러 가기</button>
     </div>
 
-    <div class="footer-space"></div> 
-</div>
+    <div class="footer-space"></div>
     <div id="footer"></div>
-
   </div>
 </body>
 </html>

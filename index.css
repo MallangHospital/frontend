@@ -1,0 +1,101 @@
+.wrap{
+  background-color: #A6B1BB ; 
+}
+.container {
+  background-color: #A6B1BB; /* 컨테이너 배경색 */
+  display: flex;
+  justify-content: right; /* 오른쪽 정렬 */
+  align-items: center;
+  padding: 20px;
+}
+
+.wrap_box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2열 레이아웃 */
+  gap: 20px; /* 박스 간 간격 */
+  width: 40%; /* wrap_box의 크기 조정 */
+  margin: 0 100px 20px auto;
+  position: relative;
+}
+
+.box {
+  background-color: #d9d9d9; /* 박스 색상 */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 220px; /* 박스 너비 조정 */
+  height: 110px; /* 박스 높이 조정 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* hover 효과 */
+  display: flex;
+  flex-direction: column; /* 세로 배치 */
+  justify-content: center;
+  align-items: center;
+  position: relative; /* 화살표 위치를 위한 상대 위치 */
+}
+
+.box:nth-child(odd) {
+  transform: translateY(20px); /* 홀수 박스를 아래로 이동 */
+}
+
+.box:nth-child(even) {
+  transform: translateY(-20px); /* 짝수 박스를 위로 이동 */
+}
+
+.box:hover {
+  transform: scale(1.05); /* hover 시 살짝 커짐 */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* hover 시 효과 */
+}
+
+.box a {
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  flex-direction: column; /* 세로 배치 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  height: 100%;
+  width: 100%;
+}
+
+.icon img {
+  max-width: 44px; /* 기본 아이콘 크기 */
+  max-height: 44px;
+}
+
+.icon img[src="assets/icon_reserv.png"] {
+  max-width: 50px; /* 진료예약 아이콘 크기 증가 */
+  max-height: 50px;
+}
+
+.icon img[src="assets/icon_login.png"] {
+  max-width: 30px; /* 로그인 아이콘 크기 감소 */
+  max-height: 30px;
+}
+
+.box p {
+  margin: 5px 0 0;
+  font-size: 18px;
+  text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.arrow {
+  position: absolute; /* 절대 위치 설정 */
+  bottom: 10px; /* 박스 하단에서 10px 떨어짐 */
+  right: 10px; /* 박스 오른쪽에서 10px 떨어짐 */
+  font-size: 14px; /* 화살표 크기 */
+  color: #555; /* 화살표 색상 */
+  background-color: #cccccc; /* 회색 동그라미 배경 */
+  border-radius: 50%; /* 동그라미 모양 */
+  width: 24px; /* 동그라미 크기 */
+  height: 24px; /* 동그라미 크기 */
+  display: flex; /* 동그라미 안에 화살표 중앙 정렬 */
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  margin-top: -40px; /* 로고를 위로 20px 이동 */
+  margin-left: 30px; /* 로고를 위로 20px 이동 */
+  text-align: center; /* 로고 중앙 정렬 */
+}

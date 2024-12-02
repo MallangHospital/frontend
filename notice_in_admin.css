@@ -1,4 +1,24 @@
+.notice-container {
+  padding: 0 20px; /* Adds padding to the left and right */
+  margin: 0 auto;  /* Centers the container horizontally */
+  max-width: 1200px; /* Optional: Limits the max width of the content */
+}
 
+.button {
+  background-color: white;  /* White background */
+  color: #4a5359;  /* Dark text color */
+  font-size: 1rem;  /* Reduced font size */
+  padding: 10px 20px;  /* Reduced padding */
+  border: 2px solid #4a5359;  /* Black border with thickness */
+  border-radius: 30px;  /* Fully rounded corners */
+  cursor: pointer;  
+  display: block;  /* Makes it a block element to center it */
+  text-align: center;  
+  width: 200px;  /* Reduced button width */
+  margin: 0 auto;  /* Centers the button */
+  line-height: 1.5;
+  background: transparent;  /* Ensure transparency inside button */
+}
 .divider {
   width: 100%;
   height: 1px;
@@ -14,11 +34,13 @@
   background-color: #4a5359; 
 }
 
+
 .title h1 {
   font-size: 2rem;
   text-align: left;
   color: #333;
   margin-bottom: 20px;
+  margin-top: 70px;
 }
 
 .announcement {
