@@ -9,7 +9,7 @@ async function fetchReviews(page = 1) {
       throw new Error('리뷰 데이터를 불러오는 데 실패했습니다.');
 
     const data = await response.json();
-
+    console.log(data);
     const reviews = data.reviews;
     const totalPages = data.totalPages;
 
@@ -59,7 +59,7 @@ function renderReviews(reviews) {
       5 - review.averageStars
     )} <span style="color: black;"> ${review.averageStars}</span></p> 
       <p>${review.content}</p>
-      <p>${new Date(review.createdAt).toLocaleDateString()}</p>
+      <p>${new Date(review.regDate).toLocaleDateString()}</p>
       <button onclick="openDeletePopup(${review.id})">삭제</button>
     `;
     reviewList.appendChild(reviewItem);
@@ -144,12 +144,11 @@ document.getElementById('result-popup-close').addEventListener('click', () => {
 });
 
 document.getElementById('open-review-modal').addEventListener('click', () => {
-  // const jwtToken = localStorage.getItem('jwtToken');
-  // if (!jwtToken) {
-  //   alert('로그인이 필요합니다.');
-  //   window.location.href = '/login.html'; // 로그인 페이지로 리다이렉트
-  //   return;
-  // }
+  const jwtToken = localStorage.getItem('jwtToken');
+  if (!jwtToken) {
+    alert('로그인이 필요합니다.');
+    return;
+  }
   initializeStarRatings();
   document.getElementById('review-form').style.display = 'block';
   document.getElementById('overlay').style.display = 'block';
@@ -160,6 +159,28 @@ document.getElementById('overlay').addEventListener('click', closeForm);
 document.querySelector('.close-button').addEventListener('click', closeForm);
 
 function closeForm() {
+  // 드롭다운 초기화
+  document.getElementById('department').selectedIndex = 0; // 진료과 초기화
+  document.getElementById('doctor').innerHTML =
+    '<option value="" disabled selected>의사 선택</option>'; // 의사 선택 초기화
+
+  // 별점 초기화
+  document.querySelectorAll('.stars').forEach((container) => {
+    Array.from(container.children).forEach((star) => {
+      star.classList.remove('selected'); // 별점 선택 해제
+    });
+    container.dataset.selectedValue = ''; // 별점 값 초기화
+  });
+
+  // 텍스트 입력 초기화
+  document.getElementById('review-text').value = ''; // 리뷰 내용 초기화
+
+  // 파일 업로드 초기화
+  document.getElementById('upload-file').value = ''; // 파일 입력 초기화
+
+  // 비밀번호 입력 초기화
+  document.getElementById('review-password').value = ''; // 비밀번호 입력 초기화
+
   document.getElementById('review-form').style.display = 'none';
   document.getElementById('overlay').style.display = 'none';
   document.body.style.overflow = '';
@@ -245,6 +266,8 @@ document
   });
 
 async function validateAndSubmit() {
+  const jwtToken = localStorage.getItem('jwtToken');
+
   const departmentId = document.getElementById('department').value;
   const doctorId = document.getElementById('doctor').value;
   const content = document.getElementById('review-text').value;
@@ -255,7 +278,6 @@ async function validateAndSubmit() {
   const reviewDTO = {
     departmentId,
     doctorId,
-    memberId: 1,
     content,
     memberPassword,
     explanationStars: parseInt(stars[0].dataset.selectedValue || 0),
@@ -276,6 +298,9 @@ async function validateAndSubmit() {
       'https://mallang-a85bb2ff492b.herokuapp.com/api/reviews',
       {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
         body: formData,
       }
     );
