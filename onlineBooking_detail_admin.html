@@ -96,38 +96,37 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  // 접수 상세 정보를 테이블과 제목에 렌더링
   function renderRegistrationDetails(details) {
-    console.log("접수 상세 정보 렌더링 시작..."); // 렌더링 시작 로그 추가
+  console.log("접수 상세 정보 렌더링 시작..."); // 렌더링 시작 로그 추가
 
-    // 환자 이름 설정
-    heading.innerHTML = `${details.patientName} <span>환자</span>`; // 환자 이름 동적 설정
+  // 환자 이름 설정
+  heading.innerHTML = `${details.patientName} <span>환자</span>`; // 환자 이름 동적 설정
 
-    // 접수 상세 정보 테이블에 추가
-    registrationDetailSection.innerHTML = `
-      <tr>
-        <td>진료종류</td>
-        <td>${details.visitType}</td>
-      </tr>
-      <tr>
-        <td>진료과목</td>
-        <td>${details.department}</td> 
-      </tr>
-      <tr>
-        <td>담당 의료진</td>
-        <td>${details.doctorName}</td>
-      </tr>
-      <tr>
-        <td>전화번호</td>
-        <td>${details.phoneNumber}</td>
-      </tr>
-      <tr>
-        <td>증상</td>
-        <td>${details.symptom}</td>
-      </tr>
-    `;
-    console.log("접수 상세 정보 렌더링 완료."); // 렌더링 완료 로그 추가
-  }
+  registrationDetailSection.innerHTML = `
+    <tr>
+      <td>진료종류</td>
+      <td>${details.visitType}</td>
+    </tr>
+    <tr>
+      <td>진료과목</td>
+      <td>${details.department}</td> 
+    </tr>
+    <tr>
+      <td>담당 의료진</td>
+      <td>${details.doctorName}</td>
+    </tr>
+    <tr>
+      <td>전화번호</td>
+      <td>${details.phoneNumber}</td>
+    </tr>
+    <tr>
+      <td>증상</td>
+      <td>${details.symptom}</td>
+    </tr>
+  `;
+
+  console.log("접수 상세 정보 렌더링 완료."); // 렌더링 완료 로그 추가
+}
 
   // 초기 데이터 로드
   loadRegistrationDetails();

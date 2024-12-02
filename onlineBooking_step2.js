@@ -12,17 +12,17 @@ function submitReservation() {
   const registrationDate = now.toISOString().split("T")[0]; // YYYY-MM-DD 형식
   const registrationTime = now.toTimeString().split(" ")[0].slice(0, 5); // HH:mm 형식
 
-  // 예약 데이터 구성
+  // 접수 데이터 구성
   const registrationData = {
     visitType: localStorage.getItem("visitType"),
     departmentId: localStorage.getItem("departmentId"),
-    doctorName: localStorage.getItem("doctorName"),
+    doctorId: localStorage.getItem("doctorId"),
     registrationDate: registrationDate, // 접수 날짜 (오늘 날짜)
     registrationTime: registrationTime, // 접수 시간 (현재 시간)
     symptom: symptomInput, // 증상 추가
 };
 
-  console.log("전송할 예약 데이터:", registrationData);
+  console.log("전송할 접수 데이터:", registrationData);
 
   // 백엔드로 데이터 전송
   fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/registrations", {
@@ -36,7 +36,7 @@ function submitReservation() {
           if (response.ok) {
               return response.json(); // JSON 응답 처리
           } else {
-              throw new Error("예약 요청에 실패했습니다.");
+              throw new Error("접수 요청에 실패했습니다.");
           }
       })
       .then((data) => {
@@ -44,8 +44,8 @@ function submitReservation() {
           showPopup(); // 성공 시 팝업 표시
       })
       .catch((error) => {
-          console.error("예약 처리 중 오류 발생:", error);
-          alert("예약 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
+          console.error("접수 처리 중 오류 발생:", error);
+          alert("접수 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
       });
 }
 
