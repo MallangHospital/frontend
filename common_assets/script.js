@@ -27,29 +27,6 @@ $(document).ready(function () {
       window.location.href = '/login.html'; // 로그인 페이지로 이동
     }
   });
-
-  // 공통 이미지 스크롤 기능
-  $('.scrollable-image').each(function () {
-    const targetImage = $(this); // 각 이미지에 대해 처리
-
-    // 클릭 이벤트 핸들러
-    targetImage.on('click', function () {
-      scrollToBelowImage(targetImage);
-    });
-
-    // 마우스 휠 이벤트 핸들러
-    targetImage.on('wheel', function (event) {
-      if (event.originalEvent.deltaY > 0) {
-        scrollToBelowImage(targetImage);
-      }
-    });
-  });
-
-  // 이미지 아래로 스크롤하는 함수
-  function scrollToBelowImage(imageElement) {
-    const imageBottom = imageElement.offset().top + imageElement.outerHeight();
-    $('html, body').animate({ scrollTop: imageBottom }, 400);
-  }
 });
 
 // 로그아웃 처리
