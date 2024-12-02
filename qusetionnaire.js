@@ -31,7 +31,7 @@ async function loadQuestionsAndResponses() {
     renderQuestionsWithResponses(questions, responses);
   } catch (error) {
     console.error("오류 발생:", error.message);
-    alert("문진표 데이터를 로드하는 중 오류가 발생했습니다.");
+    alert("로그인 후 이용가능한 서비스입니다.");
   }
 }
 
