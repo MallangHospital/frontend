@@ -74,6 +74,73 @@ document.addEventListener("DOMContentLoaded", async function () {
     window.location.href = `/booking_detail_admin.html?id=${appointmentId}`;
   }
 
+
+  //온라인 접수
+  const registrationTableBody = document.querySelector("section:nth-of-type(2) tbody");
+  const registrationApiUrl = "https://mallang-a85bb2ff492b.herokuapp.com/api/registrations";
+
+  async function loadOnlineRegistrations() {
+    try {
+      console.log("온라인 접수 요청 시작:", registrationApiUrl);
+      const response = await fetch(registrationApiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+
+      console.log("온라인 접수 응답 상태 코드:", response.status);
+      const responseBody = await response.text(); // 응답을 텍스트로 먼저 읽음
+      console.log("온라인 접수 응답 원본 데이터:", responseBody);
+
+      if (response.ok) {
+        const registrations = JSON.parse(responseBody);
+        console.log("온라인 접수 파싱된 데이터:", registrations);
+        renderOnlineRegistrations(registrations);
+      } else {
+        alert("온라인 접수 정보를 불러오는 데 실패했습니다.");
+        console.error("온라인 접수 요청 실패 상태:", response.status, response.statusText);
+      }
+    } catch (error) {
+      alert("온라인 접수 데이터 요청 중 문제가 발생했습니다.");
+      console.error("온라인 접수 요청 중 오류:", error);
+    }
+  }
+
+  function renderOnlineRegistrations(registrations) {
+    registrationTableBody.innerHTML = ""; // 기존 내용 초기화
+    registrations.forEach((registration) => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${registration.patientName}</td>
+        <td>${registration.registrationDate} ${registration.registrationTime}</td>
+        <td>${registration.doctorName}</td>
+        <td>
+          <button class="view-details" data-id="${registration.id}">상세 보기</button>
+        </td>
+      `;
+
+      registrationTableBody.appendChild(row);
+    });
+
+    document.querySelectorAll(".view-details").forEach((button) => {
+      button.addEventListener("click", function () {
+        const registrationId = this.dataset.id; // id를 가져옴
+        console.log(`"상세 보기" 버튼 클릭: 접수 ID = ${registrationId}`);
+        viewRegistrationDetails(registrationId);
+      });
+    });
+  }
+
+  function viewRegistrationDetails(registrationId) {
+    console.log(`상세보기 페이지로 이동: 접수 ID = ${registrationId}`);
+    window.location.href = `/onlineBooking_detail_admin.html?id=${registrationId}`;
+  }
+
+
+
   async function loadHealthcareReservations() {
     try {
       console.log("건강검진 예약 요청 시작:", healthcareApiUrl);
@@ -121,5 +188,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   loadAppointments();
+  loadOnlineRegistrations();
   loadHealthcareReservations();
 });
