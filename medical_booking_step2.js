@@ -23,30 +23,51 @@ function initializeDatepicker(doctorId, baseUrl) {
             const today = new Date(); // 현재 날짜
             today.setHours(0, 0, 0, 0); // 현재 날짜의 시간 초기화
 
-            if (selectedDateObj < today) {
-                alert("현재 날짜 이후의 날짜를 선택해주세요.");
-                $("#datepicker").val(""); // 선택된 날짜 초기화
-                return;
-            }
-
             // 예약 가능한 시간 가져오기
             fetchAvailableTimes(doctorId, selectedDate, baseUrl);
         }
     });
 }
 
-// 특정 날짜의 예약 가능한 시간 가져오기
+function updateTimeButtons(availableTimes) {
+    $(".time-button").each(function () {
+        const time = $(this).text().trim(); // 버튼 텍스트 (시간)
+        if (availableTimes.includes(time)) {
+            $(this).prop("disabled", false).removeClass("disabled");
+        } else {
+            $(this).prop("disabled", true).addClass("disabled");
+        }
+    });
+}
+
+
 async function fetchAvailableTimes(doctorId, date, baseUrl) {
     try {
-        const apiUrl = `"https://mallang-a85bb2ff492b.herokuapp.com"/api/schedules?doctorId=${doctorId}&date=${date}`;
-        console.log("예약 가능한 시간 API 요청 URL:", apiUrl); // 디버깅용 로그
+        const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/schedules?doctorId=${doctorId}&date=${date}`;
+        console.log("예약 가능한 시간 API 요청 URL:", apiUrl);
 
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
         if (response.ok) {
-            const data = await response.json();
-            console.log("예약 가능한 시간 데이터:", data); // API 응답 데이터 로그
-            const availableTimes = data.length > 0 ? data[0].availableTimes : []; // 첫 번째 스케줄의 예약 가능한 시간 목록
-            updateTimeButtons(availableTimes); // 시간 버튼 업데이트
+            const rawData = await response.json();
+            console.log("예약 가능한 시간 원본 데이터:", rawData);
+
+            // 데이터가 배열 형태로 반환된 경우
+            if (Array.isArray(rawData) && rawData.length > 0) {
+                // 첫 번째 객체의 `availableTimes` 배열 가져오기
+                const availableTimes = rawData[0].availableTimes.map((time) => time.slice(0, 5));
+                console.log("예약 가능한 시간 변환된 데이터:", availableTimes);
+
+                updateTimeButtons(availableTimes); // 시간 버튼 업데이트
+            } else {
+                console.error("예약 가능한 시간이 없습니다.");
+                updateTimeButtons([]); // 빈 배열 전달하여 모든 버튼 비활성화
+            }
         } else {
             console.error("예약 가능한 시간 가져오기 실패:", response.status);
             alert("예약 가능한 시간을 불러오는 데 실패했습니다.");
@@ -57,19 +78,7 @@ async function fetchAvailableTimes(doctorId, date, baseUrl) {
     }
 }
 
-// 시간 버튼 업데이트
-function updateTimeButtons(availableTimes) {
-    $(".time-button").each(function () {
-        const time = $(this).text(); // 버튼 텍스트 (시간)
-        if (availableTimes.includes(time)) {
-            $(this).prop("disabled", false).removeClass("disabled");
-        } else {
-            $(this).prop("disabled", true).addClass("disabled");
-        }
-    });
-}
 
-// 예약 처리 함수
 function submitReservation() {
     const date = $("#datepicker").val(); // 선택한 날짜
     const selectedTime = document.querySelector(".time-button.active")?.innerText; // 선택한 시간
@@ -77,7 +86,7 @@ function submitReservation() {
 
     // 로컬 스토리지에서 데이터 가져오기
     const doctorId = localStorage.getItem("doctorId");
-    const departmentId = localStorage.getItem("departmentId");
+    const departmentId = localStorage.getItem("selectedDepartmentId");
     const appointmentType = localStorage.getItem("appointmentType");
 
     // 유효성 검사
@@ -94,23 +103,24 @@ function submitReservation() {
         return;
     }
 
-    // 예약 데이터 구성 (DTO에 맞게 수정)
+    // 서버 요구 사항에 맞는 데이터 구성
     const requestData = {
         doctorId: parseInt(doctorId, 10),
         departmentId: parseInt(departmentId, 10),
-        appointmentType: appointmentType, // 초진/재진/상담
-        appointmentDate: date, // 예약 날짜
-        appointmentTime: selectedTime, // 예약 시간
+        appointmentType: appointmentType, // "초진" 등
+        appointmentDate: date, // "YYYY-MM-DD"
+        appointmentTime: selectedTime, // "HH:mm"
         symptomDescription: symptoms, // 증상 설명
     };
 
     console.log("백엔드로 전송할 예약 데이터:", requestData);
 
-    // 백엔드로 데이터 전송
-    fetch(`"https://mallang-a85bb2ff492b.herokuapp.com"/api/appointments`, {
+    // 데이터 전송
+    fetch(`https://mallang-a85bb2ff492b.herokuapp.com/api/appointments`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`, // JWT 토큰 추가
         },
         body: JSON.stringify(requestData),
     })
@@ -118,12 +128,14 @@ function submitReservation() {
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error("예약 요청에 실패했습니다.");
+                console.error("서버 응답 실패:", response.status, response.statusText);
+                return response.json().then((error) => {
+                    throw new Error(`예약 요청 실패: ${error.message}`);
+                });
             }
         })
         .then(() => {
-            // 예약 성공 팝업 표시
-            showPopup();
+            showPopup(); // 예약 성공 시 팝업 표시
         })
         .catch((error) => {
             alert("예약 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
