@@ -24,7 +24,12 @@
   <body>
     <div class="wrap">
       <div id="navbar"></div>
-
+      <img
+        src="assets/section_review.png"
+        alt=""
+        width="100%"
+        class="scrollable-image"
+      />
       <div class="container">
         <!-- Header -->
         <div class="header">
@@ -66,7 +71,7 @@
       <!-- 리뷰 삭제 팝업 -->
       <div id="delete-popup" class="popup">
         <div class="popup-content">
-          <p id="popup-message">리뷰를 삭제하려면 비밀번호를 입력하세요</p>
+          <p id="popup-message"></p>
           <input
             type="password"
             id="popup-password"
@@ -78,6 +83,16 @@
           </div>
         </div>
       </div>
+
+      <div id="result-popup" class="popup">
+        <div class="popup-content">
+          <p id="result-popup-message"></p>
+          <div class="popup-buttons">
+            <button id="result-popup-close">확인</button>
+          </div>
+        </div>
+      </div>
+
       <div id="overlay"></div>
 
       <!-- Review Form Modal -->

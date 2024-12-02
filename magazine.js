@@ -40,8 +40,9 @@ async function validateAndSubmit() {
 
     // 응답 처리
     if (response.ok) {
-      showModal('건강 매거진이 성공적으로 등록되었습니다!'); // 성공 메시지 표시
-      window.location.href = 'health_magazine_admin.html';
+      showModal('건강 매거진이 성공적으로 등록되었습니다!', function () {
+        window.location.href = 'health_magazine_admin.html'; // 확인 버튼 누르면 이동
+      });
     } else {
       const error = await response.text();
       showModal(`등록 실패: ${error}`); // 서버 오류 메시지 표시
@@ -51,16 +52,20 @@ async function validateAndSubmit() {
     showModal('서버와의 통신에 실패했습니다. 다시 시도해 주세요.');
   }
 }
-// 모달 표시 함수
-function showModal(message) {
+// 모달 표시 함수 (Callback 사용)
+function showModal(message, onCloseCallback = null) {
   const modal = document.getElementById('modal');
   const modalMessage = document.getElementById('modal-message');
+  const closeButton = document.getElementById('close-modal'); // 확인 버튼
+
   modalMessage.textContent = message;
   modal.style.display = 'flex'; // 모달 표시
-}
 
-// 모달 닫기 이벤트
-document.getElementById('close-modal').addEventListener('click', function () {
-  const modal = document.getElementById('modal');
-  modal.style.display = 'none'; // 모달 숨기기
-});
+  // 확인 버튼 클릭 이벤트 등록
+  closeButton.onclick = function () {
+    modal.style.display = 'none'; // 모달 숨기기
+    if (onCloseCallback) {
+      onCloseCallback(); // 콜백 함수 실행
+    }
+  };
+}

@@ -717,3 +717,7 @@ textarea {
   margin: 10px 0 30px;
 }
 
+#result-popup-close {
+  background-color: #555;
+  color: #fff;
+}

@@ -34,8 +34,9 @@ async function validateAndSubmit() {
 
     // 응답 처리
     if (response.ok) {
-      showModal('공지사항이 성공적으로 등록되었습니다!');
-      window.location.href = 'notice_admin.html';
+      showModal('공지사항이 성공적으로 등록되었습니다!', function () {
+        window.location.href = 'notice_admin.html'; // 확인 버튼 누르면 이동
+      });
     } else {
       const error = await response.text();
       showModal(`${error}`); // 서버에서 반환된 오류 메시지 표시
@@ -47,16 +48,20 @@ async function validateAndSubmit() {
   }
 }
 
-// 모달 표시 함수
-function showModal(message) {
+// 모달 표시 함수 (Callback 사용)
+function showModal(message, onCloseCallback = null) {
   const modal = document.getElementById('modal');
   const modalMessage = document.getElementById('modal-message');
+  const closeButton = document.getElementById('close-modal'); // 확인 버튼
+
   modalMessage.textContent = message;
   modal.style.display = 'flex'; // 모달 표시
-}
 
-// 모달 닫기 이벤트
-document.getElementById('close-modal').addEventListener('click', function () {
-  const modal = document.getElementById('modal');
-  modal.style.display = 'none'; // 모달 숨기기
-});
+  // 확인 버튼 클릭 이벤트 등록
+  closeButton.onclick = function () {
+    modal.style.display = 'none'; // 모달 숨기기
+    if (onCloseCallback) {
+      onCloseCallback(); // 콜백 함수 실행
+    }
+  };
+}

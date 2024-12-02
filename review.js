@@ -2,39 +2,40 @@ let currentReviewId = null;
 
 async function fetchReviews(page = 1) {
   try {
-    const response = await fetch(`/reviews?page=${page}`);
+    const response = await fetch(
+      `https://mallang-a85bb2ff492b.herokuapp.com/api/reviews?page=${page}`
+    );
     if (!response.ok)
       throw new Error('리뷰 데이터를 불러오는 데 실패했습니다.');
 
     const data = await response.json();
+    console.log(data);
     const reviews = data.reviews;
     const totalPages = data.totalPages;
 
-    // 평균 데이터 업데이트
-    const averageScore = calculateAverage(
-      reviews.map((review) => review.rating)
-    );
-    const detailRatings = calculateDetailAverages(reviews);
-
     document.getElementById('average-stars').textContent =
-      '★'.repeat(Math.round(averageScore)) +
-      '☆'.repeat(5 - Math.round(averageScore));
+      '★'.repeat(data.overallAverageStars) +
+      '☆'.repeat(5 - data.overallAverageStars);
     document.getElementById(
       'average-score'
-    ).textContent = `${averageScore.toFixed(1)} / 10`;
+    ).textContent = `${data.overallAverageStars.toFixed(1)} / 5`;
     document.getElementById('total-reviews').textContent = data.totalReviews;
     document.getElementById(
       'detail-description'
-    ).textContent = `자세한 설명: ★${detailRatings.description.toFixed(1)}`;
+    ).textContent = `자세한 설명: ★${data.averageExplanationStars.toFixed(1)}`;
     document.getElementById(
       'treatment-result'
-    ).textContent = `치료 후 결과: ★${detailRatings.treatment.toFixed(1)}`;
+    ).textContent = `치료 후 결과: ★${data.averageTreatmentResultStars.toFixed(
+      1
+    )}`;
     document.getElementById(
       'staff-kindness'
-    ).textContent = `직원의 친절: ★${detailRatings.staff.toFixed(1)}`;
+    ).textContent = `직원의 친절: ★${data.averageStaffKindnessStars.toFixed(
+      1
+    )}`;
     document.getElementById(
       'cleanliness'
-    ).textContent = `청결함: ★${detailRatings.cleanliness.toFixed(1)}`;
+    ).textContent = `청결함: ★${data.averageCleanlinessStars.toFixed(1)}`;
 
     renderReviews(reviews);
     renderPagination(totalPages, page);
@@ -42,38 +43,6 @@ async function fetchReviews(page = 1) {
     console.error(error.message);
     alert('리뷰 데이터를 불러오는 중 오류가 발생했습니다.');
   }
-}
-
-function calculateAverage(scores) {
-  if (scores.length === 0) return 0;
-  return scores.reduce((sum, score) => sum + score, 0) / scores.length;
-}
-
-function calculateDetailAverages(reviews) {
-  const totals = {
-    description: 0,
-    treatment: 0,
-    staff: 0,
-    cleanliness: 0,
-  };
-  let count = 0;
-
-  reviews.forEach((review) => {
-    if (review.detailRatings) {
-      totals.description += review.detailRatings.description || 0;
-      totals.treatment += review.detailRatings.treatment || 0;
-      totals.staff += review.detailRatings.staff || 0;
-      totals.cleanliness += review.detailRatings.cleanliness || 0;
-      count++;
-    }
-  });
-
-  return {
-    description: count ? totals.description / count : 0,
-    treatment: count ? totals.treatment / count : 0,
-    staff: count ? totals.staff / count : 0,
-    cleanliness: count ? totals.cleanliness / count : 0,
-  };
 }
 
 function renderReviews(reviews) {
@@ -84,13 +53,13 @@ function renderReviews(reviews) {
     const reviewItem = document.createElement('div');
     reviewItem.className = 'review-item';
     reviewItem.innerHTML = `
-      <h3>${review.username}</h3>
+      <h3>${review.memberId}</h3>
       <p>진료과: ${review.department}, 의사: ${review.doctor}</p>
-      <p class="average-stars">${'★'.repeat(review.rating)}${'☆'.repeat(
-      5 - review.rating
-    )}</p>
+      <p class="average-stars">${'★'.repeat(review.averageStars)}${'☆'.repeat(
+      5 - review.averageStars
+    )} <span style="color: black;"> ${review.averageStars}</span></p> 
       <p>${review.content}</p>
-      <p>${new Date(review.createdAt).toLocaleDateString()}</p>
+      <p>${new Date(review.regDate).toLocaleDateString()}</p>
       <button onclick="openDeletePopup(${review.id})">삭제</button>
     `;
     reviewList.appendChild(reviewItem);
@@ -99,11 +68,6 @@ function renderReviews(reviews) {
 
 function openDeletePopup(reviewId) {
   currentReviewId = reviewId;
-
-  const popupMessage = document.getElementById('popup-message');
-  const passwordInput = document.getElementById('popup-password');
-  const confirmButton = document.getElementById('popup-confirm');
-  const cancelButton = document.getElementById('popup-cancel');
 
   document.getElementById('popup-message').textContent =
     '리뷰를 삭제하려면 비밀번호를 입력하세요';
@@ -125,21 +89,18 @@ async function deleteReview() {
 
   try {
     const response = await fetch(
-      `/reviews/${currentReviewId}?password=${password}`,
+      `https://mallang-a85bb2ff492b.herokuapp.com/api/reviews/${currentReviewId}?password=${password}`,
       { method: 'DELETE' }
     );
     const message = await response.text();
 
     if (response.ok) {
-      document.getElementById('popup-password').style.display = 'none';
-      document.getElementById('popup-cancel').style.display = 'none';
-      document.getElementById('popup-message').textContent = message;
-      setTimeout(() => {
-        closeDeletePopup();
-        fetchReviews();
-      }, 1500);
+      closeDeletePopup();
+      showResultPopup(message);
+      fetchReviews();
     } else {
-      document.getElementById('popup-message').textContent = message;
+      closeDeletePopup();
+      showResultPopup(message);
     }
   } catch (error) {
     console.error(error);
@@ -170,7 +131,24 @@ document
   .getElementById('popup-cancel')
   .addEventListener('click', closeDeletePopup);
 
+function showResultPopup(message) {
+  const errorPopup = document.getElementById('result-popup');
+  const errorPopupMessage = document.getElementById('result-popup-message');
+
+  errorPopupMessage.textContent = message;
+  errorPopup.style.display = 'flex';
+}
+
+document.getElementById('result-popup-close').addEventListener('click', () => {
+  document.getElementById('result-popup').style.display = 'none';
+});
+
 document.getElementById('open-review-modal').addEventListener('click', () => {
+  const jwtToken = localStorage.getItem('jwtToken');
+  if (!jwtToken) {
+    alert('로그인이 필요합니다.');
+    return;
+  }
   initializeStarRatings();
   document.getElementById('review-form').style.display = 'block';
   document.getElementById('overlay').style.display = 'block';
@@ -181,6 +159,28 @@ document.getElementById('overlay').addEventListener('click', closeForm);
 document.querySelector('.close-button').addEventListener('click', closeForm);
 
 function closeForm() {
+  // 드롭다운 초기화
+  document.getElementById('department').selectedIndex = 0; // 진료과 초기화
+  document.getElementById('doctor').innerHTML =
+    '<option value="" disabled selected>의사 선택</option>'; // 의사 선택 초기화
+
+  // 별점 초기화
+  document.querySelectorAll('.stars').forEach((container) => {
+    Array.from(container.children).forEach((star) => {
+      star.classList.remove('selected'); // 별점 선택 해제
+    });
+    container.dataset.selectedValue = ''; // 별점 값 초기화
+  });
+
+  // 텍스트 입력 초기화
+  document.getElementById('review-text').value = ''; // 리뷰 내용 초기화
+
+  // 파일 업로드 초기화
+  document.getElementById('upload-file').value = ''; // 파일 입력 초기화
+
+  // 비밀번호 입력 초기화
+  document.getElementById('review-password').value = ''; // 비밀번호 입력 초기화
+
   document.getElementById('review-form').style.display = 'none';
   document.getElementById('overlay').style.display = 'none';
   document.body.style.overflow = '';
@@ -199,7 +199,7 @@ document
     try {
       // 의료진 목록을 가져오는 API 호출
       const response = await fetch(
-        `https://mallang-a85bb2ff492b.herokuapp.com/api/doctor?departmentId=${departmentId}`
+        `https://mallang-a85bb2ff492b.herokuapp.com/api/doctors/department/${departmentId}`
       );
       if (!response.ok) {
         throw new Error('의료진 정보를 불러오는 데 실패했습니다.');
@@ -266,6 +266,8 @@ document
   });
 
 async function validateAndSubmit() {
+  const jwtToken = localStorage.getItem('jwtToken');
+
   const departmentId = document.getElementById('department').value;
   const doctorId = document.getElementById('doctor').value;
   const content = document.getElementById('review-text').value;
@@ -273,35 +275,31 @@ async function validateAndSubmit() {
   const memberPassword = document.getElementById('review-password').value;
   const stars = document.querySelectorAll('.stars');
 
-  // 별점 데이터 수집
-  const detailStars = [];
-  for (const starContainer of stars) {
-    const selectedStars = parseInt(starContainer.dataset.selectedValue || 0);
-    detailStars.push(selectedStars); // 선택된 별점 값을 배열에 추가
-  }
-
-  // 데이터 구성
   const reviewDTO = {
     departmentId,
     doctorId,
-    detailStars,
     content,
     memberPassword,
+    explanationStars: parseInt(stars[0].dataset.selectedValue || 0),
+    treatmentResultStars: parseInt(stars[1].dataset.selectedValue || 0),
+    staffKindnessStars: parseInt(stars[2].dataset.selectedValue || 0),
+    cleanlinessStars: parseInt(stars[3].dataset.selectedValue || 0),
   };
 
+  // FormData 생성
   const formData = new FormData();
-  formData.append('reviewDTO', reviewDTO);
-
-  // 파일을 FormData에 추가
-  formData.append('receiptFile', fileInput);
+  formData.append('reviewDTO', JSON.stringify(reviewDTO)); // JSON으로 변환하여 전송
+  if (fileInput) {
+    formData.append('proveFile', fileInput); // 파일이 있을 경우 추가
+  }
 
   try {
     const response = await fetch(
-      'https://mallang-a85bb2ff492b.herokuapp.com/api/review',
+      'https://mallang-a85bb2ff492b.herokuapp.com/api/reviews',
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${jwtToken}`,
         },
         body: formData,
       }
