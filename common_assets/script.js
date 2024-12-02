@@ -28,9 +28,10 @@ $(document).ready(function () {
     }
   });
 
-  // 공통 이미지 스크롤 기능
+  let isScrolling = false; // 스크롤 상태 추적 변수
+
   $('.scrollable-image').each(function () {
-    const targetImage = $(this); // 각 이미지에 대해 처리
+    const targetImage = $(this);
 
     // 클릭 이벤트 핸들러
     targetImage.on('click', function () {
@@ -41,14 +42,30 @@ $(document).ready(function () {
     targetImage.on('wheel', function (event) {
       if (event.originalEvent.deltaY > 0) {
         scrollToBelowImage(targetImage);
+        event.preventDefault();
+      }
+    });
+
+    // 터치패드 이벤트 핸들러
+    targetImage.on('touchmove', function (event) {
+      const touch = event.originalEvent.touches[0];
+      if (touch) {
+        scrollToBelowImage(targetImage);
+        event.preventDefault();
       }
     });
   });
 
-  // 이미지 아래로 스크롤하는 함수
   function scrollToBelowImage(imageElement) {
+    if (isScrolling) return; // 이미 스크롤 중이면 실행하지 않음
+    isScrolling = true;
+
     const imageBottom = imageElement.offset().top + imageElement.outerHeight();
-    $('html, body').animate({ scrollTop: imageBottom }, 400);
+    $('html, body')
+      .stop(true)
+      .animate({ scrollTop: imageBottom }, 400, 'swing', function () {
+        isScrolling = false; // 애니메이션 완료 후 플래그 해제
+      });
   }
 });
 
