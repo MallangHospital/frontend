@@ -69,34 +69,44 @@ $(document).ready(function () {
         console.log("진료 과목 리스트 표시"); // 로그 추가
     }
 
-    // 의료진 리스트를 보이는 함수
     async function showDoctorsByDepartment(departmentId) {
-        console.log("선택한 departmentId:", departmentId); // 선택한 departmentId 로그
-
+        console.log("선택한 departmentId:", departmentId);
+    
         const $staffListView = $("#staffListView");
         const doctorList = await fetchDoctorsByDepartment(departmentId);
-
-        // 기존 리스트 초기화 후 추가
+    
         $staffListView.empty();
-        doctorList.forEach((doctor) => {
-            console.log("의사 정보:", doctor); // 각 의사 정보 로그
+    
+        for (const doctor of doctorList) {
+            const registrationCount = await fetchRegistrationCountByDoctor(doctor.id);
+            const estimatedWaitTime = registrationCount * 5; // 1인당 대기 시간 5분 기준
+    
+            console.log(`의사 ${doctor.name} - 접수 건수: ${registrationCount}, 예상 대기 시간: ${estimatedWaitTime}분`);
+    
             $staffListView.append(`
                 <li data-doctor-id="${doctor.id}" class="doctor-item">
                     <img src="${doctor.photoUrl}" alt="${doctor.name}" class="doctor-img">
-                    <p>${doctor.name}</p>
+                    <div>
+                        <p>${doctor.name}</p>
+                        ${registrationCount === 0 
+                            ? `<p class="status">휴진</p>` 
+                            : `<p class="status">대기자 ${registrationCount}명</p>
+                               <p class="wait-time">예상 대기 시간 <span>${estimatedWaitTime}</span>분</p>`}
+                    </div>
                 </li>
             `);
-        });
-
-        console.log("의료진 리스트 표시 완료"); // 의료진 리스트 표시 로그
-
+        }
+    
+        console.log("의료진 리스트 표시 완료");
+    
         // UI 상태 전환
         $(".medical_department_list").hide();
         $(".medical_staff_list").show();
-
+    
         $(".navItem").removeClass("is-active");
         $(".navItem").eq(1).addClass("is-active");
     }
+    
 
     // 진료과목 클릭 시 의료진 리스트 표시
     $("#listView li").click(function () {
@@ -173,6 +183,33 @@ $(document).ready(function () {
         console.log("데이터 저장 완료. 다음 단계로 이동.");
         window.location.href = "online_booking_step2.html";
     }
+
+    // 특정 의료진의 접수 건수를 가져오는 함수
+async function fetchRegistrationCountByDoctor(doctorId) {
+    const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/registrations/doctor/${doctorId}/count`;
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwtToken}`, // JWT 토큰 인증 추가
+            },
+        });
+
+        if (response.ok) {
+            const count = await response.json();
+            return count;
+        } else {
+            console.error(`의사 ID ${doctorId}의 접수 건수 가져오기 실패`, response.status);
+            return 0; // 실패 시 0 반환
+        }
+    } catch (error) {
+        console.error(`네트워크 오류: 의사 ID ${doctorId}`, error);
+        return 0; // 네트워크 오류 시 0 반환
+    }
+}
+
 
     $(".btn_next").click(saveSelectionAndProceed);
 
