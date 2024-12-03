@@ -136,6 +136,13 @@ $(document).ready(function () {
     // 선택된 의사의 ID 로그 출력
     const selectedDoctorId = $(this).data("doctor-id");
     console.log("선택된 의사 ID:", selectedDoctorId);
+
+    // 선택된 의사 이름 가져오기
+    const selectedDoctorName = $(this).find("p").text(); // 의사 이름
+  
+    // 의사 이름을 포함한 alert 추가
+    alert(`${selectedDoctorName} 의사를 선택하였습니다.`); // 의사 이름을 선택한 메시지
+
   });
 
   // 즐겨찾기 기능 추가
