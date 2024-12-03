@@ -50,6 +50,14 @@ function validateRequiredFields() {
     }
   }
 
+  // 이메일 형식 검증 추가
+  const email = document.getElementById('email').value.trim();
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  if (!emailRegex.test(email)) {
+    alert("유효한 이메일 주소를 입력하세요.");
+    return false;
+  }
+
   return true;
 }
 
@@ -78,9 +86,9 @@ function validatePasswords() {
     return false;
   }
 
-  const passwordRegex = /^.{8,}$/; // 최소 8자 이상만 검증
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?~\-=/]).{1,20}$/; // 최소 8자 이상만 검증
   if (!passwordRegex.test(password)) {
-    alert("비밀번호는 최소 8자 이상이어야 합니다.");
+    alert("비밀번호는 영어, 숫자, 특수문자를 모두 포함하며 8자 이상, 20자 이내로 작성해야 합니다.");
     return false;
   }
 

@@ -9,7 +9,6 @@ document.getElementById('loginFrm').addEventListener('submit', async function (e
         return;
     }
 
-    console.log("로그인 요청 데이터:", { username, password });
 
     try {
         const response = await fetch('https://mallang-a85bb2ff492b.herokuapp.com/login', {

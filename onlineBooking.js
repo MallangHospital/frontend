@@ -193,11 +193,30 @@ function showMedicalDepartments(event) {
         $(".medical_staff_list").show();
     }
 
-    // 진료과목 클릭 시 의료진 리스트 표시
-    $("#listView li").click(function () {
-        const departmentId = $(this).data("id");
-        showDoctorsByDepartment(departmentId);
-    });
+   // 진료과목 클릭 시 의료진 리스트 표시
+$("#listView li").click(function () {
+    // 기존 선택된 항목 해제
+    $("#listView li").removeClass("is-active");
+  
+    // 현재 선택된 항목 강조
+    $(this).addClass("is-active");
+  
+    // 진료과 ID 가져오기
+    const departmentId = $(this).data("id"); // 진료과목 ID
+    const departmentName = getDepartmentName(departmentId); // 진료과목 이름 변환
+    console.log(`선택된 진료과 ID: ${departmentId}, 이름: ${departmentName}`); // 로그 추가
+  
+    // 선택한 departmentId 저장 (다음 단계에서 사용 가능)
+    localStorage.setItem("selectedDepartmentId", departmentId);
+  
+    // 해당 부서의 의료진 리스트를 표시
+    if (departmentId) {
+      showDoctorsByDepartment(departmentId);
+    } else {
+      alert("유효한 진료과목이 아닙니다.");
+    }
+  });
+  
 
     // 의사 선택 로직 추가
 $("#staffListView").on("click", ".doctor-item", function () {

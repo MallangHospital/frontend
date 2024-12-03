@@ -22,61 +22,61 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("의료진 정보를 불러오는 중 오류가 발생했습니다.");
         }
     }
-// 페이지네이션 렌더링 함수
-function renderPagination() {
-    const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);  // 전체 페이지 수 계산
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    const end = start + ITEMS_PER_PAGE;
+    // 페이지네이션 렌더링 함수
+    function renderPagination() {
+        const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);  // 전체 페이지 수 계산
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        const end = start + ITEMS_PER_PAGE;
 
-    // 데이터가 부족할 수 있으므로 end 값은 doctors.length로 조정
-    const visibleDoctors = doctors.slice(start, Math.min(end, doctors.length));  // 현재 페이지에 해당하는 데이터
+        // 데이터가 부족할 수 있으므로 end 값은 doctors.length로 조정
+        const visibleDoctors = doctors.slice(start, Math.min(end, doctors.length));  // 현재 페이지에 해당하는 데이터
 
-    const doctorList = document.getElementById("doctor-list");
-    doctorList.innerHTML = visibleDoctors
-        .map(
-            (doctor) => `
-            <tr>
-                <td>
-                    <img src="${doctor.photoUrl || '/assets/default.jpg'}" alt="${doctor.name}" width="50" height="50" style="object-fit: cover; border-radius: 8px; background-color: #f0f0f0;">
-                </td>
-                <td>${doctor.name}</td>
-                <td>${doctor.departmentName || "정보 없음"}</td>
-                <td>${doctor.phoneNumber || "정보 없음"}</td>
-                <td>
-                    <a href="#" class="btn-update" data-id="${doctor.id}">수정</a>
-                    <button class="btn-delete" data-id="${doctor.id}">삭제</button>
-                </td>
-            </tr>`
-        )
-        .join("");
+        const doctorList = document.getElementById("doctor-list");
+        doctorList.innerHTML = visibleDoctors
+            .map(
+                (doctor) => `
+                <tr>
+                    <td>
+                        <img src="${doctor.photoUrl || '/assets/default.jpg'}" alt="${doctor.name}" width="50" height="50" style="object-fit: cover; border-radius: 8px; background-color: #f0f0f0;">
+                    </td>
+                    <td>${doctor.name}</td>
+                    <td>${doctor.departmentName || "정보 없음"}</td>
+                    <td>${doctor.phoneNumber || "정보 없음"}</td>
+                    <td>
+                        <a href="#" class="btn-update" data-id="${doctor.id}">수정</a>
+                        <button class="btn-delete" data-id="${doctor.id}">삭제</button>
+                    </td>
+                </tr>`
+            )
+            .join("");
 
-    // 페이지 정보 갱신
-    document.getElementById("page-info").textContent = `${currentPage} / ${totalPages}`;
-    document.getElementById("prev-page").disabled = currentPage === 1;  // 첫 페이지일 경우 '이전' 버튼 비활성화
-    document.getElementById("next-page").disabled = currentPage === totalPages;  // 마지막 페이지일 경우 '다음' 버튼 비활성화
+        // 페이지 정보 갱신
+        document.getElementById("page-info").textContent = `${currentPage} / ${totalPages}`;
+        document.getElementById("prev-page").disabled = currentPage === 1;  // 첫 페이지일 경우 '이전' 버튼 비활성화
+        document.getElementById("next-page").disabled = currentPage === totalPages;  // 마지막 페이지일 경우 '다음' 버튼 비활성화
 
-    attachPaginationEvents(); // 페이지네이션 버튼 이벤트 연결
-    attachDeleteEvents(); // 삭제 버튼 이벤트 연결
-    attachUpdateEvents(); // 수정 버튼 이벤트 연결
-}
+        attachPaginationEvents(); // 페이지네이션 버튼 이벤트 연결
+        attachDeleteEvents(); // 삭제 버튼 이벤트 연결
+        attachUpdateEvents(); // 수정 버튼 이벤트 연결
+    }
 
-// 페이지네이션 이벤트 연결
-function attachPaginationEvents() {
-    document.getElementById("prev-page").addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;  // 이전 페이지로 이동
-            renderPagination(); // 페이지 렌더링
-        }
-    });
+    // 페이지네이션 이벤트 연결
+    function attachPaginationEvents() {
+        document.getElementById("prev-page").addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;  // 이전 페이지로 이동
+                renderPagination(); // 페이지 렌더링
+            }
+        });
 
-    document.getElementById("next-page").addEventListener("click", () => {
-        const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);  // 총 페이지 수 계산
-        if (currentPage < totalPages) {
-            currentPage++;  // 다음 페이지로 이동
-            renderPagination(); // 페이지 렌더링
-        }
-    });
-}
+        document.getElementById("next-page").addEventListener("click", () => {
+            const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);  // 총 페이지 수 계산
+            if (currentPage < totalPages) {
+                currentPage++;  // 다음 페이지로 이동
+                renderPagination(); // 페이지 렌더링
+            }
+        });
+    }
 
 
    // 의료진 정보를 로드하고 부서별로 그룹화하여 드롭다운에 추가하는 함수
