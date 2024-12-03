@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 리뷰 페이지</title>
+
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar_admin.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
+    <link rel="stylesheet" href="style_review.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--제이쿼리 연결-->
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script_admin.js"></script>
+    <script defer src="review_admin.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <!-- 네비게이션 바 -->
+      <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <h1>리뷰</h1>
+        </div>
+
+        <!-- Review Summary -->
+        <div class="review-summary">
+          <div class="summary-item">
+            <h2>고객 평점 평균</h2>
+            <p id="average-stars" class="average-stars"></p>
+            <p id="average-score"></p>
+          </div>
+          <div class="summary-item">
+            <h2>전체 리뷰 수</h2>
+            <p id="total-reviews"></p>
+          </div>
+          <div class="summary-item">
+            <h2>세부 항목</h2>
+            <p id="detail-description"></p>
+            <p id="treatment-result"></p>
+            <p id="staff-kindness"></p>
+            <p id="cleanliness"></p>
+          </div>
+        </div>
+
+        <!-- Review List -->
+        <div id="review-list" class="review-list"></div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+      <!-- 리뷰 삭제 팝업 -->
+      <div id="delete-popup" class="popup">
+        <div class="popup-content">
+          <p id="popup-message"></p>
+          <div class="popup-buttons">
+            <button id="popup-confirm">확인</button>
+            <button id="popup-cancel">취소</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="result-popup" class="popup">
+        <div class="popup-content">
+          <p id="result-popup-message"></p>
+          <div class="popup-buttons">
+            <button id="result-popup-close">확인</button>
+          </div>
+        </div>
+      </div>
+      <div id="footer"></div>
+      <!-- 푸터 -->
+    </div>
+  </body>
+</html>

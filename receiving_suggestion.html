@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>건의사항 접수 페이지</title>
+
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
+    <link rel="stylesheet" href="style_service.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script.js"></script>
+    <script defer src="suggestion.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <img
+        src="assets/section_suggestion.png"
+        alt=""
+        width="100%"
+        class="scrollable-image"
+      />
+      <h1 class="main_title">건의사항 접수</h1>
+      <div class="suggestion_container">
+        <p class="note">*은 필수 입력 항목입니다.</p>
+        <hr class="separator" />
+
+        <form class="form">
+          <div class="form-group">
+            <label for="title">제목<span class="required">*</span></label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="제목을 입력해주세요."
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="content">내용<span class="required">*</span></label>
+            <textarea
+              id="content"
+              name="content"
+              placeholder="문의 내용을 작성해주세요."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="name">이름<span class="required">*</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="이름을 입력해주세요."
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phone"
+              >휴대폰 번호<span class="required">*</span></label
+            >
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              placeholder="000-0000-0000으로 입력해주세요."
+            />
+          </div>
+
+          <div class="form-group email-group">
+            <label for="email">이메일 주소</label>
+            <input
+              type="text"
+              id="email-prefix"
+              name="email-prefix"
+              placeholder="이메일 아이디"
+            />
+            <span class="at-sign">@</span>
+            <input
+              type="text"
+              id="email-domain"
+              name="email-domain"
+              placeholder="이메일 도메인"
+            />
+            <select id="email-select">
+              <option value="">직접 입력</option>
+              <option value="gmail.com">gmail.com</option>
+              <option value="naver.com">naver.com</option>
+            </select>
+
+            <input type="hidden" id="email" name="email" />
+          </div>
+
+          <hr class="separator_below" />
+          <button type="submit" class="submit-btn">접수하기</button>
+        </form>
+      </div>
+
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <p id="modal-message"></p>
+          <button id="close-modal" class="close-btn">확인</button>
+        </div>
+      </div>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>

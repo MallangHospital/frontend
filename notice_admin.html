@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 페이지</title>
+
+  <link rel="stylesheet" href="notice.css">
+  <link rel="stylesheet" href="notice_admin.css">
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar_admin.css"> <!-- 네비게이션 바 css -->
+  <link rel="stylesheet" href="common_assets/footer.css"> <!-- 푸터 css -->
+
+  <!-- 폰트 연결 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- 제이쿼리 연결 -->
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script_admin.js"></script>
+  <script defer src="notice_admin.js"></script> <!-- 동적으로 공지사항 데이터를 로드할 JS -->
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div>  
+
+    <main class="main-content">
+      <div class="search-box" style="margin-bottom: 20px;">
+        <label for="search">search</label><p>:</p>
+        <input type="text" id="search" placeholder="검색어를 입력하세요.">
+        <button class="search-button">검색</button>
+      </div>
+
+      <!-- 공지사항 테이블 -->
+      <table class="announcement-table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>상태</th>
+            <th>등록일</th>
+            <th>
+              <button id="deleteAllButton" class="delete-all-button">삭제</button>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="notice-tbody">
+          <!-- 공지사항 데이터가 동적으로 렌더링됩니다 -->
+        </tbody>
+      </table>
+
+      <!-- 페이징 버튼 -->
+      <div class="pagination">
+        <a href="#" class="prev-button">◀</a>
+        <div class="pagination-numbers">
+          <!-- 동적으로 페이지 번호가 렌더링됩니다 -->
+        </div>
+        <a href="#" class="next-button">▶</a>
+      </div>
+
+      <!-- 글 작성 버튼 -->
+      <button id="writeButton" class="write-button" style="margin-top: 20px;">글 작성하러 가기</button>
+    </main>
+
+    <div id="footer"></div> 
+  </div>
+</body>
+</html>

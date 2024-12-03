@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약 상세 정보</title>
+
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar_admin.css">
+  <link rel="stylesheet" href="common_assets/footer.css">
+  <link rel="stylesheet" href="booking_detail_admin.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- 제이쿼리 연결 -->
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script_admin.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div> <!-- 네비게이션 바 -->
+
+    <section class="booking-detail">
+      <h2><span>환자</span></h2> <!-- 환자 이름 동적 설정 -->
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>정보</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 예약 정보가 동적으로 추가됩니다 -->
+        </tbody>
+      </table>
+      <a href="booking_management_admin.html" class="btn-back">이전</a>
+    </section>
+
+    <div id="footer"></div> <!-- 푸터 -->
+  </div>
+</body>
+</html>
+
+<script>
+ document.addEventListener("DOMContentLoaded", async function () {
+  const jwtToken = localStorage.getItem("jwtToken"); // JWT 토큰 가져오기
+
+  // JWT 토큰 없으면 로그인 페이지로 리다이렉트
+  if (!jwtToken) {
+    alert("관리자 로그인이 필요합니다.");
+    window.location.href = "/login.html";
+    return;
+  }
+
+  // URL에서 예약 ID 추출
+  const params = new URLSearchParams(window.location.search);
+  const appointmentId = params.get("id"); // URL에서 'id' 값을 가져옴
+
+  if (!appointmentId) {
+    alert("예약 ID가 누락되었습니다.");
+    window.location.href = "booking_management_admin.html"; // 목록 페이지로 리다이렉트
+    return;
+  }
+
+  const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/appointments/${appointmentId}`;
+  const bookingDetailSection = document.querySelector(".booking-detail tbody");
+  const heading = document.querySelector(".booking-detail h2");
+
+  // 예약 상세 정보 로드 함수
+  async function loadAppointmentDetails() {
+    try {
+      console.log("예약 상세 정보 요청 시작..."); // 로그 추가
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`, // JWT 토큰 추가
+        },
+      });
+
+      console.log("예약 상세 정보 응답 상태 코드:", response.status); // 응답 상태 코드 로그 추가
+
+      if (response.ok) {
+        const details = await response.json();
+        console.log("예약 상세 정보:", details); // 응답 데이터 로그 추가
+        renderAppointmentDetails(details);
+      } else {
+        alert("예약 상세 정보를 불러오는 데 실패했습니다.");
+        console.error("Error:", response.status, response.statusText);
+      }
+    } catch (error) {
+      alert("서버 요청 중 문제가 발생했습니다.");
+      console.error("Error:", error);
+    }
+  }
+
+  // 예약 상세 정보를 테이블과 제목에 렌더링
+  function renderAppointmentDetails(details) {
+    console.log("예약 상세 정보 렌더링 시작..."); // 렌더링 시작 로그 추가
+
+    // 환자 이름 설정
+    heading.innerHTML = `${details.patientName} <span>환자</span>`; // 환자 이름 동적 설정
+
+    // 예약 상세 정보 테이블에 추가
+    bookingDetailSection.innerHTML = `
+      <tr>
+        <td>진료종류</td>
+        <td>${details.appointmentType}</td>
+      </tr>
+      <tr>
+        <td>진료과목</td>
+        <td>${details.departmentName}</td> 
+      </tr>
+      <tr>
+        <td>담당 의료진</td>
+        <td>${details.doctorName}</td>
+      </tr>
+      <tr>
+        <td>전화번호</td>
+        <td>${details.phoneNum}</td>
+      </tr>
+      <tr>
+        <td>증상</td>
+        <td>${details.symptomDescription}</td>
+      </tr>
+    `;
+    console.log("예약 상세 정보 렌더링 완료."); // 렌더링 완료 로그 추가
+  }
+
+  // 초기 데이터 로드
+  loadAppointmentDetails();
+});
+
+</script>

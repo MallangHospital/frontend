@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 상세 페이지</title>
+
+  <link rel="stylesheet" href="notice_in_admin.css">
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar_admin.css"> <!-- 네비게이션 바 css -->
+  <link rel="stylesheet" href="common_assets/footer.css"> <!-- 푸터 css -->
+
+  <!-- 폰트 연결 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- 제이쿼리 연결 -->
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script_admin.js"></script>
+  <script defer src="notice_in_admin.js"></script> <!-- 동적으로 공지사항 데이터를 로드할 JS -->
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div>
+
+    <div class="notice-container">
+      <div class="title">
+        <h1>공지사항</h1>
+      </div>
+
+      <div class="divider"></div> 
+
+      <div class="announcement">
+        <h2 id="notice-title">제목 로딩 중...</h2>
+        <div class="info">
+          <span id="notice-writer">작성자: 로딩 중...</span> |
+          <span id="notice-date">등록일: 로딩 중...</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details" id="notice-content">
+          <p>내용 로딩 중...</p>
+        </div>
+
+        <div class="divider"></div>
+      </div>
+
+      <div class="button-container">
+        <button class="button" id="goBackButton">목록</button>
+      </div>
+
+      <div class="divider"></div> 
+
+      <div class="prev-next">
+        <div class="prev" id="prev-notice">
+          <span class="label">이전글</span> 이전글 로딩 중...
+        </div>
+        <div class="divider"></div>
+        <div class="next" id="next-notice">
+          <span class="label">다음글</span> 다음글 로딩 중...
+        </div>
+      </div>
+
+      <div class="divider"></div> 
+
+      <button id="writeButton2" class="write-button" style="margin-top: 20px;">글 수정하러 가기</button>
+    </div>
+
+    <div class="footer-space"></div>
+    <div id="footer"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>의료진 정보 수정</title>
+
+  <link rel="stylesheet" href="common_assets/globalstyle.css">
+  <link rel="stylesheet" href="common_assets/navbar_admin.css">
+  <link rel="stylesheet" href="common_assets/footer.css">
+
+  <!-- 폰트 연결 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script_admin.js"></script>
+  <style>
+    /* 팝업 스타일 */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #DFD9D9;
+      padding: 70px 120px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup-content p {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .popup-content button {
+      padding: 10px 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .popup-content button:hover {
+      background: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div>
+
+    <!-- 의료진 정보 수정 -->
+    <section style="margin: 50px auto; max-width: 600px;">
+      <h2 style="font-weight: bold; font-size: 18px; margin-bottom: 30px;">의료진 정보 수정</h2>
+      <form id="doctor-update-form">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="doctor-name" style="font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block;">이름:</label>
+          <input type="text" id="doctor-name" name="name" placeholder="의료진 이름" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="doctor-specialty" style="font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block;">전문 분야:</label>
+          <select id="doctor-specialty" name="specialty" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+            <option value="" disabled selected>전문 분야를 선택하세요</option>
+            <option value="1">내과</option>
+            <option value="2">산부인과</option>
+            <option value="3">소아청소년과</option>
+            <option value="4">외과</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="doctor-contact" style="font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block;">연락처:</label>
+          <input type="text" id="doctor-contact" name="contact" placeholder="연락처" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="doctor-image-preview" style="font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block;">의료진 사진:</label>
+          <img id="doctor-image-preview" src="" alt="미리보기" style="width: 100px; height: auto; display: none; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <input type="file" id="doctor-image" name="photo" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <button type="submit" class="btn-submit" 
+          style="background-color: #A6B1BB; color: white; margin: 20px auto; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 30%; display: block;">
+          수정하기
+        </button>
+      </form>
+    </section>
+
+    <div id="popup-overlay" class="popup-overlay">
+      <div class="popup-content">
+        <p>수정되었습니다.</p>
+        <button id="close-popup">확인</button>
+      </div>
+    </div>
+
+    <div id="footer"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const baseUrl = "https://mallang-a85bb2ff492b.herokuapp.com";
+      const doctorId = new URLSearchParams(window.location.search).get("doctorId");
+      console.log(`수정 페이지 로드: doctorId=${doctorId}`);
+  
+      // 의사 정보 로드 함수
+      async function loadDoctorInfo() {
+        try {
+          const response = await fetch(`${baseUrl}/api/doctors/${doctorId}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+  
+          if (response.ok) {
+            const doctor = await response.json();
+            console.log("의사 정보 로드 성공:", doctor);
+            document.getElementById("doctor-name").value = doctor.name || "";
+            document.getElementById("doctor-specialty").value = doctor.departmentName || "";
+            document.getElementById("doctor-contact").value = doctor.phoneNumber || "";
+          } else {
+            console.error("의사 정보 로드 실패:", response.status);
+            alert("의사 정보를 불러오는 데 실패했습니다.");
+            window.location.href = "doctor-management_admin.html";
+          }
+        } catch (error) {
+          console.error("네트워크 오류:", error);
+          alert("의사 정보를 불러오는 중 오류가 발생했습니다.");
+        }
+      }
+  
+      loadDoctorInfo();
+  
+      // 사진 미리보기
+      document.getElementById("doctor-image").addEventListener("change", function () {
+        const file = this.files[0];
+        const preview = document.getElementById("doctor-image-preview");
+  
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        } else {
+          preview.style.display = "none";
+        }
+      });
+  
+      // 의사 정보 업데이트 함수
+      async function updateDoctor() {
+  const name = document.getElementById("doctor-name").value.trim();
+  const departmentId = document.getElementById("doctor-specialty").value.trim();  // 선택된 부서 ID
+  const contact = document.getElementById("doctor-contact").value.trim();
+  const photoFile = document.getElementById("doctor-image").files[0];  // 파일 선택
+
+  if (!name || !departmentId || !contact) {
+    alert("모든 필드를 입력해주세요.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("id", doctorId);  // doctorId를 id로 변경
+  formData.append("name", name);
+  formData.append("departmentId", departmentId);
+  formData.append("phoneNumber", contact);  // contact 대신 phoneNumber로 변경
+
+  if (photoFile) {
+    formData.append("photo", photoFile);
+  }
+
+  // 로그 추가: 전송할 데이터 출력
+  console.log("업데이트 요청 데이터:", {
+    id: doctorId,
+    name,
+    departmentId,
+    phoneNumber: contact,
+    photoFile: photoFile ? "있음" : "없음"
+  });
+
+  try {
+    // 로그 추가: PUT 요청 전송 시작
+    console.log(`PUT 요청 보내는 URL: ${baseUrl}/api/doctors/${doctorId}`);
+
+    const response = await fetch(`${baseUrl}/api/doctors/${doctorId}`, {
+      method: "PUT",
+      body: formData,
+    });
+
+    // 응답 상태 로그
+    console.log("응답 상태 코드:", response.status);
+
+    if (response.ok) {
+      // 응답 성공 시
+      console.log("수정 성공!");
+      alert("의료진 정보가 성공적으로 수정되었습니다.");
+      document.getElementById("doctor-update-form").reset();
+      window.location.href = "doctor-management_admin.html";
+    } else {
+      // 응답 실패 시
+      const errorMessage = await response.text();
+      console.error("수정 실패 응답:", errorMessage);
+      alert(`수정 실패: ${errorMessage}`);
+    }
+  } catch (error) {
+    // 네트워크 오류 처리
+    console.error("의료진 수정 중 오류 발생:", error);
+    alert("의료진 수정 중 문제가 발생했습니다. 네트워크를 확인하세요.");
+  }
+}
+
+
+  
+      // 수정하기 버튼 클릭 시
+      document.getElementById("doctor-update-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        updateDoctor();
+      });
+  
+      // 팝업 닫기 버튼
+      document.getElementById("close-popup").addEventListener("click", () => {
+        document.getElementById("popup-overlay").style.display = "none";
+        window.location.href = "doctor-management_admin.html";
+      });
+    });
+  </script>
+  
+</body>
+</html>

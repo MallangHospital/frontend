@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 페이지</title>
+
+  <link rel="stylesheet" href="common_assets/globalstyle.css" />
+  <link rel="stylesheet" href="common_assets/navbar.css" />
+  <link rel="stylesheet" href="common_assets/footer.css" />
+  <link rel="stylesheet" href="notice.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script.js"></script>
+  <script defer src="notice.js"></script> <!-- 수정된 JS 연결 -->
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div>
+    <div class="section">
+      <img src="assets/section_notice.png" alt="공지사항 배너" class="scrollable-image">>
+    </div>
+
+    <main class="main-content">
+      <div class="search-box">
+        <label for="search">search: </label>
+        <input type="text" id="search" placeholder="검색어를 입력하세요">
+        <button class="search-button">검색</button>
+      </div>
+
+      <table class="announcement-table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>상태</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 공지사항 데이터가 동적으로 삽입됩니다. -->
+          <tr>
+            <td colspan="4" class="centered-text">공지사항 데이터를 불러오는 중입니다...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <a href="#" class="prev-button">◀</a>
+        <div class="pagination-numbers">
+          <!-- 페이지 번호가 필요하다면 JavaScript로 추가 가능 -->
+          <a href="#" class="active">1</a>
+        </div>
+        <a href="#" class="next-button">▶</a>
+      </div>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+</body>
+</html>

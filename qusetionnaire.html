@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문진표</title>
+  
+  <link rel="stylesheet" href="common_assets/globalstyle.css" />
+  <link rel="stylesheet" href="common_assets/navbar.css" />
+  <link rel="stylesheet" href="common_assets/footer.css" />
+  <link rel="stylesheet" href="qusetionnaire.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="common_assets/jquery-3.7.1.min.js"></script>
+  <script defer src="common_assets/script.js"></script>
+  <script defer src="qusetionnaire.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div id="navbar"></div>  
+    <div class="section">
+      <img src="assets/section_questionnaire.png" alt="section" class="scrollable-image">>
+    </div>
+
+    <!-- 동적으로 질문이 렌더링될 컨테이너 -->
+    <div id="questionnaire-container" class="wrap">
+      <!-- 질문이 동적으로 추가됩니다 -->
+    </div>
+
+    <div id="footer"></div> 
+  </div>
+
+  <div id="alertImage" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+    <img id="alertImg" src="" alt="alert" />
+  </div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>외과 센터 소개 페이지</title>
+
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
+    <link rel="stylesheet" href="style_introduce.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <img
+        src="assets/section_surgery_department.png"
+        alt=""
+        width="100%"
+        class="scrollable-image"
+      />
+      <div class="button-container">
+        <button
+          class="custom-button active"
+          onclick="location.href='surgery.html'"
+        >
+          <span class="text">외과</span>
+          <img src="assets/icon_surgery.png" alt="외과 아이콘" class="icon" />
+        </button>
+        <button
+          class="custom-button"
+          onclick="location.href='internal_medicine.html'"
+        >
+          <span class="text">내과</span>
+          <img src="assets/icon_medicine.png" alt="내과 아이콘" class="icon" />
+        </button>
+        <button class="custom-button" onclick="location.href='pediatrics.html'">
+          <span class="text">소아청소년과</span>
+          <img
+            src="assets/icon_pediatrics_adolescents_department.png"
+            alt="소아청소년과 아이콘"
+            class="icon"
+          />
+        </button>
+        <button class="custom-button" onclick="location.href='gynecology.html'">
+          <span class="text">산부인과</span>
+          <img
+            src="assets/icon_obstetrics_gynecology_department.png"
+            alt="산부인과 아이콘"
+            class="icon"
+          />
+        </button>
+      </div>
+
+      <div class="main_department">
+        <h1 class="main_department">외과 센터</h1>
+        <p class="main_content">
+          말랑병원 외과센터는 정밀한 진료와 최적의 수술을 통해 환자분들의 건강과
+          삶의 질을 향상시키는 것을 목표로 하고 있습니다. 저희 외과센터는 각
+          분야의 전문 의료진들이 다양한 수술 경험과 최신 의료 장비를 바탕으로
+          환자 개개인에게 맞는 안전하고 효과적인 치료를 제공합니다. 환자분들이
+          수술 과정에서부터 회복에 이르는 전 과정에서 안심하고 신뢰할 수 있도록
+          최선을 다하며, 맞춤형 치료와 세심한 사후 관리를 통해 빠른 일상 복귀를
+          지원하고 있습니다.
+        </p>
+        <p class="main_content">
+          또한, 말랑병원 외과센터는 24시간 응급 상황에 대비하여 언제나 준비된
+          상태로 환자를 맞이하고 있으며, 응급 수술이 필요한 환자분들에게도
+          즉각적으로 대응할 수 있는 체계를 갖추고 있습니다. 이러한 응급 대처
+          시스템을 통해 위급한 상황에서도 최상의 치료를 제공할 수 있도록
+          노력하며, 지역 사회의 든든한 의료 파트너로 자리매김하고 있습니다.
+          환자분들의 건강과 행복한 삶을 지키기 위해 말랑병원 외과센터는 언제나
+          앞서 나아가겠습니다.
+        </p>
+      </div>
+      <div class="department_container">
+        <h2>진료과목</h2>
+        <hr />
+
+        <div class="department">
+          <h3>신경외과</h3>
+          <div class="department-content">
+            <img
+              src="assets/icon_neurosurgery.png"
+              alt="신경외과 아이콘"
+              class="icon"
+            />
+            <p>
+              신경외과는 뇌와 척수, 말초신경과 관련된 다양한 신경계 질환을
+              전문적으로 진단하고 치료하는 분야입니다. 뇌종양, 뇌출혈, 척추
+              질환, 신경계 손상 등 중증의 신경계 질환을 대상으로 하며, 고도의
+              기술과 집중력이 요구되는 수술을 통해 환자분들의 건강을 회복하는 데
+              중점을 두고 있습니다. 말랑병원 신경외과 의료진은 풍부한 경험과
+              최신 수술 기법을 바탕으로 환자에게 가장 적합한 치료 방법을
+              제공하고, 환자 개개인의 상태에 맞춘 세심한 진단과 치료 계획을 세워
+              최고의 결과를 위해 노력하고 있습니다. 또한, 수술 후 지속적인
+              모니터링과 관리로 환자분들의 빠른 회복과 일상 복귀를 도우며,
+              편안하고 안전한 의료 서비스를 제공하고 있습니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="department">
+          <h3>정형외과</h3>
+          <div class="department-content">
+            <img
+              src="assets/icon_orthopedics.png"
+              alt="정형외과 아이콘"
+              class="icon"
+            />
+            <p>
+              정형외과는 뼈, 관절, 인대, 근육 등의 근골격계 질환을 진단하고
+              치료하는 분야로, 골절, 디스크, 관절염 등 다양한 정형외과적 문제를
+              다룹니다. 말랑병원 정형외과는 최신의 치료법과 수술 기술을 활용하여
+              환자 개개인에게 맞는 치료 방법을 제시하며, 최소침습 수술을 통해
+              회복 시간을 단축하고 환자의 불편을 최소화하고자 합니다. 관절
+              내시경, 척추 내시경 등 첨단 장비를 사용하여 정확한 진단과 치료를
+              제공하며, 수술 후 재활 프로그램을 통해 환자들이 건강을 유지하고
+              빠르게 일상으로 복귀할 수 있도록 지원합니다. 저희 정형외과
+              의료진은 환자들의 삶의 질 향상과 지속 가능한 건강을 목표로 최선을
+              다하고 있습니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="department">
+          <h3>외상외과</h3>
+          <div class="department-content">
+            <img
+              src="assets/icon_trauma_surgery.png"
+              alt="외상외과 아이콘"
+              class="icon"
+            />
+            <p>
+              외상외과는 교통사고, 낙상, 산업재해 등으로 발생하는 다양한 외상과
+              응급 상황에 즉각적으로 대응하는 분야입니다. 말랑병원 외상외과는
+              응급 상황에서 환자분들에게 신속하고 정확한 치료를 제공하기 위해
+              24시간 대비 체제를 갖추고 있습니다. 다양한 외상과 골절, 장기 손상
+              등을 전문적으로 치료하며, 환자의 상태에 따라 비수술적 치료와
+              수술적 치료를 모두 고려하여 최적의 치료 방안을 제공합니다. 또한,
+              외상으로 인해 발생할 수 있는 합병증을 예방하고, 환자들이 안전하게
+              회복할 수 있도록 지속적인 사후 관리와 재활 프로그램을 제공하고
+              있습니다. 말랑병원 외상외과는 환자의 생명을 구하고 건강을 회복하는
+              데 있어 언제나 최선을 다하고 있습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>

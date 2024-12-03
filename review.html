@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>리뷰 페이지</title>
+
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
+    <link rel="stylesheet" href="style_review.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script.js"></script>
+    <script defer src="review.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <img
+        src="assets/section_review.png"
+        alt=""
+        width="100%"
+        class="scrollable-image"
+      />
+      <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <h1>리뷰</h1>
+        </div>
+
+        <!-- Review Summary -->
+        <div class="review-summary">
+          <div class="summary-item">
+            <h2>고객 평점 평균</h2>
+            <p id="average-stars" class="average-stars"></p>
+            <p id="average-score"></p>
+          </div>
+          <div class="summary-item">
+            <h2>전체 리뷰 수</h2>
+            <p id="total-reviews"></p>
+          </div>
+          <div class="summary-item">
+            <h2>세부 항목</h2>
+            <p id="detail-description"></p>
+            <p id="treatment-result"></p>
+            <p id="staff-kindness"></p>
+            <p id="cleanliness"></p>
+          </div>
+        </div>
+
+        <!-- Review List -->
+        <div id="review-list" class="review-list"></div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+
+        <!-- Write Review Button -->
+        <div class="write-review-button">
+          <button id="open-review-modal">리뷰 작성하러 가기</button>
+        </div>
+      </div>
+
+      <!-- 리뷰 삭제 팝업 -->
+      <div id="delete-popup" class="popup">
+        <div class="popup-content">
+          <p id="popup-message"></p>
+          <input
+            type="password"
+            id="popup-password"
+            placeholder="비밀번호 입력"
+          />
+          <div class="popup-buttons">
+            <button id="popup-confirm">확인</button>
+            <button id="popup-cancel">취소</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="result-popup" class="popup">
+        <div class="popup-content">
+          <p id="result-popup-message"></p>
+          <div class="popup-buttons">
+            <button id="result-popup-close">확인</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="overlay"></div>
+
+      <!-- Review Form Modal -->
+      <form class="review-form-container" id="review-form">
+        <div class="review-form-header">
+          <h2>리뷰 작성</h2>
+          <button type="button" class="close-button" onclick="closeForm()">
+            X
+          </button>
+        </div>
+        <!-- 진료과 -->
+        <div class="form-section_option">
+          <label for="department">진료과</label>
+          <select id="department" name="department">
+            <option value="" disabled selected>진료 선택</option>
+            <option value="1">내과</option>
+            <option value="2">외과</option>
+            <option value="3">소아과</option>
+            <option value="4">산부인과</option>
+          </select>
+        </div>
+
+        <!-- 의사 -->
+        <div class="form-section_option">
+          <label for="doctor">의사</label>
+          <select id="doctor" name="doctor">
+            <option value="" disabled selected>의사 선택</option>
+          </select>
+        </div>
+        <hr />
+        <!-- 별점 -->
+        <div class="star-section_option">
+          <label>자세한 설명</label>
+          <div class="stars" data-name="detailed-explanation"></div>
+        </div>
+        <div class="star-section_option">
+          <label>치료 후 결과</label>
+          <div class="stars" data-name="treatment-results"></div>
+        </div>
+        <div class="star-section_option">
+          <label>직원의 친절</label>
+          <div class="stars" data-name="staff-kindness"></div>
+        </div>
+        <div class="star-section_option">
+          <label>청결함</label>
+          <div class="stars" data-name="cleanliness"></div>
+        </div>
+        <hr />
+        <!-- 진료 후기 -->
+        <div class="form-section">
+          <label for="review-text">진료는 어떠셨나요?</label>
+          <textarea
+            id="review-text"
+            name="review_text"
+            placeholder="리뷰 내용을 입력하세요"
+            class="review-textarea"
+          ></textarea>
+        </div>
+        <hr />
+        <!-- 파일 업로드 -->
+        <div class="form-section">
+          <label>병원 방문을 인증할 수 있는 자료를 올려주세요</label>
+          <input type="file" id="upload-file" name="file" />
+        </div>
+        <hr />
+
+        <!-- 비밀번호 입력 -->
+        <div class="form-section">
+          <label for="review-password">작성 비밀번호</label>
+          <input
+            type="password"
+            id="review-password"
+            name="review_password"
+            placeholder="비밀번호를 입력하세요"
+            class="review-password"
+          />
+        </div>
+        <!-- 제출 버튼 -->
+        <div class="review-form-footer">
+          <button type="submit" class="review-submit-button">등록하기</button>
+        </div>
+      </form>
+
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <p id="modal-message"></p>
+          <button id="close-modal" class="close-btn">확인</button>
+        </div>
+      </div>
+
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>
