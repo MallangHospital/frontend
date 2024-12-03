@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = document.getElementById("doctor-name").value.trim();
         const department = document.getElementById("doctor-department").value.trim();
         const contact = document.getElementById("doctor-contact").value.trim();
-        const photoFile = document.getElementById("doctor-image").files[0];
+        const photoFile = document.getElementById("doctor-image").files[0];  // 파일 선택
     
         // 부서 맵핑
         const departmentMapping = {
@@ -118,21 +118,25 @@ document.addEventListener("DOMContentLoaded", () => {
             name,
             departmentId,
             phoneNumber: contact,
-            photoPath: "default/photo/path", // 기본값
+            position: "Doctor", // 기본값
+            adminId: "admin123", // 기본값
+            specialty: "General Medicine", // 기본값
         };
     
-        // FormData에 JSON 데이터와 이미지 파일 추가
+        // FormData 객체 생성
         const formData = new FormData();
-        formData.append("doctor", JSON.stringify(doctorData));
+        formData.append("doctor", JSON.stringify(doctorData));  // JSON 데이터를 "doctor" 필드에 추가
         if (photoFile) {
-            formData.append("photo", photoFile);
+            formData.append("photo", photoFile);  // 이미지 파일을 "photo" 필드에 추가
         }
     
         try {
-            console.log("전송할 데이터:", doctorData, photoFile);
+            console.log("전송 데이터:", doctorData, photoFile);
+    
+            // API 요청 (POST)
             const response = await fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/doctors", {
                 method: "POST",
-                body: formData,
+                body: formData, // FormData로 전송
             });
     
             if (response.ok) {
@@ -163,15 +167,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 수정 버튼 이벤트 연결
     function attachUpdateEvents() {
         document.querySelectorAll(".btn-update").forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 const doctorId = e.target.dataset.id;
+                // 의사 ID를 로컬 스토리지에 저장
+                localStorage.setItem('doctorId', doctorId);
                 window.location.href = `doctor_update_admin.html?doctorId=${doctorId}`;
             });
         });
     }
+    
 
     // 의료진 삭제
     async function deleteDoctor(doctorId) {
@@ -321,6 +327,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
+document.getElementById("doctor-image").addEventListener("change", function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.getElementById("image-preview");
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    } else {
+        const preview = document.getElementById("image-preview");
+        preview.src = "";
+        preview.style.display = "none";
+    }
+});
+
+
 
     // 초기화 및 이벤트 리스너 연결
     async function initializePage() {
@@ -335,3 +360,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initializePage();
 });
+
