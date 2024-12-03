@@ -149,15 +149,21 @@ $(document).ready(function () {
 });
 
 
-    // 진료과목 리스트를 보이는 함수
-    function showMedicalDepartments(event) {
-        event.preventDefault(); // 기본 링크 동작 방지
-        $(".medical_staff_list").hide();
-        $(".medical_department_list").show();
 
-        $(".navItem").removeClass("is-active");
-        $(event.target).closest(".navItem").addClass("is-active");
-    }
+    // 진료과목 리스트를 보이는 함수
+function showMedicalDepartments(event) {
+    event.preventDefault(); // 기본 링크 동작 방지
+    $(".medical_staff_list").hide();
+    $(".medical_department_list").show();
+
+    // 선택한 진료과목 ID를 로컬 스토리지에 저장
+    const departmentId = $(event.target).data("id");
+    localStorage.setItem("departmentId", departmentId); // 진료과목 ID 저장
+
+    $(".navItem").removeClass("is-active");
+    $(event.target).closest(".navItem").addClass("is-active");
+}
+
 
     // 의료진 리스트를 보이는 함수
     async function showDoctorsByDepartment(departmentId) {
@@ -255,3 +261,5 @@ $(".navLink[data-target='진료 과목']").click(function(event) {
     $(".medical_staff_list").hide();
     console.log("스크립트 초기화 완료");
 });
+
+
