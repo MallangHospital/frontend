@@ -53,7 +53,7 @@ function renderReviews(reviews) {
     reviewItem.className = 'review-item';
     reviewItem.innerHTML = `
       <h3>${review.memberId}</h3>
-      <p>진료과: ${review.department}, 의사: ${review.doctor}</p>
+      <p>진료과: ${review.departmentName}, 의사: ${review.doctorName}</p>
       <p class="average-stars">${'★'.repeat(review.averageStars)}${'☆'.repeat(
       5 - review.averageStars
     )} <span style="color: black;"> ${review.averageStars}</span></p> 
