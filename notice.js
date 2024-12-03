@@ -78,7 +78,7 @@ function renderNotices(notices) {
         <a href="notice_in.html?id=${notice.id}">${notice.title}</a>
       </td>
       <td>공고</td>
-      <td>${notice.writeDate}</td>
+      <td>${notice.regDate}</td>
     `;
     tableBody.appendChild(row);
   });
