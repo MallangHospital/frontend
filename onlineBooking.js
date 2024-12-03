@@ -70,6 +70,85 @@ $(document).ready(function () {
         }
     }
 
+    // 휴진 상태를 가져오는 함수
+async function fetchVacationStatus(doctorId) {
+    const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/vacations/${doctorId}/status`;
+    try {
+        const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwtToken}`,
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data.onVacation;  // onVacation 값 반환
+        } else {
+            console.error("휴진 상태 로드 실패");
+            return false;  // 기본값은 휴진 아님
+        }
+    } catch (error) {
+        console.error("네트워크 오류:", error);
+        return false;  // 네트워크 오류 발생 시 기본값은 휴진 아님
+    }
+}
+
+// 의사의 정보와 휴진 여부를 처리하는 함수
+async function showDoctorsByDepartment(departmentId) {
+    const $staffListView = $("#staffListView");
+    const doctorList = await fetchDoctorsByDepartment(departmentId);
+
+    // 기존 리스트 초기화 후 추가
+    $staffListView.empty();
+    doctorList.forEach(async (doctor) => {
+        const registrationCount = await fetchRegistrationCountByDoctor(doctor.id); // 대기 인원 수 가져오기
+        const waitTime = registrationCount * 5; // 예상 대기 시간 계산
+        const isOnVacation = await fetchVacationStatus(doctor.id); // 휴진 상태 확인
+
+        // 의사 항목 렌더링
+        const doctorItem = `
+            <li data-doctor-id="${doctor.id}" class="doctor-item ${isOnVacation ? 'vacation' : ''}">
+                <img src="${doctor.photoUrl}" alt="${doctor.name}" class="doctor-img">
+                <div class="doctor-info">
+                    <p class="doctor-name">${doctor.name}</p>
+                    <p class="doctor-status">대기 인원: ${registrationCount}명</p>
+                    <p class="doctor-wait-time">예상 대기 시간: <span class="wait-time">${waitTime}분</span></p>
+                    ${isOnVacation ? '<span class="vacation-label">휴진</span>' : ''}
+                </div>
+            </li>`;
+
+        $staffListView.append(doctorItem);
+    });
+
+    // UI 상태 전환
+    $(".medical_department_list").hide();
+    $(".medical_staff_list").show();
+}
+
+// 휴진 상태에 따른 스타일 적용
+$(document).ready(function () {
+    // 휴진 의사 항목에 스타일 추가
+    $("body").on("mouseover", ".vacation", function () {
+        $(this).css("background-color", "#d3d3d3"); // 회색 배경
+        $(this).find(".vacation-label").show(); // "휴진" 텍스트 표시
+    });
+
+    $("body").on("mouseout", ".vacation", function () {
+        $(this).css("background-color", ""); // 배경색 초기화
+        $(this).find(".vacation-label").hide(); // "휴진" 텍스트 숨김
+    });
+
+    // 다른 페이지 로드 후에도 휴진 상태 처리
+    $(".doctor-item").each(function () {
+        if ($(this).hasClass("vacation")) {
+            $(this).find(".vacation-label").show(); // "휴진" 텍스트 표시
+        }
+    });
+});
+
+
     // 진료과목 리스트를 보이는 함수
     function showMedicalDepartments(event) {
         event.preventDefault(); // 기본 링크 동작 방지
