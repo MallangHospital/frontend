@@ -42,7 +42,7 @@ async function loadReservations() {
     renderHealthChecks(data.healthChecks);
   } catch (error) {
     console.error("예약 정보 로드 오류:", error.message);
-    alert("예약 정보를 로드하는 중 오류가 발생했습니다. 콘솔을 확인하세요.");
+    alert("로그인 후 이용가능한 서비스입니다.");
   }
 }
 

@@ -70,15 +70,100 @@ $(document).ready(function () {
         }
     }
 
-    // 진료과목 리스트를 보이는 함수
-    function showMedicalDepartments(event) {
-        event.preventDefault(); // 기본 링크 동작 방지
-        $(".medical_staff_list").hide();
-        $(".medical_department_list").show();
+    // 휴진 상태를 가져오는 함수
+async function fetchVacationStatus(doctorId) {
+    const apiUrl = `https://mallang-a85bb2ff492b.herokuapp.com/api/vacations/${doctorId}/status`;
+    try {
+        const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwtToken}`,
+            },
+        });
 
-        $(".navItem").removeClass("is-active");
-        $(event.target).closest(".navItem").addClass("is-active");
+        if (response.ok) {
+            const data = await response.json();
+            return data.onVacation;  // onVacation 값 반환
+        } else {
+            console.error("휴진 상태 로드 실패");
+            return false;  // 기본값은 휴진 아님
+        }
+    } catch (error) {
+        console.error("네트워크 오류:", error);
+        return false;  // 네트워크 오류 발생 시 기본값은 휴진 아님
     }
+}
+
+// 의사의 정보와 휴진 여부를 처리하는 함수
+async function showDoctorsByDepartment(departmentId) {
+    const $staffListView = $("#staffListView");
+    const doctorList = await fetchDoctorsByDepartment(departmentId);
+
+    // 기존 리스트 초기화 후 추가
+    $staffListView.empty();
+    doctorList.forEach(async (doctor) => {
+        const registrationCount = await fetchRegistrationCountByDoctor(doctor.id); // 대기 인원 수 가져오기
+        const waitTime = registrationCount * 5; // 예상 대기 시간 계산
+        const isOnVacation = await fetchVacationStatus(doctor.id); // 휴진 상태 확인
+
+        // 의사 항목 렌더링
+        const doctorItem = `
+            <li data-doctor-id="${doctor.id}" class="doctor-item ${isOnVacation ? 'vacation' : ''}">
+                <img src="${doctor.photoUrl}" alt="${doctor.name}" class="doctor-img">
+                <div class="doctor-info">
+                    <p class="doctor-name">${doctor.name}</p>
+                    <p class="doctor-status">대기 인원: ${registrationCount}명</p>
+                    <p class="doctor-wait-time">예상 대기 시간: <span class="wait-time">${waitTime}분</span></p>
+                    ${isOnVacation ? '<span class="vacation-label">휴진</span>' : ''}
+                </div>
+            </li>`;
+
+        $staffListView.append(doctorItem);
+    });
+
+    // UI 상태 전환
+    $(".medical_department_list").hide();
+    $(".medical_staff_list").show();
+}
+
+// 휴진 상태에 따른 스타일 적용
+$(document).ready(function () {
+    // 휴진 의사 항목에 스타일 추가
+    $("body").on("mouseover", ".vacation", function () {
+        $(this).css("background-color", "#d3d3d3"); // 회색 배경
+        $(this).find(".vacation-label").show(); // "휴진" 텍스트 표시
+    });
+
+    $("body").on("mouseout", ".vacation", function () {
+        $(this).css("background-color", ""); // 배경색 초기화
+        $(this).find(".vacation-label").hide(); // "휴진" 텍스트 숨김
+    });
+
+    // 다른 페이지 로드 후에도 휴진 상태 처리
+    $(".doctor-item").each(function () {
+        if ($(this).hasClass("vacation")) {
+            $(this).find(".vacation-label").show(); // "휴진" 텍스트 표시
+        }
+    });
+});
+
+
+
+    // 진료과목 리스트를 보이는 함수
+function showMedicalDepartments(event) {
+    event.preventDefault(); // 기본 링크 동작 방지
+    $(".medical_staff_list").hide();
+    $(".medical_department_list").show();
+
+    // 선택한 진료과목 ID를 로컬 스토리지에 저장
+    const departmentId = $(event.target).data("id");
+    localStorage.setItem("departmentId", departmentId); // 진료과목 ID 저장
+
+    $(".navItem").removeClass("is-active");
+    $(event.target).closest(".navItem").addClass("is-active");
+}
+
 
     // 의료진 리스트를 보이는 함수
     async function showDoctorsByDepartment(departmentId) {
@@ -108,11 +193,30 @@ $(document).ready(function () {
         $(".medical_staff_list").show();
     }
 
-    // 진료과목 클릭 시 의료진 리스트 표시
-    $("#listView li").click(function () {
-        const departmentId = $(this).data("id");
-        showDoctorsByDepartment(departmentId);
-    });
+   // 진료과목 클릭 시 의료진 리스트 표시
+$("#listView li").click(function () {
+    // 기존 선택된 항목 해제
+    $("#listView li").removeClass("is-active");
+  
+    // 현재 선택된 항목 강조
+    $(this).addClass("is-active");
+  
+    // 진료과 ID 가져오기
+    const departmentId = $(this).data("id"); // 진료과목 ID
+    const departmentName = getDepartmentName(departmentId); // 진료과목 이름 변환
+    console.log(`선택된 진료과 ID: ${departmentId}, 이름: ${departmentName}`); // 로그 추가
+  
+    // 선택한 departmentId 저장 (다음 단계에서 사용 가능)
+    localStorage.setItem("selectedDepartmentId", departmentId);
+  
+    // 해당 부서의 의료진 리스트를 표시
+    if (departmentId) {
+      showDoctorsByDepartment(departmentId);
+    } else {
+      alert("유효한 진료과목이 아닙니다.");
+    }
+  });
+  
 
     // 의사 선택 로직 추가
 $("#staffListView").on("click", ".doctor-item", function () {
@@ -176,3 +280,5 @@ $(".navLink[data-target='진료 과목']").click(function(event) {
     $(".medical_staff_list").hide();
     console.log("스크립트 초기화 완료");
 });
+
+

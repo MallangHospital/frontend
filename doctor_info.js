@@ -22,14 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("의료진 정보를 불러오는 중 오류가 발생했습니다.");
         }
     }
-
-
     // 페이지네이션 렌더링 함수
     function renderPagination() {
-        const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);
+        const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);  // 전체 페이지 수 계산
         const start = (currentPage - 1) * ITEMS_PER_PAGE;
         const end = start + ITEMS_PER_PAGE;
-        const visibleDoctors = doctors.slice(start, end);
+
+        // 데이터가 부족할 수 있으므로 end 값은 doctors.length로 조정
+        const visibleDoctors = doctors.slice(start, Math.min(end, doctors.length));  // 현재 페이지에 해당하는 데이터
 
         const doctorList = document.getElementById("doctor-list");
         doctorList.innerHTML = visibleDoctors
@@ -50,9 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
             )
             .join("");
 
+        // 페이지 정보 갱신
         document.getElementById("page-info").textContent = `${currentPage} / ${totalPages}`;
-        document.getElementById("prev-page").disabled = currentPage === 1;
-        document.getElementById("next-page").disabled = currentPage === totalPages;
+        document.getElementById("prev-page").disabled = currentPage === 1;  // 첫 페이지일 경우 '이전' 버튼 비활성화
+        document.getElementById("next-page").disabled = currentPage === totalPages;  // 마지막 페이지일 경우 '다음' 버튼 비활성화
 
         attachPaginationEvents(); // 페이지네이션 버튼 이벤트 연결
         attachDeleteEvents(); // 삭제 버튼 이벤트 연결
@@ -63,40 +64,63 @@ document.addEventListener("DOMContentLoaded", () => {
     function attachPaginationEvents() {
         document.getElementById("prev-page").addEventListener("click", () => {
             if (currentPage > 1) {
-                currentPage--;
-                renderPagination();
+                currentPage--;  // 이전 페이지로 이동
+                renderPagination(); // 페이지 렌더링
             }
         });
 
         document.getElementById("next-page").addEventListener("click", () => {
-            const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);
+            const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE);  // 총 페이지 수 계산
             if (currentPage < totalPages) {
-                currentPage++;
-                renderPagination();
+                currentPage++;  // 다음 페이지로 이동
+                renderPagination(); // 페이지 렌더링
             }
         });
     }
 
-    // 의료진 드롭다운에 정보 추가
-    function populateDoctorDropdown() {
-        const doctorDropdown = document.getElementById("vacation-doctor");
-        doctorDropdown.innerHTML = ""; // 기존 옵션 초기화
 
-        doctors.forEach((doctor) => {
+   // 의료진 정보를 로드하고 부서별로 그룹화하여 드롭다운에 추가하는 함수
+function populateDoctorDropdown() {
+    const doctorDropdown = document.getElementById("vacation-doctor");
+    doctorDropdown.innerHTML = ""; // 기존 옵션 초기화
+
+    // 부서별로 의료진을 그룹화
+    const departments = {};  // 부서별로 의료진을 그룹화할 객체
+
+    doctors.forEach((doctor) => {
+        const departmentName = doctor.departmentName || "기타";
+        
+        if (!departments[departmentName]) {
+            departments[departmentName] = [];
+        }
+        departments[departmentName].push(doctor);
+    });
+
+    // 부서별로 그룹화된 의료진을 드롭다운에 추가
+    Object.keys(departments).forEach((departmentName) => {
+        const optGroup = document.createElement("optgroup");
+        optGroup.label = departmentName;  // 부서 이름을 그룹 레이블로 설정
+
+        // 해당 부서의 의료진을 옵션으로 추가
+        departments[departmentName].forEach((doctor) => {
             const option = document.createElement("option");
             option.value = doctor.id;
             option.textContent = doctor.name;
-            doctorDropdown.appendChild(option);
+            optGroup.appendChild(option);
         });
 
-        console.log("드롭다운 갱신 완료");
-    }
+        doctorDropdown.appendChild(optGroup);  // optgroup을 드롭다운에 추가
+    });
+
+    console.log("드롭다운 갱신 완료");
+}
+
 
     async function addDoctor() {
         const name = document.getElementById("doctor-name").value.trim();
         const department = document.getElementById("doctor-department").value.trim();
         const contact = document.getElementById("doctor-contact").value.trim();
-        const photoFile = document.getElementById("doctor-image").files[0];
+        const photoFile = document.getElementById("doctor-image").files[0];  // 파일 선택
     
         // 부서 맵핑
         const departmentMapping = {
@@ -118,26 +142,31 @@ document.addEventListener("DOMContentLoaded", () => {
             name,
             departmentId,
             phoneNumber: contact,
-            photoPath: "default/photo/path", // 기본값
+            position: "Doctor", // 기본값
+            adminId: "admin123", // 기본값
+            specialty: "General Medicine", // 기본값
         };
     
-        // FormData에 JSON 데이터와 이미지 파일 추가
+        // FormData 객체 생성
         const formData = new FormData();
-        formData.append("doctor", JSON.stringify(doctorData));
+        formData.append("doctor", JSON.stringify(doctorData));  // JSON 데이터를 "doctor" 필드에 추가
         if (photoFile) {
-            formData.append("photo", photoFile);
+            formData.append("photo", photoFile);  // 이미지 파일을 "photo" 필드에 추가
         }
     
         try {
-            console.log("전송할 데이터:", doctorData, photoFile);
+            console.log("전송 데이터:", doctorData, photoFile);
+    
+            // API 요청 (POST)
             const response = await fetch("https://mallang-a85bb2ff492b.herokuapp.com/api/doctors", {
                 method: "POST",
-                body: formData,
+                body: formData, // FormData로 전송
             });
     
             if (response.ok) {
                 alert("의료진이 성공적으로 등록되었습니다.");
                 document.getElementById("add-doctor-form").reset(); // 폼 초기화
+                document.getElementById("image-preview").style.display = "none";  // 사진 미리보기 숨기기
                 await loadDoctors(); // 새로고침
             } else {
                 const errorMessage = await response.text();
@@ -149,6 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("의료진 등록 중 문제가 발생했습니다. 네트워크를 확인하세요.");
         }
     }
+    
     
 
     // 삭제 버튼 이벤트 연결
@@ -163,15 +193,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 수정 버튼 이벤트 연결
     function attachUpdateEvents() {
         document.querySelectorAll(".btn-update").forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 const doctorId = e.target.dataset.id;
+                // 의사 ID를 로컬 스토리지에 저장
+                localStorage.setItem('doctorId', doctorId);
                 window.location.href = `doctor_update_admin.html?doctorId=${doctorId}`;
             });
         });
     }
+    
 
     // 의료진 삭제
     async function deleteDoctor(doctorId) {
@@ -321,12 +353,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
+document.getElementById("doctor-image").addEventListener("change", function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.getElementById("image-preview");
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    } else {
+        const preview = document.getElementById("image-preview");
+        preview.src = "";
+        preview.style.display = "none";
+    }
+});
+
+
 
     // 초기화 및 이벤트 리스너 연결
     async function initializePage() {
         console.log("페이지 초기화 시작...");
         await loadDoctors();
         await loadVacations();
+
 
         document.querySelector(".add-vacation-btn").addEventListener("click", addVacation);
         document.querySelector(".add-doctor-btn").addEventListener("click", addDoctor); // 의료진 등록 버튼 이벤트 리스너 추가
@@ -335,3 +387,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initializePage();
 });
+
