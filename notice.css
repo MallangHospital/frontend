@@ -1,23 +1,14 @@
 
-html{
-    margin: 0;
-    padding: 0;
-    width: 100%;   
-    height: 100%; 
-    box-sizing: border-box;  
-
-}
 
 
 .announcement-table {
     width: 50%;                          
     border-collapse: collapse;
     text-align: center;
-    margin-right: 800px;
-    margin-left: 550px;
-
+    margin: 0 auto; 
+    margin-top: 70px;
+    margin-bottom: 200px;
 }
-
 
 .announcement-table th, .announcement-table td {
     padding: 12px;
@@ -37,56 +28,45 @@ html{
     background-color: #f1f1f1;
 }
 
-
 .section img {
     width: 100%;  
     height: auto;
     display: block;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
 }
 
 .centered-text {
     text-align: center;
 }
 
+.search-box {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    margin-bottom: 20px;
+    flex-wrap: wrap; 
+}
 
 .search-box input {
     width: 100%;               
-    max-width: 600px;           
+    max-width: 600px;          
     height: 40px;
     padding: 10px;
     margin-right: 10px;
+    box-sizing: border-box; 
 }
 
 .search-button {
     height: 40px;
     padding: 10px;
-}
-
-.search-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.search-box label {
-    margin-right: 10px;
     font-size: 1rem;
 }
-
-.search-box button {
-    height: 40px;
-    padding: 0 15px;
-    font-size: 1rem;
-}
-
 
 .pagination {
     display: flex;
-    justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    justify-content: center; 
+    margin: 50px 0; 
+    margin-top: 100px;
 }
 
 .pagination-numbers a {
@@ -100,7 +80,6 @@ html{
     color: white;
 }
 
-
 .centered-image {
     display: flex;
     justify-content: center;
@@ -112,7 +91,6 @@ html{
     max-width: 100%;
     height: auto;
 }
-
 
 .announcement h2 {
     text-align: center;
@@ -126,5 +104,4 @@ html{
     font-size: 1.125rem;
     color: #707070;
 }
-
 
