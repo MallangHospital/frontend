@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // '글 작성 버튼' 클릭 이벤트 추가
   const writeButton = document.getElementById("writeButton2");
   writeButton.addEventListener("click", () => {
-    window.location.href = 'anounce_write_admin.html'; // 경로 수정
+    window.location.href = 'announce_modify_admin.html'; // 경로 수정
   });
 });
 
