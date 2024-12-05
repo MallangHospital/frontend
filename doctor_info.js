@@ -142,14 +142,11 @@ function populateDoctorDropdown() {
             name,
             departmentId,
             phoneNumber: contact,
-            position: "Doctor", // 기본값
-            adminId: "admin123", // 기본값
-            specialty: "General Medicine", // 기본값
         };
     
         // FormData 객체 생성
         const formData = new FormData();
-        formData.append("doctor", JSON.stringify(doctorData));  // JSON 데이터를 "doctor" 필드에 추가
+        formData.append("doctorDTO", JSON.stringify(doctorData));  // JSON 데이터를 "doctor" 필드에 추가
         if (photoFile) {
             formData.append("photo", photoFile);  // 이미지 파일을 "photo" 필드에 추가
         }
