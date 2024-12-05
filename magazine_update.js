@@ -100,7 +100,7 @@ async function validateAndSubmit() {
 
     // 응답 처리
     if (response.ok) {
-      showModal('건강 매거진이 성공적으로 등록되었습니다!', function () {
+      showModal('건강 매거진이 성공적으로 수정되었습니다!', function () {
         window.location.href = 'health_magazine_admin.html'; // 확인 버튼 누르면 이동
       });
     } else {
