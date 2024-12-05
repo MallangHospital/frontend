@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // '글 작성 버튼' 클릭 이벤트 추가
   const writeButton = document.getElementById("writeButton2");
   writeButton.addEventListener("click", () => {
-    window.location.href = 'announce_modify_admin.html'; // 경로 수정
+    // 현재 공지사항 ID를 쿼리 파라미터로 전달
+    const urlParams = new URLSearchParams(window.location.search);
+    const noticeId = urlParams.get("id");
+    window.location.href = `announce_modify_admin.html?id=${noticeId}`;
   });
 });
 
