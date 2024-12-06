@@ -1,54 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>건강매거진 상세 페이지</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>건강매거진 상세 페이지</title>
 
-  <link rel="stylesheet" href="common_assets/globalstyle.css" />
-  <link rel="stylesheet" href="common_assets/navbar.css" />
-  <link rel="stylesheet" href="common_assets/footer.css" />
-  <link rel="stylesheet" href="health_magazine_in.css" />
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
+    <link rel="stylesheet" href="health_magazine_in.css" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-    rel="stylesheet"
-  />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
-  <script src="common_assets/jquery-3.7.1.min.js"></script>
-  <script defer src="common_assets/script.js"></script>
-  <script defer src="health_magazine_in.js"></script>
-</head>
-<body>
-  <div class="wrap">
-    <div id="navbar"></div>  
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script.js"></script>
+    <script defer src="health_magazine_in.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
 
-    <div class="section">
-      <img src="assets/section_magazine.png" alt="섹션 이미지"  class="scrollable-image">/>
+      <div class="section">
+        <img
+          src="assets/section_magazine.png"
+          alt="섹션 이미지"
+          class="scrollable-image"
+        />
+      </div>
+
+      <div class="content" id="magazine-content">
+        <h1 id="magazine-title" class="content-title">제목 로딩 중...</h1>
+        <div id="magazine-info" class="content-info">
+          <span id="magazine-writer" class="writer">작성자: 로딩 중...</span> |
+          <span id="magazine-date" class="date">작성일: 로딩 중...</span>
+        </div>
+        <div id="magazine-main-image" class="content-image">
+          <img src="assets/default.jpg" alt="대표 이미지" id="main-image" />
+        </div>
+        <div id="magazine-body" class="content-body">
+          <p>내용 로딩 중...</p>
+        </div>
+        <div id="magazine-attachment" class="content-attachment">
+          <!-- 첨부파일 링크가 추가됩니다 -->
+        </div>
+      </div>
+
+      <div id="footer"></div>
     </div>
-
-    <div class="content" id="magazine-content">
-      <h1 id="magazine-title" class="content-title">제목 로딩 중...</h1>
-      <div id="magazine-info" class="content-info">
-        <span id="magazine-writer" class="writer">작성자: 로딩 중...</span> |
-        <span id="magazine-date" class="date">작성일: 로딩 중...</span>
-      </div>
-      <div id="magazine-main-image" class="content-image">
-        <img src="assets/default.jpg" alt="대표 이미지" id="main-image" />
-      </div>
-      <div id="magazine-body" class="content-body">
-        <p>내용 로딩 중...</p>
-      </div>
-      <div id="magazine-attachment" class="content-attachment">
-        <!-- 첨부파일 링크가 추가됩니다 -->
-      </div>
-    </div>
-
-    <div id="footer"></div> 
-  </div>
-</body>
+  </body>
 </html>
-

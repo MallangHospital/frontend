@@ -1,75 +1,91 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>개인정보 수정</title>
-  <link rel="stylesheet" href="modify.css">
-  <link rel="stylesheet" href="common_assets/globalstyle.css" />
-  <link rel="stylesheet" href="common_assets/navbar.css" />
-  <link rel="stylesheet" href="common_assets/footer.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>개인정보 수정</title>
+    <link rel="stylesheet" href="modify.css" />
+    <link rel="stylesheet" href="common_assets/globalstyle.css" />
+    <link rel="stylesheet" href="common_assets/navbar.css" />
+    <link rel="stylesheet" href="common_assets/footer.css" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-    rel="stylesheet"
-  />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
-  <script src="common_assets/jquery-3.7.1.min.js"></script>
-  <script defer src="common_assets/script.js"></script>
-  <script defer src="modify.js"></script> <!-- 연결된 JS -->
-</head>
-<body>
-  <div class="wrap">
-    <div id="navbar"></div>
-    <div class="section">
-        <img src="assets/section_modify.png" alt="section" class="scrollable-image">>
+    <script src="common_assets/jquery-3.7.1.min.js"></script>
+    <script defer src="common_assets/script.js"></script>
+    <script defer src="modify.js"></script>
+    <!-- 연결된 JS -->
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="navbar"></div>
+      <div class="section">
+        <img
+          src="assets/section_modify.png"
+          alt="section"
+          class="scrollable-image"
+        />
+      </div>
+
+      <div class="header">
+        <h1 class="title-bar">개인 정보 수정</h1>
+      </div>
+      <form class="form" id="modify-form">
+        <div class="form-group">
+          <label for="name">이름</label>
+          <input type="text" id="name" placeholder="입력해주세요..." readonly />
+        </div>
+        <div class="form-group">
+          <label for="id">ID</label>
+          <input type="text" id="id" placeholder="MALRANG" readonly />
+        </div>
+        <div class="form-group">
+          <label for="ssn">주민번호</label>
+          <input type="text" id="ssn" placeholder="030101-4******" readonly />
+        </div>
+        <div class="form-group">
+          <label for="phone">전화번호</label>
+          <input type="text" id="phone" placeholder="010-" />
+        </div>
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <input type="email" id="email" placeholder="입력해주세요..." />
+        </div>
+        <div class="form-group">
+          <label for="current-password">현재 비밀번호</label>
+          <input
+            type="password"
+            id="current-password"
+            placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내"
+          />
+        </div>
+        <div class="form-group">
+          <label for="new-password">새 비밀번호</label>
+          <input
+            type="password"
+            id="new-password"
+            placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내"
+          />
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">새 비밀번호 확인</label>
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내"
+          />
+        </div>
+        <div class="buttons">
+          <button type="submit" class="save-btn">저장</button>
+        </div>
+      </form>
+
+      <div id="footer"></div>
     </div>
-
-    <div class="header">
-      <h1 class="title-bar">개인 정보 수정</h1>
-  </div>
-    <form class="form" id="modify-form">
-      <div class="form-group">
-        <label for="name">이름</label>
-        <input type="text" id="name" placeholder="입력해주세요..." readonly>
-      </div>
-      <div class="form-group">
-        <label for="id">ID</label>
-        <input type="text" id="id" placeholder="MALRANG" readonly>
-      </div>
-      <div class="form-group">
-        <label for="ssn">주민번호</label>
-        <input type="text" id="ssn" placeholder="030101-4******" readonly>
-      </div>
-      <div class="form-group">
-        <label for="phone">전화번호</label>
-        <input type="text" id="phone" placeholder="010-">
-      </div>
-      <div class="form-group">
-        <label for="email">이메일</label>
-        <input type="email" id="email" placeholder="입력해주세요...">
-      </div>
-      <div class="form-group">
-        <label for="current-password">현재 비밀번호</label>
-        <input type="password" id="current-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
-      </div>
-      <div class="form-group">
-        <label for="new-password">새 비밀번호</label>
-        <input type="password" id="new-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
-      </div>
-      <div class="form-group">
-        <label for="confirm-password">새 비밀번호 확인</label>
-        <input type="password" id="confirm-password" placeholder="영어, 숫자 또는 특수 문자 포함 20자 이내">
-      </div>        
-      <div class="buttons">
-    
-        <button type="submit" class="save-btn">저장</button>
-      </div>
-    </form>
-
-    <div id="footer"></div>
-  </div>
-</body>
+  </body>
 </html>
