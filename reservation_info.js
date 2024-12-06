@@ -90,7 +90,7 @@ function renderHealthChecks(healthChecks) {
       <td>${healthCheck.memberId || '정보 없음'}</td>
       <td>${healthCheck.phoneNumber || '정보 없음'}</td>
       <td>${healthCheck.reserveDate || '정보 없음'}</td>
-      <td>${healthCheck.hType || '정보 없음'}</td>
+      <td>${healthCheck.htype || '정보 없음'}</td>
       <td>${healthCheck.status || '정보 없음'}</td>
       <td>
         <input type="checkbox" class="health-check-checkbox" data-id="${
