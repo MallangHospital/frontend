@@ -9,7 +9,7 @@
 <table>
     <tr>
         <td align="center">
-            <a href="https://github.com/bobo-403"><img height="200px" width="200px" src="https://avatars.githubusercontent.com/u/139124147?v=4"/></a>
+            <a href="https://github.com/boboyoii"><img height="200px" width="200px" src="https://avatars.githubusercontent.com/u/139124147?v=4"/></a>
         </td>
         <td align="center">
             <a href="https://github.com/do2y"><img height="200px" width="200px" src="https://avatars.githubusercontent.com/u/162614561?v=4"/></a>
@@ -20,13 +20,13 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="https://github.com/Legitgoons">서보연 (팀장)</a>
+            <a href="https://github.com/boboyoii">서보연 (팀장)</a>
         </td>
         <td align="center">
-            <a href="https://github.com/BangDori">이소희</a>
+            <a href="https://github.com/do2y">이소희</a>
         </td>
         <td align="center">
-            <a href="https://github.com/BangDori">배정현</a>
+            <a href="https://github.com/baezzan">배정현</a>
         </td>
     </tr>
 </table>
